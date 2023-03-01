@@ -1,31 +1,29 @@
 use std::fs::File;
-use std::io;
-use std::io::prelude::*;
-use std::path::Path;
+use std::io::Read;
+use std::env;
+
+fn open_file(path: &str) -> Result<String, std::io::Error> {
+    let mut file = File::open(path)?;
+    let mut rdin = String::new();
+    file.read_to_string(&mut rdin)?;
+    Ok(rdin)
+}
 
 fn main() {
-    println!("listening for file at: {}", std::env::current_dir().unwrap().display());
-    let mut filename = String::new();
+    let mut args = env::args();
 
-    io::stdin()
-        .read_line(&mut filename)
-        .expect("failed to read file name");
-    let filename = filename.trim();
+    if args.len() > 1 {
+        let filename: String = args.nth(1).unwrap();
 
-    let path = Path::new(&filename);
-    let display = path.display();
+        match open_file(filename.as_str()) {
+            Ok(raw) => {
+                println!("reading content from {}:\n{}", filename, raw);
+            }
 
-    let mut file = match File::open(&path) {
-        Err(f) => panic!("failed to open {}: {}", display, f),
-        Ok(file) => file,
-    };
-
-    let mut raw = String::new();
-    match file.read_to_string(&mut raw) {
-        Err(f) => panic!("failed to read {}: {}", display, f),
-        Ok(_) => println!("read raw string data from {}:", display),
+            Err(e) => {
+                println!("failed to run {}: {}", filename, e);
+            }
+        }
     }
-
-    println!("{}", raw);
 }
 
