@@ -23,7 +23,8 @@ pub enum TokenType {
     OPERATOR,
     SHIFT_KEYWORD,
     STRETCH_KEYWORD,
-    ROTATE_KEYWORDS
+    ROTATE_KEYWORD,
+    EVOLVE_KEYWORD,
 }
 
 pub struct Token {
@@ -55,7 +56,47 @@ pub fn code_to_token(input: &String) {
                 '(' => all_tokens.push(Token::new(TokenType::L_PAREN, cc.to_string())),
                 ')' => all_tokens.push(Token::new(TokenType::R_PAREN, cc.to_string())),
 
-                '+' | '-' | '*' | '/' => all_tokens.push(Token::new(TokenType::OPERATOR,cc.to_string())),
+                '+' | '-' | '*' | '/' | '=' => all_tokens.push(Token::new(TokenType::OPERATOR,cc.to_string())),
+
+                c if c.is_ascii_digit() => {
+                    let mut num = String::new();
+                    num.push(c);
+
+                    while let Some(&cc) = chars.peek() {
+                        if cc.is_ascii_digit() || cc == '.' {
+                            num.push(chars.next().unwrap());
+                        } else {
+                            break;
+                        }
+                    }
+
+                    all_tokens.push(Token::new(TokenType::NUMBER, num));
+                }
+
+                // words to check for keywords and identifiers
+                c if c.is_ascii_alphabetic() => {
+                    let mut keyw = String::new();
+                    keyw.push(c);
+
+                    while let Some(&cc) = chars.peek() {
+                        if cc.is_ascii_alphabetic() || cc.is_ascii_digit() {
+                            keyw.push(chars.next().unwrap());
+                        } else {
+                            break;
+                        }
+                    }
+
+                    // check for reserved keywords, otherwise identifier
+
+                    match keyw.as_str() {
+                        "shift" => all_tokens.push(Token::new(TokenType::SHIFT_KEYWORD, keyw)),
+                        "stretch" => all_tokens.push(Token::new(TokenType::STRETCH_KEYWORD, keyw)),
+                        "rotate" => all_tokens.push(Token::new(TokenType::ROTATE_KEYWORD, keyw)),
+                        "evolve" => all_tokens.push(Token::new(TokenType::EVOLVE_KEYWORD, keyw)),
+
+                        _ => all_tokens.push(Token::new(TokenType::IDENTIFIER, keyw))
+                    }
+                }
 
                 _ => ()
             }
