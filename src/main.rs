@@ -1,9 +1,10 @@
+mod lexer;
 mod tokens;
 
 use std::fs::File;
 use std::io::Read;
 use std::env;
-use crate::tokens::{code_to_token};
+use crate::lexer::Lexer;
 
 fn open_file(path: &str) -> Result<String, std::io::Error> {
     let mut file = File::open(path)?;
@@ -21,7 +22,8 @@ fn main() {
         match open_file(filename.as_str()) {
             Ok(raw) => {
                 println!("reading content from {}:\n{}", filename, raw);
-                code_to_token(raw);
+                
+                let lex = Lexer::new(raw);
             }
 
             Err(e) => {

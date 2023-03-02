@@ -40,7 +40,7 @@ impl Token {
     }
 }
 
-pub fn code_to_token(input: String) {
+pub fn code_to_token(input: &String) {
     let mut lines = input.split("\n");
     let mut all_tokens = Vec::<Token>::new();
 
