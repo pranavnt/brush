@@ -1,7 +1,6 @@
-mod tokens;
+use crate::tokens::{Token, TokenType};
 
 use std::*;
-use tokens::*;
 
 pub struct Lexer {
     code: String,
