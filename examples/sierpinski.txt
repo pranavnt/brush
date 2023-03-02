@@ -1,0 +1,25 @@
+let background = triangle {
+    // equilateral by default unless specified
+    length = 100
+    color = '#000'
+}
+
+let sierpinski = triangle {
+    length = 50
+    color = '#fff'
+    angle = 180
+
+    evolve {
+        child {
+            length /= 2
+            center.y += 2 / 3 * length
+        }
+        child {
+            length /= 2
+            
+        }
+        child {
+            length /= 2
+        }
+    }
+}
