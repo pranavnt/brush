@@ -4,7 +4,6 @@ use crate::tokens::{Token, TokenType};
 pub struct Parser {
     pub tokens: Vec<Token>,
     pub current: usize,
-    pub ast: Node,
 }
 
 impl Parser {
@@ -12,7 +11,15 @@ impl Parser {
         Parser {
             tokens: tokens,
             current: 0,
-            ast: Node::new(NodeType::Program, String::from("")),
         }
+    }
+
+    pub fn parse(&mut self) -> Node {
+        let mut root = Node::new(NodeType::Program, String::from("Program"));
+
+
+        // all parser code 
+
+        root
     }
 }
