@@ -13,7 +13,7 @@ impl Lexer {
         Lexer {
             code: code,
             position: 0,
-            tokens: Vec::Token::new(),
+            tokens: Vec::<Token>::new(),
         }
     }
 }
