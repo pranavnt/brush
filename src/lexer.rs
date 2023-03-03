@@ -5,7 +5,6 @@ use std::*;
 pub struct Lexer {
     code: String,
     position: i32,
-    tokens: Vec<Token>,
 }
 
 impl Lexer {
@@ -13,11 +12,10 @@ impl Lexer {
         Lexer {
             code: code,
             position: 0,
-            tokens: Vec::<Token>::new(),
         }
     }
 
-    pub fn lex(&mut self) {
+    pub fn lex(&mut self) -> Vec<Token> {
         let lines = self.code.split("\n");
         let mut all_tokens = Vec::<Token>::new();
     
@@ -84,7 +82,7 @@ impl Lexer {
             }
         }
         
-        self.tokens = all_tokens;
+        all_tokens
     }
 }
 

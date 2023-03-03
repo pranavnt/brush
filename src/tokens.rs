@@ -29,6 +29,7 @@ pub enum TokenType {
     EVOLVE_KEYWORD,
 }
 
+#[derive(Debug)]
 pub struct Token {
     pub token_type: TokenType,
     pub value: String,

@@ -4,6 +4,8 @@ use std::fs::File;
 use std::io::Read;
 use std::env;
 use crate::lexer::Lexer;
+use crate::parser::Parser;
+use crate::eval::Interpreter;
 
 fn open_file(path: &str) -> Result<String, std::io::Error> {
     let mut file = File::open(path)?;
@@ -22,7 +24,20 @@ fn main() {
             Ok(raw) => {
                 println!("reading content from {}:\n{}", filename, raw);
                 
-                let lex = Lexer::new(raw);
+                let mut lex = Lexer::new(raw);
+                let tokens = lex.lex();
+
+                for token in tokens.iter() {
+                    println!("{:?}", token);
+                }
+
+                let mut parser = Parser::new(tokens);
+
+                let ast = parser.parse();
+
+                let interpreter = Interpreter::new(ast);
+
+                interpreter.run();
             }
 
             Err(e) => {

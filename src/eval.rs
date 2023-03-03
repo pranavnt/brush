@@ -12,7 +12,7 @@ impl Interpreter {
         }
     }
 
-    pub fn interpret(&self) {
+    pub fn run(&self) {
         println!("Interpreting AST");
     }
 }
