@@ -21,6 +21,8 @@ pub enum TokenType {
     IDENTIFIER,
     NUMBER,
     OPERATOR,
+    KEYWORD,
+    SHAPE_KEYWORD,
     SHIFT_KEYWORD,
     STRETCH_KEYWORD,
     ROTATE_KEYWORD,
@@ -74,12 +76,12 @@ pub fn code_to_token(input: &String) {
                 }
 
                 // words to check for keywords and identifiers
-                c if c.is_ascii_alphabetic() => {
+                c if c.is_ascii_alphabetic() || cc == '_' => {
                     let mut keyw = String::new();
                     keyw.push(c);
 
                     while let Some(&cc) = chars.peek() {
-                        if cc.is_ascii_alphabetic() || cc.is_ascii_digit() {
+                        if cc.is_ascii_alphabetic() || cc == '_' || cc.is_ascii_digit() {
                             keyw.push(chars.next().unwrap());
                         } else {
                             break;
@@ -89,6 +91,9 @@ pub fn code_to_token(input: &String) {
                     // check for reserved keywords, otherwise identifier
 
                     match keyw.as_str() {
+                        "let" => all_tokens.push(Token::new(TokenType::KEYWORD, keyw)),
+                        "circle" => all_tokens.push(Token::new(TokenType::SHAPE_KEYWORD, keyw)),
+                        "triangle" => all_tokens.push(Token::new(TokenType::SHAPE_KEYWORD, keyw)),
                         "shift" => all_tokens.push(Token::new(TokenType::SHIFT_KEYWORD, keyw)),
                         "stretch" => all_tokens.push(Token::new(TokenType::STRETCH_KEYWORD, keyw)),
                         "rotate" => all_tokens.push(Token::new(TokenType::ROTATE_KEYWORD, keyw)),
