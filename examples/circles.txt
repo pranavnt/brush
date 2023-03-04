@@ -10,5 +10,3 @@ my_shape(
     center = (100, 100)
     generations = 8
 )
-
-

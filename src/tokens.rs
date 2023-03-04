@@ -14,6 +14,7 @@
 }*/
 #[derive(Debug)]
 pub enum TokenType {
+    ENDLINE,
     L_CURLY,
     R_CURLY,
     L_PAREN,
