@@ -13,6 +13,7 @@
     value: "2"
 }*/
 #[derive(Debug)]
+#[allow(non_camel_case_types)]
 pub enum TokenType {
     L_CURLY,
     R_CURLY,
