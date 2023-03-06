@@ -15,6 +15,7 @@
 #[derive(Debug)]
 #[allow(non_camel_case_types)]
 pub enum TokenType {
+    ENDLINE,
     L_CURLY,
     R_CURLY,
     L_PAREN,

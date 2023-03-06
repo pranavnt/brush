@@ -80,6 +80,8 @@ impl Lexer {
                     _ => ()
                 }
             }
+
+            all_tokens.push(Token::new(TokenType::ENDLINE, String::from("")))
         }
         
         all_tokens
