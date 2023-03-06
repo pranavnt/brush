@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "choice-project-generative-art-programming-language"
+name = "brush"
 version = "0.1.0"
