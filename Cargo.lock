@@ -5,3 +5,12 @@ version = 3
 [[package]]
 name = "brush"
 version = "0.1.0"
+dependencies = [
+ "svg",
+]
+
+[[package]]
+name = "svg"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e715e0c3fc987f4c435dc7189641fd9caa6919a74675ace605c38e201d278001"

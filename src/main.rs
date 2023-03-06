@@ -1,4 +1,4 @@
-mod tokens; mod lexer; mod ast; mod parser; mod eval;
+mod tokens; mod lexer; mod ast; mod parser; mod eval; mod error; mod art;
 
 use std::fs::File;
 use std::io::Read;
