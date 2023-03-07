@@ -19,7 +19,49 @@ pub struct Shape {
 }
 
 impl Shape {
+    pub fn new_circle(
+        center: (f64, f64),
+        radius: f64,
+    ) -> Shape {  
+        let mut path = Data::new();
+        let mut x = center.0 + radius;
+        let mut y = center.1;
+        let mut angle: f32 = 0.0;
+        while angle < 360.0 {
+            path = path.add(x, y);
+            x = center.0 + radius * angle.cos();
+            y = center.1 + radius * angle.sin();
+            angle += 1.0;
+        }
 
+        unimplemented!();
+
+    }
+
+    pub fn new_rect() -> Shape {
+        unimplemented!();
+    }
+
+    pub fn new_triangle() -> Shape {
+        unimplemented!();
+    }
+
+    pub fn new_polygon() -> Shape {
+        unimplemented!();
+    }
+
+    pub fn shift(&mut self, x: f64, y: f64) {
+        self.center.0 += x;
+        self.center.1 += y;
+
+        // iterate through the path and shift each point   
+    }
+
+    pub fn rotate(&mut self, angle: f64) {
+        self.rotation += angle;
+
+        // iterate through the path and rotate each point around the center
+    }
 }
 
 pub fn draw(shapes: Vec::<Shape>) -> Result<(), Error> { 
