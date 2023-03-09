@@ -7,6 +7,12 @@ pub enum NodeType {
     Shape(String),
     Property(String),
     DrawShape,
+    MathExpression,
+    NumberLiteral,
+    Identifier,
+    Operator,
+    ShapeProperty,
+    ShapeIdentifier
 }
 
 #[derive(Debug)]
