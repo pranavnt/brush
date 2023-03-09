@@ -12,7 +12,7 @@
     type: "NUMBER",
     value: "2"
 }*/
-#[derive(Debug)]
+#[derive(Debug,PartialEq)]
 pub enum TokenType {
     ENDLINE,
     L_CURLY,
@@ -28,6 +28,7 @@ pub enum TokenType {
     STRETCH_KEYWORD,
     ROTATE_KEYWORD,
     EVOLVE_KEYWORD,
+    PROPERTIES,
 }
 
 #[derive(Debug)]
