@@ -12,8 +12,9 @@
     type: "NUMBER",
     value: "2"
 }*/
-#[derive(Debug,PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum TokenType {
+    T_PROGRAM,
     ENDLINE,
     L_CURLY,
     R_CURLY,
@@ -31,7 +32,7 @@ pub enum TokenType {
     PROPERTIES,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Token {
     pub token_type: TokenType,
     pub value: String,
