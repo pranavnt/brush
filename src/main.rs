@@ -35,6 +35,8 @@ fn main() {
 
                 let ast = parser.parse();
 
+                println!("{:#?}", ast.to_string());
+
                 let interpreter = Interpreter::new(ast);
 
                 interpreter.run();

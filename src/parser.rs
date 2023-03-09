@@ -86,7 +86,7 @@ impl Parser {
             // Parse brackets with parent as last child
             self.tokens.remove(0);
             if parent.children.last().unwrap().children.len() != 0 {
-                self.parse_brackets(parent.children.last().unwrap().children.last_mut().unwrap());
+                self.parse_brackets(parent.children.last_mut().unwrap().children.last_mut().unwrap());
             } else {
                 self.parse_brackets(parent.children.last_mut().unwrap());
             }
@@ -94,7 +94,7 @@ impl Parser {
             // Parse parentheses with parent as last child
             self.tokens.remove(0);
             if parent.children.last().unwrap().children.len() != 0 {
-                self.parse_paren(parent.children.last().unwrap().children.last_mut().unwrap());
+                self.parse_paren(parent.children.last_mut().unwrap().children.last_mut().unwrap());
             } else {
                 self.parse_paren(parent.children.last_mut().unwrap());
             }
@@ -148,28 +148,3 @@ impl Parser {
         return root;
     }
 }
-////old code -
-// pub struct Parser {
-//     pub tokens: Vec<Token>,
-//     pub current: usize,
-// }
-
-// impl Parser {
-//     pub fn new(tokens: Vec<Token>) -> Parser {
-//         Parser {
-//             tokens: tokens,
-//             current: 0,
-//         }
-//     }
-
-//     pub fn parse(&mut self) -> Node {
-//         let mut root = Node::new(NodeType::Program, String::from("Program"));
-
-
-//         // all parser code 
-
-//         root
-//     }
-
-//     // additional functions might be 
-// }

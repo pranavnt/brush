@@ -12,7 +12,8 @@
     type: "NUMBER",
     value: "2"
 }*/
-#[derive(Debug, PartialEq, Clone)]
+#[allow(non_camel_case_types)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub enum TokenType {
     T_PROGRAM,
     ENDLINE,
