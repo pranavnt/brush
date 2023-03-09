@@ -26,16 +26,33 @@ impl Shape {
         let mut path = Data::new();
         let mut x = center.0 + radius;
         let mut y = center.1;
-        let mut angle: f32 = 0.0;
+        let mut angle = 0.0;
+
         while angle < 360.0 {
-            path = path.add(x, y);
-            x = center.0 + radius * angle.cos();
-            y = center.1 + radius * angle.sin();
+            // path.move_to defines the starting point of the path
+            // path.line_to defines 
+            // path.move_to((x, y));
+            // let delta_x = radius * angle.cos();
+            // let delta_y = radius * angle.sin();
+            // path.line_to((center.0 + delta_x, center.1 + delta_y));
+            // x = center.0 + delta_x;
+            // y = center.1 + delta_y;
             angle += 1.0;
         }
 
+        let svg = Path::new()
+            .set("fill", "none")
+            .set("stroke", "black")
+            .set("stroke-width", 1)
+            .set("d", path);
+        
+        // Shape {
+        //     svg: svg,
+        //     path: path,
+        //     center: center,
+        //     dimensions: (radius * 2.0, radius * 2.0),
+        // }
         unimplemented!();
-
     }
 
     pub fn new_rect() -> Shape {
