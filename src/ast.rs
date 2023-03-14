@@ -56,11 +56,11 @@ pub struct Node {
 }
 
 impl Node {
-    pub fn new(node_type: NodeType, value: Option<Token>) -> Node {
+    pub fn new(value: String) -> Node {
         Node {
-            node_type,
-            value,
-            children: vec![],
+            value: value,
+            children: Vec::new(),
         }
     }
 }
+
