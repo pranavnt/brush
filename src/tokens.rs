@@ -12,8 +12,10 @@
     type: "NUMBER",
     value: "2"
 }*/
-#[derive(Debug)]
+#[allow(non_camel_case_types)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub enum TokenType {
+    T_PROGRAM,
     ENDLINE,
     L_CURLY,
     R_CURLY,
@@ -28,9 +30,10 @@ pub enum TokenType {
     STRETCH_KEYWORD,
     ROTATE_KEYWORD,
     EVOLVE_KEYWORD,
+    PROPERTIES,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Token {
     pub token_type: TokenType,
     pub value: String,
