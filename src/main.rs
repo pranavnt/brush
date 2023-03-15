@@ -33,7 +33,7 @@ fn main() {
 
                 let mut parser = Parser::new(tokens);
 
-                let ast = parser.parse();
+                let ast = parser.parse_program();
 
                 println!("{:#?}", ast);
 
