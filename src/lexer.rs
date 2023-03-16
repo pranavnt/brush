@@ -72,9 +72,6 @@ impl Lexer {
                             "stretch" => all_tokens.push(Token::new(TokenType::STRETCH_KEYWORD, keyw)),
                             "rotate" => all_tokens.push(Token::new(TokenType::ROTATE_KEYWORD, keyw)),
                             "evolve" => all_tokens.push(Token::new(TokenType::EVOLVE_KEYWORD, keyw)),
-                            "generations" => all_tokens.push(Token::new(TokenType::KEYWORD, keyw)),
-                            "radius" => all_tokens.push(Token::new(TokenType::KEYWORD, keyw)),
-    
                             _ => all_tokens.push(Token::new(TokenType::IDENTIFIER, keyw))
                         }
                     }

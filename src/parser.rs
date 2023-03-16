@@ -40,13 +40,25 @@ impl Parser {
                     
                     self.shapes.insert(name);
 
-                    println!("{:?}", shape);
+                    println!("{:#?}", shape);
 
                     program.statements.push(shape);
                 }
 
                 TokenType::IDENTIFIER => {
-                    let mut end_pos = self.current;
+                    let name = self.tokens[self.current as usize].clone().value;
+
+                    if !self.shapes.contains(&name) {
+                        panic!("Shape {} not defined", name);
+                    }
+
+                    self.advance_past(TokenType::L_PAREN);
+                    
+                    if self.tokens[self.current as usize].token_type == TokenType::ENDLINE {
+                        self.current += 1;
+                    }
+
+                    let mut end_pos = self.current.clone();
 
                     let mut paren_count = 1;
 
@@ -57,22 +69,25 @@ impl Parser {
                             paren_count -= 1;
                         }
 
-                        println!("paren count: {}", paren_count);
-
                         end_pos += 1;
                     }
+                    
+                    end_pos -= 1;
+                    
+                    let draw = Node::Statement(StatementNode {
+                        kind: StatementKind::DrawShape(name, self.parse_shape_properties(end_pos)),
+                    });
 
-                    let shape = self.parse_shape_draw(end_pos);
-                    program.statements.push(shape);
+                    program.statements.push(draw);
                 }
-
                 _ => {
-                    if token.token_type == TokenType::ENDLINE || token.token_type == TokenType::R_CURLY {
-                        self.current += 1;
-                        continue;
+                    if token.token_type == TokenType::ENDLINE || token.token_type == TokenType::R_CURLY || token.token_type == TokenType::R_PAREN {
+                        self.current += 1;       
                     }
-                    let statement = self.parse_statement(self.current + 1);
-                    program.statements.push(statement);
+
+                    if self.current >= self.tokens.len() as i64 {
+                        break;
+                    }                
                 }
             }
         }                
@@ -114,39 +129,38 @@ impl Parser {
         return (Node::Shape(shape), name);
     }
 
-    pub fn parse_shape_draw(&mut self, end_pos: i64) -> Node {
-        let name = self.tokens[self.current as usize].value.clone();
-
-        if !self.shapes.contains(&name) {
-            panic!("Shape {} not defined", name);
-        }
-
-        self.advance_past(TokenType::L_PAREN);
-
+    pub fn parse_shape_properties(&mut self, end_pos: i64) -> Vec<PropertyNode> {
         let mut properties = vec![];
 
         while self.current < end_pos {
+            if self.tokens[self.current as usize].token_type == TokenType::R_PAREN {
+                self.advance_past(TokenType::R_PAREN);
+                self.advance_past(TokenType::ENDLINE);
+            }
+
             let property_name = self.tokens[self.current as usize].value.clone();
             self.advance_past(TokenType::OPERATOR);
+
             let property_value = self.parse_expression(self.get_next(TokenType::ENDLINE));
 
             let property_node = PropertyNode {
                 name: property_name,
                 value: Box::new(property_value),
             };
+            println!("property node: {:#?}", property_node);
+
             properties.push(property_node);
+
+            self.advance_past(TokenType::ENDLINE);
         }
 
-        return Node::Statement(StatementNode {
-            kind: StatementKind::DrawShape(name, properties),
-        });
+        return properties;
     }
 
     pub fn parse_statement(&mut self, end_pos: i64) -> Node {
         // statements are always going to fall into the following categories
         // 1. tranformation (warp, rotate, stretch, shift)
         // 2. property modification (radius, etc.)
-
         match self.tokens[self.current as usize].token_type {
             TokenType::SHIFT_KEYWORD => {
                 self.advance_past(TokenType::SHIFT_KEYWORD);
@@ -254,13 +268,13 @@ impl Parser {
         } else if math_operators {
             return self.parse_math_expression(self.current.clone(), end_pos);
         } else {
-            // check that there's only one token
             if self.current + 1 != end_pos {
-                // it's probably a coordinate OR invalid
                 if self.tokens[self.current as usize].token_type == TokenType::L_PAREN {
-                    // it's a coordinate
+                    self.advance_past(TokenType::L_PAREN);
+                    
                     let x = self.parse_expression(self.get_next(TokenType::COMMA));
                     self.advance_past(TokenType::COMMA);
+                    
                     let y = self.parse_expression(self.get_next(TokenType::R_PAREN));
                     self.advance_past(TokenType::R_PAREN);
 
@@ -410,5 +424,11 @@ impl Parser {
         }
 
         panic!("Could not find token of type {:?}", kind);
+    }
+
+    fn print_tokens(&self, start: i64, end: i64) {
+        for i in start..end {
+            println!("{:?}", self.tokens[i as usize]);
+        }
     }
 }
