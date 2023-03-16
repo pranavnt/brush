@@ -23,6 +23,8 @@ pub enum TokenType {
     R_PAREN,
     IDENTIFIER,
     NUMBER,
+    STRING,
+    BOOLEAN,
     OPERATOR,
     LET,
     COMMA,

@@ -25,6 +25,11 @@ fn main() {
                 let mut lex = Lexer::new(raw);
                 let tokens = lex.lex();
 
+                // uncomment to see tokens
+                // for t in &tokens {
+                //     println!("{:#?}", t);
+                // }
+
                 let mut parser = Parser::new(tokens);
 
                 let ast = parser.parse_program();
