@@ -32,8 +32,31 @@ impl Lexer {
                     ')' => all_tokens.push(Token::new(TokenType::R_PAREN, cc.to_string())),
     
                     '+' | '-' | '*' | '/' | '=' => all_tokens.push(Token::new(TokenType::OPERATOR,cc.to_string())),
+                    
+                    //check for strings
+                    '"' => {
+                        let mut keyw = String::new();
 
-    
+                        // ignore refutability warning, will either break or panic
+                        while let tc = chars.peek() {
+                            if let Some(&cc) = tc {
+                                if cc == '"' {
+                                    chars.next();
+                                    break;
+                                } else {
+                                    keyw.push(chars.next().unwrap());
+                                }
+                            }
+                            else {
+                                // fix this later, should be error because mismatched quotes
+                                panic!("missing end quote");
+                            }
+                        }
+
+                        all_tokens.push(Token::new(TokenType::STRING, keyw));
+                    }
+
+                    // check for numbers
                     c if c.is_ascii_digit() => {
                         let mut num = String::new();
                         num.push(c);
@@ -72,6 +95,9 @@ impl Lexer {
                             "stretch" => all_tokens.push(Token::new(TokenType::STRETCH_KEYWORD, keyw)),
                             "rotate" => all_tokens.push(Token::new(TokenType::ROTATE_KEYWORD, keyw)),
                             "evolve" => all_tokens.push(Token::new(TokenType::EVOLVE_KEYWORD, keyw)),
+
+                            "true" => all_tokens.push(Token::new(TokenType::BOOLEAN, keyw)),
+                            "false" => all_tokens.push(Token::new(TokenType::BOOLEAN, keyw)),
                             _ => all_tokens.push(Token::new(TokenType::IDENTIFIER, keyw))
                         }
                     }
