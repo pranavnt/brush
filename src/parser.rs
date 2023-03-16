@@ -40,8 +40,6 @@ impl Parser {
                     
                     self.shapes.insert(name);
 
-                    println!("{:#?}", shape);
-
                     program.statements.push(shape);
                 }
 
@@ -147,7 +145,6 @@ impl Parser {
                 name: property_name,
                 value: Box::new(property_value),
             };
-            println!("property node: {:#?}", property_node);
 
             properties.push(property_node);
 
@@ -181,7 +178,6 @@ impl Parser {
             TokenType::ROTATE_KEYWORD => {
                 self.advance_past(TokenType::ROTATE_KEYWORD);
 
-                // parse x
                 self.advance_past(TokenType::L_PAREN);
                 let angle = self.parse_expression(self.get_next(TokenType::R_PAREN));
 
@@ -194,7 +190,6 @@ impl Parser {
             TokenType::STRETCH_KEYWORD => {
                 self.advance_past(TokenType::STRETCH_KEYWORD);
 
-                // parse x
                 self.advance_past(TokenType::L_PAREN);
                 let x = self.parse_expression(self.get_next(TokenType::COMMA));
 
@@ -228,9 +223,7 @@ impl Parser {
         // math expression (add, subtract, multiply, divide)
         // boolean expression (and, or, not)
         // comparison expression (equal, greater than, less than, etc.)
-        // NO function calls, function calls are statements
 
-        // check if there are operators
         let mut bool_operators = false;
         let mut math_operators = false;
 
