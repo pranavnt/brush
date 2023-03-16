@@ -32,6 +32,8 @@ impl Lexer {
                     ')' => all_tokens.push(Token::new(TokenType::R_PAREN, cc.to_string())),
     
                     '+' | '-' | '*' | '/' | '=' => all_tokens.push(Token::new(TokenType::OPERATOR,cc.to_string())),
+
+                    ',' => all_tokens.push(Token::new(TokenType::COMMA, cc.to_string())),
                     
                     //check for strings
                     '"' => {
