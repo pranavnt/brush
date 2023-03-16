@@ -8,6 +8,7 @@ pub enum Node {
     NumberLiteral(NumberLiteralNode),
     StringLiteral(StringLiteralNode),
     BooleanLiteral(BooleanLiteralNode),
+    TupleLiteral(TupleLiteralNode),
     BinaryExpression(BinaryExpressionNode),
     FunctionCall(FunctionCallNode),
     VariableDeclaration(VariableDeclarationNode),
@@ -30,8 +31,13 @@ pub struct StatementNode {
 
 #[derive(Debug)]
 pub enum StatementKind {
+    DrawShape(String, Vec<PropertyNode>),
     Expression(Box<Node>),
     Return(Box<Node>),
+    Shift(Box<Node>, Box<Node>),
+    Stretch(Box<Node>, Box<Node>),
+    Rotate(Box<Node>),
+    // Warp(String, Box<Node>, Box<Node>),
 }
 
 #[derive(Debug)]
@@ -42,7 +48,7 @@ pub struct IdentifierNode {
 #[derive(Debug)]
 pub struct ShapeNode {
     pub kind: ShapeKind,
-    pub properties: Vec<Node>,
+    pub statements: Vec<Node>,
 }
 
 #[derive(Debug)]
@@ -62,6 +68,11 @@ pub struct PropertyNode {
 #[derive(Debug)]
 pub struct NumberLiteralNode {
     pub value: f64,
+}
+
+#[derive(Debug)]
+pub struct TupleLiteralNode {
+    pub values: Vec<Node>,
 }
 
 #[derive(Debug)]
@@ -95,6 +106,7 @@ pub enum BinaryOperator {
     GreaterThanOrEqual,
     LessThanOrEqual,
     And,
+    Not,
     Or,
 }
 

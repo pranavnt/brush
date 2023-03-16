@@ -22,14 +22,8 @@ fn main() {
 
         match open_file(filename.as_str()) {
             Ok(raw) => {
-                println!("reading content from {}:\n{}", filename, raw);
-                
                 let mut lex = Lexer::new(raw);
                 let tokens = lex.lex();
-
-                for token in tokens.iter() {
-                    println!("{:?}", token);
-                }
 
                 let mut parser = Parser::new(tokens);
 
@@ -37,13 +31,13 @@ fn main() {
 
                 println!("{:#?}", ast);
 
-                let interpreter = Interpreter::new(ast);
+                // let interpreter = Interpreter::new(ast);
 
-                interpreter.run();
+                // interpreter.run();
             }
 
             Err(e) => {
-                println!("failed to run {}: {}", filename, e);
+                panic!("failed to run {}: {}", filename, e);
             }
         }
     }

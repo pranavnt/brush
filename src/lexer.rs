@@ -25,12 +25,14 @@ impl Lexer {
             while let Some(cc) = chars.next() {
                 match cc {
                     // Match current character to left and right parens and curly braces
+                    ',' => all_tokens.push(Token::new(TokenType::COMMA, cc.to_string())),
                     '{' => all_tokens.push(Token::new(TokenType::L_CURLY, cc.to_string())),
                     '}' => all_tokens.push(Token::new(TokenType::R_CURLY, cc.to_string())),
                     '(' => all_tokens.push(Token::new(TokenType::L_PAREN, cc.to_string())),
                     ')' => all_tokens.push(Token::new(TokenType::R_PAREN, cc.to_string())),
     
                     '+' | '-' | '*' | '/' | '=' => all_tokens.push(Token::new(TokenType::OPERATOR,cc.to_string())),
+
     
                     c if c.is_ascii_digit() => {
                         let mut num = String::new();
@@ -63,7 +65,7 @@ impl Lexer {
                         // check for reserved keywords, otherwise identifier
     
                         match keyw.as_str() {
-                            "let" => all_tokens.push(Token::new(TokenType::KEYWORD, keyw)),
+                            "let" => all_tokens.push(Token::new(TokenType::LET, keyw)),
                             "circle" => all_tokens.push(Token::new(TokenType::SHAPE_KEYWORD, keyw)),
                             "triangle" => all_tokens.push(Token::new(TokenType::SHAPE_KEYWORD, keyw)),
                             "shift" => all_tokens.push(Token::new(TokenType::SHIFT_KEYWORD, keyw)),
@@ -81,7 +83,10 @@ impl Lexer {
                 }
             }
 
-            all_tokens.push(Token::new(TokenType::ENDLINE, String::from("")))
+            // only push endline token if the token is not a curly brace
+            if !line.contains("{") && !line.contains("}") {
+                all_tokens.push(Token::new(TokenType::ENDLINE, String::from("")))
+            }
         }
         
         all_tokens
