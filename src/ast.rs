@@ -1,66 +1,156 @@
-use crate::tokens::{Token, TokenType};
-
-#[derive(Debug, PartialEq)]
-pub enum NodeType {
-    Program,
-    ShapeDeclaration,
-    Shape(String),
-    Property(String),
-    DrawShape,
-    MathExpression,
-    NumberLiteral,
-    Identifier,
-    Operator,
-    ShapeProperty,
-    ShapeIdentifier
+#[derive(Debug)]
+pub enum Node {
+    Program(ProgramNode),
+    Statement(StatementNode),
+    Identifier(IdentifierNode),
+    Shape(ShapeNode),
+    Property(PropertyNode),
+    NumberLiteral(NumberLiteralNode),
+    StringLiteral(StringLiteralNode),
+    BooleanLiteral(BooleanLiteralNode),
+    TupleLiteral(TupleLiteralNode),
+    BinaryExpression(BinaryExpressionNode),
+    FunctionCall(FunctionCallNode),
+    VariableDeclaration(VariableDeclarationNode),
+    VariableAssignment(VariableAssignmentNode),
+    IfStatement(IfStatementNode),
+    WhileLoop(WhileLoopNode),
+    ForLoop(ForLoopNode),
+    Block(BlockNode),
 }
 
 #[derive(Debug)]
-pub struct ProgramNode{
-    pub node_type: NodeType,
-    pub children: Vec<Node>,
+pub struct ProgramNode {
+    pub statements: Vec<Node>,
 }
 
 #[derive(Debug)]
-pub struct ShapeDeclarationNode{
-    pub node_type: NodeType,
-    pub identifier: String,
-    pub children: Vec<Node>,
+pub struct StatementNode {
+    pub kind: StatementKind,
 }
 
 #[derive(Debug)]
-pub struct ShapeNode{
-    pub node_type: NodeType,
-    pub children: Vec<Node>,
+pub enum StatementKind {
+    DrawShape(String, Vec<PropertyNode>),
+    Expression(Box<Node>),
+    Return(Box<Node>),
+    Shift(Box<Node>, Box<Node>),
+    Stretch(Box<Node>, Box<Node>),
+    Rotate(Box<Node>),
+    // Warp(String, Box<Node>, Box<Node>),
 }
 
 #[derive(Debug)]
-pub struct PropertyNode{
-    pub node_type: NodeType,
-    pub identifier: String,
-    pub value: Node,
+pub struct IdentifierNode {
+    pub name: String,
 }
 
 #[derive(Debug)]
-pub struct DrawShapeNode{
-    pub node_type: NodeType,
-    pub identifier: String,
-    pub properties: Vec<Node>,
+pub struct ShapeNode {
+    pub kind: ShapeKind,
+    pub statements: Vec<Node>,
 }
 
 #[derive(Debug)]
-pub struct Node {
-    pub node_type: NodeType,
-    pub value: Option<Token>,
-    pub children: Vec<Node>,
+pub enum ShapeKind {
+    Circle,
+    Rectangle,
+    Polygon,
+    SVG,
 }
 
-impl Node {
-    pub fn new(value: String) -> Node {
-        Node {
-            value: value,
-            children: Vec::new(),
-        }
-    }
+#[derive(Debug)]
+pub struct PropertyNode {
+    pub name: String,
+    pub value: Box<Node>,
 }
 
+#[derive(Debug)]
+pub struct NumberLiteralNode {
+    pub value: f64,
+}
+
+#[derive(Debug)]
+pub struct TupleLiteralNode {
+    pub values: Vec<Node>,
+}
+
+#[derive(Debug)]
+pub struct StringLiteralNode {
+    pub value: String,
+}
+
+#[derive(Debug)]
+pub struct BooleanLiteralNode {
+    pub value: bool,
+}
+
+#[derive(Debug)]
+pub struct BinaryExpressionNode {
+    pub left: Box<Node>,
+    pub operator: BinaryOperator,
+    pub right: Box<Node>,
+}
+
+#[derive(Debug)]
+pub enum BinaryOperator {
+    Plus,
+    Minus,
+    Multiply,
+    Divide,
+    Modulo,
+    Equals,
+    NotEquals,
+    GreaterThan,
+    LessThan,
+    GreaterThanOrEqual,
+    LessThanOrEqual,
+    And,
+    Not,
+    Or,
+}
+
+#[derive(Debug)]
+pub struct FunctionCallNode {
+    pub name: String,
+    pub arguments: Vec<Node>,
+}
+
+#[derive(Debug)]
+pub struct VariableDeclarationNode {
+    pub name: String,
+    pub initializer: Option<Box<Node>>,
+}
+
+#[derive(Debug)]
+pub struct VariableAssignmentNode {
+    pub name: String,
+    pub value: Box<Node>,
+}
+
+#[derive(Debug)]
+pub struct IfStatementNode {
+    pub condition: Box<Node>,
+    pub then_block: Box<Node>,
+    pub else_block: Option<Box<Node>>,
+}
+
+#[derive(Debug)]
+pub struct WhileLoopNode {
+    pub condition: Box<Node>,
+    pub block: Box<Node>,
+}
+
+#[derive(Debug)]
+pub struct ForLoopNode {
+    pub variable: String,
+    pub initializer: Box<Node>,
+    pub condition: Box<Node>,
+    pub increment: Box<Node>,
+    pub block: Box<Node>,
+}
+
+#[derive(Debug)]
+pub struct BlockNode {
+    pub statements: Vec<Node>,
+}

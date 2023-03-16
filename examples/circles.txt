@@ -1,5 +1,6 @@
 let my_shape = circle {
-    radius = radius / 2
+  shift(0, 2)
+  stretch(0.5, 0.5)
 }
 
 my_shape(

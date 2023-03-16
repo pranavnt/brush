@@ -1,4 +1,4 @@
-use crate::ast::{Node, NodeType};
+use crate::ast::{Node};
 use crate::tokens::{Token, TokenType};
 
 pub struct Interpreter {
