@@ -15,4 +15,8 @@ impl Interpreter {
     pub fn run(&self) {
         println!("Interpreting AST");
     }
+
+    pub fn eval_node(&mut self) {
+        unimplemented!();
+    }
 }
