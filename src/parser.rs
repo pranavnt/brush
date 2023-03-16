@@ -1,9 +1,12 @@
-use crate::ast::{Node, NodeType};
-use crate::tokens::{Token, TokenType};
+use std::collections::HashSet;
+use crate::ast::*;
+use crate::tokens::{Token,TokenType};
 
 pub struct Parser {
     pub tokens: Vec<Token>,
-    pub current: i64
+    current: i64,
+    shapes: HashSet<String>,
+
 }
 
 impl Parser {
@@ -11,140 +14,414 @@ impl Parser {
         Parser {
             tokens: tokens,
             current: 0,
+            shapes: HashSet::<String>::new(),
         }
     }
 
-    pub fn parse_expression(&mut self, parent: &mut Node) {
-        // Create a new node for the head of the expression tree
-        let mut node = Node::new(NodeType::MathExpression, None);
-    
-        // Add the first token as the value of the head node
-        node.value = Some(self.tokens.remove(0));
-    
-        // Continue adding nodes to the expression tree until the end of the expression
-        while self.tokens.len() > 0 && self.tokens.first().unwrap().token_type == TokenType::NUMBER || self.tokens.first().unwrap().token_type == TokenType::IDENTIFIER || self.tokens.first().unwrap().token_type == TokenType::OPERATOR {
-            let token_type = &self.tokens.first().unwrap().token_type;
-            let token_value = self.tokens.first().unwrap().value.clone();
-    
-            // Create a new node for the next token
-            // let mut child_node = Node::new(NodeType::MathExpression, Some(Token::new(token_type, token_value)));
-            let mut child_node = Node::new(NodeType::MathExpression, Some(self.tokens.first().unwrap().clone()));
+    pub fn parse_program(&mut self) -> ProgramNode {
+        let mut program = ProgramNode {
+            statements: vec![],
+        };
 
-            // Set the type of the child node based on the token type   
-            match token_type {
-                TokenType::NUMBER => child_node.node_type = NodeType::NumberLiteral,
-                TokenType::IDENTIFIER => child_node.node_type = NodeType::Identifier,
-                TokenType::OPERATOR => child_node.node_type = NodeType::Operator,
-                _ => (),
+        // if we see a let, it's a shape declaration
+        // if we see a function call to a "my_shape" (or function name), it's a shape draw
+        while self.current < self.tokens.len() as i64 {
+            let token = &self.tokens[self.current as usize];
+
+            match token.token_type {
+                TokenType::LET => {
+                    // calculate end position based on when the next closing curly brace is
+                    let mut end_pos = self.current + 1;
+                    while self.tokens[end_pos as usize].token_type != TokenType::R_CURLY {
+                        end_pos += 1;
+                    }
+
+                    let (shape, name) = self.parse_shape_declaration(end_pos);
+                    
+                    self.shapes.insert(name);
+
+                    program.statements.push(shape);
+                }
+
+                TokenType::IDENTIFIER => {
+                    let name = self.tokens[self.current as usize].clone().value;
+
+                    if !self.shapes.contains(&name) {
+                        panic!("Shape {} not defined", name);
+                    }
+
+                    self.advance_past(TokenType::L_PAREN);
+                    
+                    if self.tokens[self.current as usize].token_type == TokenType::ENDLINE {
+                        self.current += 1;
+                    }
+
+                    let mut end_pos = self.current.clone();
+
+                    let mut paren_count = 1;
+
+                    while paren_count > 0 {
+                        if self.tokens[end_pos as usize].token_type == TokenType::L_PAREN {
+                            paren_count += 1;
+                        } else if self.tokens[end_pos as usize].token_type == TokenType::R_PAREN {
+                            paren_count -= 1;
+                        }
+
+                        end_pos += 1;
+                    }
+                    
+                    end_pos -= 1;
+                    
+                    let draw = Node::Statement(StatementNode {
+                        kind: StatementKind::DrawShape(name, self.parse_shape_properties(end_pos)),
+                    });
+
+                    program.statements.push(draw);
+                }
+                _ => {
+                    if token.token_type == TokenType::ENDLINE || token.token_type == TokenType::R_CURLY || token.token_type == TokenType::R_PAREN {
+                        self.current += 1;       
+                    }
+
+                    if self.current >= self.tokens.len() as i64 {
+                        break;
+                    }                
+                }
             }
-    
-            // Add the child node to the head node
-            node.children.push(child_node);
-    
-            // Remove the processed token from the token vector
-            self.tokens.remove(0);
-        }
-    
-        // Add the expression tree as a child of the parent node
-        parent.children.push(node);
-    } 
-    
-    pub fn parse_brackets(&mut self, parent: &mut Node) {
-        // Iterate through until the end of brackets
-        // until token's value is R curly
-        while self.tokens.first().unwrap().token_type != TokenType::R_CURLY {
-            self.parse_main(parent);
-        }
-        // Remove the R_CURLY token
-        self.tokens.remove(0);
+        }                
+
+        return program;
     }
-    
-    pub fn parse_paren(&mut self, parent: &mut Node) {
-        // Iterate through until the end of paren
-        while self.tokens.first().unwrap().token_type != TokenType::R_PAREN {
-            self.parse_main(parent);
+
+    pub fn parse_shape_declaration(&mut self, end_pos: i64) -> (Node, String) {
+        self.advance_past(TokenType::LET);
+        let name = self.tokens[self.current as usize].value.clone();
+        
+        self.advance_past(TokenType::OPERATOR);
+        let shape_kind = self.tokens[self.current as usize].value.clone();
+
+        self.advance_past(TokenType::L_CURLY);
+        
+        let mut statements = vec![];
+
+        
+        while self.current < end_pos {
+            let final_pos = self.get_next(TokenType::ENDLINE);
+            let statement = self.parse_statement(final_pos);
+            statements.push(statement);
         }
-        // Remove the R_PAREN token
-        self.tokens.remove(0);
+
+        let shape = ShapeNode {
+            kind: match shape_kind.as_str() {
+                "circle" => ShapeKind::Circle,
+                "square" => ShapeKind::Rectangle,
+                "svg" => ShapeKind::SVG,
+                "polygon" => ShapeKind::Polygon,
+                _ => {
+                    panic!("Invalid shape type");
+                },
+            },
+            statements: statements,
+        };
+
+        return (Node::Shape(shape), name);
     }
-    
-    pub fn parse_main(&mut self, parent: &mut Node) {
-        let token_type = (&self.tokens.first().unwrap().token_type).clone();
-        let token_value = self.tokens.first().unwrap().value.clone();
-        let mut node: Node = Node::new(NodeType::ShapeIdentifier, Some(Token::new(token_type, token_value)));
-    
-        if token_type == TokenType::ENDLINE {
-            // Skip ENDLINE tokens
-            self.tokens.remove(0);
-        } else if token_type == TokenType::EVOLVE_KEYWORD {
-            // Make a new child node of type ShapeDeclaration
-            node.node_type = NodeType::ShapeDeclaration;
-            parent.children.push(node);
-            // Remove the EVOLVE_KEYWORD token
-            self.tokens.remove(0);
-        } else if token_type == TokenType::L_CURLY {
-            // Parse brackets with parent as last child
-            self.tokens.remove(0);
-            if parent.children.last().unwrap().children.len() != 0 {
-                self.parse_brackets(parent.children.last_mut().unwrap().children.last_mut().unwrap());
-            } else {
-                self.parse_brackets(parent.children.last_mut().unwrap());
+
+    pub fn parse_shape_properties(&mut self, end_pos: i64) -> Vec<PropertyNode> {
+        let mut properties = vec![];
+
+        while self.current < end_pos {
+            if self.tokens[self.current as usize].token_type == TokenType::R_PAREN {
+                self.advance_past(TokenType::R_PAREN);
+                self.advance_past(TokenType::ENDLINE);
             }
-        } else if token_type == TokenType::L_PAREN {
-            // Parse parentheses with parent as last child
-            self.tokens.remove(0);
-            if parent.children.last().unwrap().children.len() != 0 {
-                self.parse_paren(parent.children.last_mut().unwrap().children.last_mut().unwrap());
-            } else {
-                self.parse_paren(parent.children.last_mut().unwrap());
+
+            let property_name = self.tokens[self.current as usize].value.clone();
+            self.advance_past(TokenType::OPERATOR);
+
+            let property_value = self.parse_expression(self.get_next(TokenType::ENDLINE));
+
+            let property_node = PropertyNode {
+                name: property_name,
+                value: Box::new(property_value),
+            };
+
+            properties.push(property_node);
+
+            self.advance_past(TokenType::ENDLINE);
+        }
+
+        return properties;
+    }
+
+    pub fn parse_statement(&mut self, end_pos: i64) -> Node {
+        // statements are always going to fall into the following categories
+        // 1. tranformation (warp, rotate, stretch, shift)
+        // 2. property modification (radius, etc.)
+        match self.tokens[self.current as usize].token_type {
+            TokenType::SHIFT_KEYWORD => {
+                self.advance_past(TokenType::SHIFT_KEYWORD);
+
+                // parse x
+                self.advance_past(TokenType::L_PAREN);
+                let x = self.parse_expression(self.get_next(TokenType::COMMA));
+
+                self.advance_past(TokenType::COMMA);
+                let y = self.parse_expression(self.get_next(TokenType::R_PAREN));
+
+                self.advance_past(TokenType::ENDLINE);
+
+                return Node::Statement(StatementNode {
+                    kind: StatementKind::Shift(Box::new(x), Box::new(y)),
+                });
+            },    
+            TokenType::ROTATE_KEYWORD => {
+                self.advance_past(TokenType::ROTATE_KEYWORD);
+
+                self.advance_past(TokenType::L_PAREN);
+                let angle = self.parse_expression(self.get_next(TokenType::R_PAREN));
+
+                self.advance_past(TokenType::ENDLINE);
+
+                return Node::Statement(StatementNode {
+                    kind: StatementKind::Rotate(Box::new(angle)),
+                });
+            },
+            TokenType::STRETCH_KEYWORD => {
+                self.advance_past(TokenType::STRETCH_KEYWORD);
+
+                self.advance_past(TokenType::L_PAREN);
+                let x = self.parse_expression(self.get_next(TokenType::COMMA));
+
+                self.advance_past(TokenType::COMMA);
+                let y = self.parse_expression(self.get_next(TokenType::R_PAREN));
+
+                self.advance_past(TokenType::ENDLINE);
+
+                return Node::Statement(StatementNode {
+                    kind: StatementKind::Stretch(Box::new(x), Box::new(y)),
+                });
+            },
+            TokenType::KEYWORD => {
+                let keyword = self.tokens[self.current as usize].value.clone();
+
+                self.advance_past(TokenType::KEYWORD);
+
+                let expression = self.parse_expression(end_pos);
+
+                unimplemented!();
+            },
+            _ => {
+                panic!("Invalid statement");
             }
-        } else if token_type == TokenType::PROPERTIES {
-            // Make a new child node of type Property
-            node.node_type = NodeType::ShapeProperty;
-            parent.children.push(node);
-            self.tokens.remove(0);
-    
-            if self.tokens.len() > 0 && self.tokens.first().unwrap().value == "=" {
-                // Remove the equals sign
-                self.tokens.remove(0);
-                self.parse_expression(parent.children.last_mut().unwrap());
+        }
+    }
+
+    pub fn parse_expression(&mut self, end_pos: i64) -> Node {
+        // expressions will always be:
+        // direct value (number, string, coordinate, etc.)
+        // math expression (add, subtract, multiply, divide)
+        // boolean expression (and, or, not)
+        // comparison expression (equal, greater than, less than, etc.)
+
+        let mut bool_operators = false;
+        let mut math_operators = false;
+
+        let mut i = self.current;
+
+        while i < end_pos {
+            let token = &self.tokens[i as usize];
+
+            match token.token_type {
+                TokenType::OPERATOR => {
+                    match token.value.as_str() {
+                        "+" | "-" | "*" | "/" => {
+                            math_operators = true;
+                        },
+                        "and" | "or" | "not" => {
+                            bool_operators = true;
+                        },
+                        _ => {
+                            // do nothing
+                        }
+                    }
+                },
+                _ => {
+                    // do nothing
+                }
             }
+
+            i += 1;
+        }
+
+        if bool_operators && math_operators {
+            panic!("Cannot mix boolean and math operators");
+        } else if bool_operators {
+            return self.parse_boolean_expression(self.current.clone(), end_pos);
+        } else if math_operators {
+            return self.parse_math_expression(self.current.clone(), end_pos);
         } else {
-            // Otherwise, assume it's a ShapeIdentifier
-            parent.children.push(node);
-            self.tokens.remove(0);
-        }
-    }
-    
-    pub fn parse(&mut self) -> Node {
-        let mut root = Node::new(NodeType::Program, Some(Token::new(TokenType::T_PROGRAM, String::from("Program"))));
-    
-        while self.tokens.len() > 0 {
-            if self.tokens.first().unwrap().token_type == TokenType::L_CURLY {
-                // Start a new tree from the last shape declaration or from root
-                let mut parent: &mut Node = if root.children.len() > 0 && (root.children.last().unwrap().node_type == NodeType::ShapeDeclaration) {
-                    root.children.last_mut().unwrap()
+            if self.current + 1 != end_pos {
+                if self.tokens[self.current as usize].token_type == TokenType::L_PAREN {
+                    self.advance_past(TokenType::L_PAREN);
+                    
+                    let x = self.parse_expression(self.get_next(TokenType::COMMA));
+                    self.advance_past(TokenType::COMMA);
+                    
+                    let y = self.parse_expression(self.get_next(TokenType::R_PAREN));
+                    self.advance_past(TokenType::R_PAREN);
+
+                    return Node::TupleLiteral(TupleLiteralNode {
+                        values: vec![x, y],
+                    });
                 } else {
-                    &mut root
-                };
-                let mut shape_node = Node::new(NodeType::ShapeIdentifier, Some(Token::new(TokenType::IDENTIFIER, String::from("shape"))));
-                shape_node.node_type = NodeType::ShapeDeclaration;
-                parent.children.push(shape_node);
-                parent = parent.children.last_mut().unwrap();
-                // Parse the brackets
-                self.tokens.remove(0);
-                self.parse_brackets(parent);
-            } else {
-                // If it's not a L_CURLY token, assume it's a ShapeIdentifier
-                let mut parent: &mut Node = if root.children.len() > 0 && root.children.last().unwrap().node_type == NodeType::ShapeDeclaration {
-                    root.children.last_mut().unwrap()
-                } else {
-                    &mut root
-                };
-                self.parse_main(parent);
+                    panic!("Invalid expression");
+                }
+            }
+
+            let token = self.tokens[self.current as usize].clone();
+
+            match token.token_type {
+                TokenType::NUMBER => {
+                    self.advance_past(TokenType::NUMBER);
+
+                    return Node::NumberLiteral(NumberLiteralNode {
+                        value: token.value.parse::<f64>().unwrap(),
+                    });
+                },
+                _ => {
+                    panic!("Invalid expression");
+                }
             }
         }
-    
-        return root;
+    }
+
+    fn parse_boolean_expression(&mut self, start_pos: i64, end_pos: i64) -> Node {
+        let mut i = self.current;
+
+        while i < end_pos {
+            let token = &self.tokens[i as usize];
+
+            // set left to being whatever is left of the operation with highest precedence
+            if token.token_type == TokenType::OPERATOR && token.value == "not" {
+                let left = self.parse_boolean_expression(start_pos, i);
+                let right = self.parse_boolean_expression(i + 1, end_pos);
+
+                return Node::BinaryExpression(BinaryExpressionNode {
+                    left: Box::new(left),
+                    right: Box::new(right),
+                    operator: BinaryOperator::Not,
+                });
+            } else if token.token_type == TokenType::OPERATOR && token.value == "and" {
+                let left = self.parse_boolean_expression(start_pos, i);
+                let right = self.parse_boolean_expression(i + 1, end_pos);
+
+                return Node::BinaryExpression(BinaryExpressionNode {
+                    left: Box::new(left),
+                    right: Box::new(right),
+                    operator: BinaryOperator::And,
+                });
+            } else if token.token_type == TokenType::OPERATOR && token.value == "or" {
+                let left = self.parse_boolean_expression(start_pos, i);
+                let right = self.parse_boolean_expression(i + 1, end_pos);
+
+                return Node::BinaryExpression(BinaryExpressionNode {
+                    left: Box::new(left),
+                    right: Box::new(right),
+                    operator: BinaryOperator::Or,
+                });
+            } else {
+                i += 1;
+            }
+        }
+
+        panic!("Invalid boolean expression");
+    }
+
+    fn parse_math_expression(&mut self, start_pos: i64, end_pos: i64) -> Node {
+        // * or /, then + or -
+        let mut i = self.current;
+
+        while i < end_pos {
+            let token = &self.tokens[i as usize];
+
+            // set left to being whatever is left of the operation with highest precedence
+            if token.token_type == TokenType::OPERATOR && token.value == "*" {
+                let left = self.parse_math_expression(start_pos, i);
+                let right = self.parse_math_expression(i + 1, end_pos);
+
+                return Node::BinaryExpression(BinaryExpressionNode {
+                    left: Box::new(left),
+                    right: Box::new(right),
+                    operator: BinaryOperator::Multiply,
+                });
+            } else if token.token_type == TokenType::OPERATOR && token.value == "/" {
+                let left = self.parse_math_expression(start_pos, i);
+                let right = self.parse_math_expression(i + 1, end_pos);
+
+                return Node::BinaryExpression(BinaryExpressionNode {
+                    left: Box::new(left),
+                    right: Box::new(right),
+                    operator: BinaryOperator::Divide,
+                });
+            } else if token.token_type == TokenType::OPERATOR && token.value == "+" {
+                let left = self.parse_math_expression(start_pos, i);
+                let right = self.parse_math_expression(i + 1, end_pos);
+
+                return Node::BinaryExpression(BinaryExpressionNode {
+                    left: Box::new(left),
+                    right: Box::new(right),
+                    operator: BinaryOperator::Plus,
+                });
+            } else if token.token_type == TokenType::OPERATOR && token.value == "-" {
+                let left = self.parse_math_expression(start_pos, i);
+                let right = self.parse_math_expression(i + 1, end_pos);
+
+                return Node::BinaryExpression(BinaryExpressionNode {
+                    left: Box::new(left),
+                    right: Box::new(right),
+                    operator: BinaryOperator::Minus,
+                });
+            } else {
+                i += 1;
+            }
+        }
+
+        panic!("Invalid math expression");
+    }
+
+    fn advance_past(&mut self, token_type: TokenType) {
+        while self.current < self.tokens.len() as i64 {
+            let token = &self.tokens[self.current as usize];
+
+            if token.token_type == token_type {
+                self.current += 1;
+                return;
+            }
+
+            self.current += 1;
+        }
+    }
+
+    fn get_next(&self, kind: TokenType) -> i64 {
+        let mut i = self.current + 1;
+
+        while i < self.tokens.len() as i64 {
+            let token = &self.tokens[i as usize];
+
+            if token.token_type == kind {
+                return i;
+            }
+
+            i += 1;
+        }
+
+        panic!("Could not find token of type {:?}", kind);
+    }
+
+    fn print_tokens(&self, start: i64, end: i64) {
+        for i in start..end {
+            println!("{:?}", self.tokens[i as usize]);
+        }
     }
 }
