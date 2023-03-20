@@ -112,6 +112,7 @@ impl Parser {
         }
 
         let shape = ShapeNode {
+            name: name.clone(),
             kind: match shape_kind.as_str() {
                 "circle" => ShapeKind::Circle,
                 "square" => ShapeKind::Rectangle,
