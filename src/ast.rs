@@ -1,4 +1,4 @@
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum Node {
     Program(ProgramNode),
     Statement(StatementNode),
@@ -19,17 +19,17 @@ pub enum Node {
     Block(BlockNode),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ProgramNode {
     pub statements: Vec<Node>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct StatementNode {
     pub kind: StatementKind,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum StatementKind {
     DrawShape(String, Vec<PropertyNode>),
     Expression(Box<Node>),
@@ -40,18 +40,19 @@ pub enum StatementKind {
     // Warp(String, Box<Node>, Box<Node>),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct IdentifierNode {
     pub name: String,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ShapeNode {
+    pub name: String,
     pub kind: ShapeKind,
     pub statements: Vec<Node>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum ShapeKind {
     Circle,
     Rectangle,
@@ -59,40 +60,40 @@ pub enum ShapeKind {
     SVG,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct PropertyNode {
     pub name: String,
     pub value: Box<Node>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct NumberLiteralNode {
     pub value: f64,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct TupleLiteralNode {
     pub values: Vec<Node>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct StringLiteralNode {
     pub value: String,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct BooleanLiteralNode {
     pub value: bool,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct BinaryExpressionNode {
     pub left: Box<Node>,
     pub operator: BinaryOperator,
     pub right: Box<Node>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum BinaryOperator {
     Plus,
     Minus,
@@ -110,38 +111,38 @@ pub enum BinaryOperator {
     Or,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct FunctionCallNode {
     pub name: String,
     pub arguments: Vec<Node>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct VariableDeclarationNode {
     pub name: String,
     pub initializer: Option<Box<Node>>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct VariableAssignmentNode {
     pub name: String,
     pub value: Box<Node>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct IfStatementNode {
     pub condition: Box<Node>,
     pub then_block: Box<Node>,
     pub else_block: Option<Box<Node>>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct WhileLoopNode {
     pub condition: Box<Node>,
     pub block: Box<Node>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ForLoopNode {
     pub variable: String,
     pub initializer: Box<Node>,
@@ -150,7 +151,7 @@ pub struct ForLoopNode {
     pub block: Box<Node>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct BlockNode {
     pub statements: Vec<Node>,
 }
