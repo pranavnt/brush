@@ -32,23 +32,23 @@ trait Drawable {
 
 pub struct Circle {
     shape: Shape,
-    radius: f64,
+    radius: f32,
 }
 
 pub struct Rectangle {
     shape: Shape,
-    width: f64,
-    height: f64,
+    width: f32,
+    height: f32,
 }
 
 pub struct Polygon {
     shape: Shape,
-    points: Vec<(f64, f64)>,
+    points: Vec<(f32, f32)>,
 }
 
 pub struct SVG {
     shape: Shape,
-    dimensions: (f64, f64),
+    dimensions: (f32, f32),
 }
 
 impl Circle {
@@ -61,6 +61,7 @@ impl Circle {
                     .set("stroke-width", 1),
                 path: Data::new(),
                 center: (0.0, 0.0),
+                dimensions: (0.0, 0.0),
                 fill: (0, 0, 0),
                 outline_color: (0, 0, 0),
                 outline_width: 1.0,
@@ -73,27 +74,29 @@ impl Circle {
 }
 
 impl Drawable for Circle {
-    fn rotate(&mut self, angle: f64) {
+    fn rotate(&mut self, angle: f32) {
         unimplemented!();
     }
 
-    fn rotate_to(&mut self, angle: f64) {
+    fn rotate_to(&mut self, angle: f32) {
         unimplemented!();
     }
 
-    fn shift(&mut self, x: f64, y: f64) {
-        unimplemented!();
+    fn shift(&mut self, x: f32, y: f32) {
+        self.shape.center = (self.shape.center.0 + x, self.shape.center.1 + y);
     }
 
-    fn shift_to(&mut self, x: f64, y: f64) {
-        unimplemented!();
+    fn shift_to(&mut self, x: f32, y: f32) {
+        self.shape.center = (x, y);
     }
 
-    fn stretch(&mut self, x: f64, y: f64) {
-        unimplemented!();
+    fn stretch(&mut self, x: f32, y: f32) {
+        if x == y {
+            self.radius *= x;
+        }
     }
 
-    fn stretch_to(&mut self, x: f64, y: f64) {
+    fn stretch_to(&mut self, x: f32, y: f32) {
         unimplemented!();
     }
      
