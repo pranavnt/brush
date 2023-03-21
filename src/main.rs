@@ -1,11 +1,26 @@
-mod art; mod ast; mod error; mod eval; mod lexer; mod parser; mod tokens;
+mod art;
+mod ast;
+mod error;
+mod eval;
+mod lexer;
+mod parser;
+mod tokens;
 
 use crate::eval::Interpreter;
 use crate::lexer::Lexer;
 use crate::parser::Parser;
+
+use crate::art::draw;
+use crate::art::Circle;
+use crate::art::Drawable;
+
 use std::env;
 use std::fs::File;
 use std::io::Read;
+
+use svg::node::element::path::Data;
+use svg::node::element::Path;
+use svg::Document;
 
 fn open_file(path: &str) -> Result<String, std::io::Error> {
     let mut file = File::open(path)?;
@@ -39,6 +54,8 @@ fn main() {
                 // let interpreter = Interpreter::new(ast);
 
                 // interpreter.run();
+
+                testing_transform();
             }
 
             Err(e) => {
@@ -46,4 +63,13 @@ fn main() {
             }
         }
     }
+}
+
+fn testing_transform() {
+    let mut testcircle = Circle::new(500.0, 500.0, 100.0);
+    testcircle.shift(300.0, 100.0);
+
+    let mut shapes = Vec::new();
+    shapes.push(testcircle.shape);
+    draw(shapes);
 }
