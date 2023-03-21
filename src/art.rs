@@ -66,6 +66,25 @@ impl Circle {
             radius: 0.0,
         }
     }
+
+    pub fn new_default() -> Circle {
+        Circle {
+            shape: Shape {
+                svg: Path::new()
+                    .set("fill", "none")
+                    .set("stroke", "black")
+                    .set("stroke-width", 1),
+                path: Data::new(),
+                center: (0.0, 0.0),
+                fill: (0, 0, 0),
+                outline_color: (0, 0, 0),
+                outline_width: 1.0,
+                rotation: 0.0,
+                stretch: (1.0, 1.0),
+            },
+            radius: 0.0,
+        }
+    }
 }
 
 impl Drawable for Circle {
