@@ -1,11 +1,11 @@
-mod tokens; mod lexer; mod ast; mod parser; mod eval; mod error; mod art;
+mod art; mod ast; mod error; mod eval; mod lexer; mod parser; mod tokens;
 
-use std::fs::File;
-use std::io::Read;
-use std::env;
+use crate::eval::Interpreter;
 use crate::lexer::Lexer;
 use crate::parser::Parser;
-use crate::eval::Interpreter;
+use std::env;
+use std::fs::File;
+use std::io::Read;
 
 fn open_file(path: &str) -> Result<String, std::io::Error> {
     let mut file = File::open(path)?;
