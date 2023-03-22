@@ -11,7 +11,7 @@ use svg::Document;
 pub struct Shape {
     pub svg: Path,
     path: Data,
-    center: (f32, f32),
+    pub center: (f32, f32),
     dimensions: (f32, f32),
     fill: (u8, u8, u8),
     outline_color: (u8, u8, u8),
@@ -165,6 +165,9 @@ impl Drawable for Shape {
     }
 
     fn stretch(&mut self, x: f32, y: f32) {
+        self.center.0 *= x;
+        self.center.1 *= y;
+
         let mut cdata = self.path.clone();
         let mut newData = Data::new();
 
@@ -252,9 +255,8 @@ impl Drawable for Circle {
         if x == y {
             self.radius *= x;
             self.shape.stretch(x, y);
-
             //shift to scale about center
-            self.shape.shift(self.shape.center.0 * x * -1.0 + self.shape.center.0, self.shape.center.1 * y * -1.0 + self.shape.center.0);
+            self.shape.shift(self.shape.center.0 / x - self.shape.center.0, self.shape.center.1 / y - self.shape.center.1);
         }
     }
 

@@ -67,9 +67,9 @@ fn main() {
 
 fn testing_transform() {
     let mut testcircle = Circle::new(500.0, 500.0, 100.0);
-    testcircle.shift(100.0, 0.0);
-    // 600, 600
-    testcircle.stretch(2.0, 2.0);
+    
+    testcircle.shift(200.0, 0.0);
+    testcircle.stretch(3.0, 3.0);
 
     let mut shapes = Vec::new();
     shapes.push(testcircle.shape);
