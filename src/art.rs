@@ -165,7 +165,60 @@ impl Drawable for Shape {
     }
 
     fn stretch(&mut self, x: f32, y: f32) {
-        unimplemented!();
+        let mut cdata = self.path.clone();
+        let mut newData = Data::new();
+
+        // bruh we have to handle each type of command
+        for cmd in cdata.iter() {
+            // derefererence error here
+            match cmd {
+                Command::Move(_pos, para) => {
+                    newData = newData.move_to((para.get(0).unwrap() * x, para.get(1).unwrap() * y));
+                }
+
+                Command::Line(_pos, para) => {
+                    newData = newData.line_to((para.get(0).unwrap() * x, para.get(1).unwrap() * y));
+                }
+
+                Command::HorizontalLine(pos, para) => {
+                    unimplemented!();
+                }
+
+                Command::VerticalLine(pos, para) => {
+                    unimplemented!();
+                }
+
+                Command::QuadraticCurve(pos, para) => {
+                    unimplemented!();
+                }
+
+                Command::SmoothQuadraticCurve(pos, para) => {
+                    unimplemented!();
+                }
+
+                Command::SmoothCubicCurve(pos, para) => {
+                    unimplemented!();
+                }
+
+                Command::EllipticalArc(pos, para) => {
+                    unimplemented!();
+                }
+
+                Command::CubicCurve(pos, para) => {
+                    unimplemented!();
+                }
+
+                Command::Close => {}
+            }
+        }
+
+        self.path = newData.close();
+
+        self.svg = Path::new()
+                    .set("fill", "none")
+                    .set("stroke", "black")
+                    .set("stroke-width", 1)
+                    .set("d", self.path.clone());
     }
 
     fn stretch_to(&mut self, x: f32, y: f32) {
@@ -198,6 +251,10 @@ impl Drawable for Circle {
     fn stretch(&mut self, x: f32, y: f32) {
         if x == y {
             self.radius *= x;
+            self.shape.stretch(x, y);
+
+            //shift to scale about center
+            self.shape.shift(self.shape.center.0 * x * -1.0 + self.shape.center.0, self.shape.center.1 * y * -1.0 + self.shape.center.0);
         }
     }
 
