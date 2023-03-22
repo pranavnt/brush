@@ -55,7 +55,7 @@ fn main() {
 
                 // interpreter.run();
 
-                testing_transform();
+                transform_test();
             }
 
             Err(e) => {
@@ -65,7 +65,7 @@ fn main() {
     }
 }
 
-fn testing_transform() {
+fn transform_test() {
     let mut testcircle = Circle::new(500.0, 500.0, 100.0);
     
     testcircle.shift(200.0, 0.0);
