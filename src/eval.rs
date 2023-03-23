@@ -7,6 +7,7 @@ pub struct Interpreter {
     pub ast: ProgramNode,
     pub symbol_table: HashMap<String, Value>,
     pub call_stack: Vec<Node>,
+    pub shapes: Vec<Shapes>,
 }
 
 pub enum Value {
@@ -30,6 +31,7 @@ impl Interpreter {
             ast: ast,
             symbol_table: HashMap::new(),
             call_stack: Vec::new(),
+            shapes: Vec::new(),
         }
     }
 
@@ -81,7 +83,17 @@ impl Interpreter {
 
                                 let circle = Circle::new();
 
-                                // iterate through generations
+                                self.shapes.push(Shapes::Circle(circle));
+
+                                for _ in 0..generations {
+                                    // clone circle
+                                    // circle = circle.clone();
+
+                                    
+
+                                    // push to shapes
+
+                                }
                             },
                             Value::Shape(Shapes::Rectangle(rectangle)) => {
                                 unimplemented!();
