@@ -50,16 +50,15 @@ impl Interpreter {
                         },
                         StatementKind::Expression(expression) => {
                             // evaluate expression
-                            
                         },
                         StatementKind::Return(expression) => {
                             // evaluate expression
                         },
-                        StatementKind::Shift(expression, amount) => {
+                        StatementKind::Shift(expression_a, expression_b) => {
                             // evaluate expression
                             
                         },
-                        StatementKind::Stretch(expression, amount) => {
+                        StatementKind::Stretch(expression_a, expression_b) => {
                             // evaluate expression
                         },
                         StatementKind::Rotate(expression) => {
