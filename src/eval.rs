@@ -1,22 +1,26 @@
 use std::collections::*;
 use crate::ast::*;
-use crate::art::{Circle, Rectangle, Polygon, SVG, Shape};
+use crate::art::{Circle, Rectangle, Polygon, SVG, Shape, Drawable};
 use crate::tokens::{Token, TokenType};
 
 pub struct Interpreter {
     pub ast: ProgramNode,
     pub symbol_table: HashMap<String, Value>,
     pub call_stack: Vec<Node>,
+
+    pub shapes: Vec<Shape>,
 }
 
+#[derive(Debug)]
 pub enum Value {
-    Number(f64),
+    Number(f32),
     String(String),
     Tuple(Vec<Value>),
     Shape(Shapes),
     Statements(Vec<Node>),
 }
 
+#[derive(Debug)]
 pub enum Shapes {
     Circle(Circle),
     Rectangle(Rectangle),
@@ -25,41 +29,107 @@ pub enum Shapes {
 }
 
 impl Interpreter {
-    pub fn run(&mut self) {
-        for statement in self.ast.statements.clone().iter() {
-            self.eval(statement);
+    pub fn new(ast: ProgramNode) -> Interpreter {
+        Interpreter {
+            ast: ast,
+            symbol_table: HashMap::new(),
+            call_stack: Vec::new(),
+
+            shapes: Vec::new()
         }
     }
 
-    pub fn eval(&mut self, node: &Node) -> Value {
+    pub fn run(&mut self) {
+        for statement in self.ast.statements.clone().iter() {
+            self.tmp_eval(statement);
+        }
+    }
+
+    pub fn tmp_eval(&mut self, node: &Node) -> Option<Value> {
         match node {
-            Node::Program(program) => {
-                for statement in program.statements.iter() {
-                    self.eval(statement);
-                }
-                Value::Statements(program.statements.clone())
+            Node::Program(program) => { // this code is never going to reach ???
+                None
             }
+
+            Node::Shape(shape) => {
+                // println!("shape: {:#?}", shape);
+
+                let name = &shape.name;
+                match self.symbol_table.get(name) {
+                    Some(value) => panic!("variable already declared with name: {}", name),
+
+                    None => {
+                        self.symbol_table.insert(name.clone(), Value::Shape(Shapes::Circle(Circle::new(0.0, 0.0, 1.0))));
+                    }
+                }
+
+                None
+            },
 
             Node::Statement(statement) => match statement.clone().kind {
                 StatementKind::DrawShape(name, properties) => {
-                    unimplemented!()
+                    println!("{:#?}\n\n", statement);
+
+                    match self.symbol_table.get(&name) {
+                        Some(value) => {
+                            match value {
+                                Value::Shape(shape) => {
+                                    match shape {
+                                        Shapes::Circle(circle) => {
+                                            for prop in &properties {
+                                                match prop.name.as_str() {
+                                                    "radius" => {
+                                                        let sc = self.tmp_eval(&prop.value).unwrap();
+
+                                                        match sc {
+                                                            Value::Number(num) => {
+                                                                circle.stretch(num, num);
+                                                            }
+
+                                                            _ => {
+                                                                panic!("wrong type somewhere");
+                                                            }
+                                                        }
+                                                        // circle.stretch(prop.value, prop.value)
+                                                    }
+
+                                                    _ => {}
+                                                }
+                                            }
+                                        }
+
+                                        _ => {}
+                                    }
+
+                                }
+                                _ => {}
+                            }
+                        }
+
+                        None => {
+                            panic!("shape not found");
+                        }
+                    }
+
+                    None
                 },
-                StatementKind::Expression(expression) => self.eval(&expression),
-                StatementKind::Return(expression) => self.eval(&expression),
+                StatementKind::Expression(expression) => self.tmp_eval(&expression),
+                StatementKind::Return(expression) => self.tmp_eval(&expression),
+
                 StatementKind::Shift(x,y) => {
-                    let x_val = self.eval(&x);
-                    let y_val = self.eval(&y);
+                    let x_val = self.tmp_eval(&x).unwrap();
+                    let y_val = self.tmp_eval(&y).unwrap();
                     // shift the shape here // 
-                    Value::Tuple(vec![x_val, y_val])
+                    Some(Value::Tuple(vec![x_val, y_val]))
                 },
                 StatementKind::Stretch(x, y) => {
-                    let x_val = self.eval(&x);
-                    let y_val = self.eval(&y);
+                    let x_val = self.tmp_eval(&x).unwrap();
+                    let y_val = self.tmp_eval(&y).unwrap();
                     // stretch the shape here //
-                    Value::Tuple(vec![x_val, y_val])
+                    Some(Value::Tuple(vec![x_val, y_val]))
                 },
                 StatementKind::Rotate(angle) => {
-                    let angle_val = self.eval(&angle);
+                    let angle_val = self.tmp_eval(&angle);
                     // rotate the shape here //
                     angle_val
                 },
@@ -74,9 +144,6 @@ impl Interpreter {
                 }
             },
 
-            Node::Shape(Shape) => {
-                unimplemented!()
-            },
             Node::BinaryExpression(expression) => {
                 unimplemented!()
             }
@@ -87,7 +154,7 @@ impl Interpreter {
                 unimplemented!()
             },
             Node::NumberLiteral(expression) => {
-                unimplemented!()
+                Some(Value::Number(expression.value))
             }
             Node::StringLiteral(expression) => {
                 unimplemented!()
@@ -118,53 +185,4 @@ impl Interpreter {
             },    
         }
     }
-    
-    /* pub fn new(ast: ProgramNode) -> Interpreter {
-        Interpreter {
-            ast: ast,
-            symbol_table: HashMap::new(),
-            call_stack: Vec::new(),
-        }
-    }
-
-    pub fn run(&mut self) {
-        // iterate through statements in ast
-        let statements = self.ast.statements.clone();
-
-        for statement in statements {
-            match statement {
-                Node::Shape(shape) => {
-                    // add shape to symbol table
-                    self.symbol_table.insert(shape.name.clone(), Value::Statements(shape.statements));
-                },
-                Node::Statement(statement) => {
-                    match statement.kind {
-                        StatementKind::DrawShape(name, properties) => {
-                            // add shape to symbol table
-                        },
-                        StatementKind::Expression(expression) => {
-                            // evaluate expression
-                        },
-                        StatementKind::Return(expression) => {
-                            // evaluate expression
-                        },
-                        StatementKind::Shift(expression_a, expression_b) => {
-                            // evaluate expression
-                            
-                        },
-                        StatementKind::Stretch(expression_a, expression_b) => {
-                            // evaluate expression
-                        },
-                        StatementKind::Rotate(expression) => {
-                            // evaluate expression
-                        },
-                    }
-                },
-                _ => {}
-            }
-        }
-
-        
-    } */
-    
 }

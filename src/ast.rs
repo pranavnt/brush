@@ -68,7 +68,7 @@ pub struct PropertyNode {
 
 #[derive(Debug, Clone)]
 pub struct NumberLiteralNode {
-    pub value: f64,
+    pub value: f32,
 }
 
 #[derive(Debug, Clone)]
