@@ -1,6 +1,6 @@
 use std::collections::*;
 use crate::ast::*;
-use crate::art::{Circle, Rectangle, Polygon, SVG};
+use crate::art::{Circle, Rectangle, Polygon, SVG, Shape};
 use crate::tokens::{Token, TokenType};
 
 pub struct Interpreter {
@@ -25,7 +25,116 @@ pub enum Shapes {
 }
 
 impl Interpreter {
-    pub fn new(ast: ProgramNode) -> Interpreter {
+    pub fn run(&mut self) {
+        for statements in self.ast.statements.iter() {
+            self.eval(statements);
+        }
+    }
+
+    pub fn eval(&mut self, node: &Node) -> Value {
+        match node {
+            Node::Program(program) => {
+                for statement in program.statements.iter() {
+                    self.eval(statement);
+                }
+                Value::Statements(program.statements.clone())
+            }
+
+            Node::Statement(statement) => match statement.kind {
+                StatementKind::DrawShape(name, properties) => {
+                    unimplemented!()
+                },
+                StatementKind::Expression(expression) => self.eval(&expression),
+                StatementKind::Return(expression) => self.eval(&expression),
+                StatementKind::Shift(x,y) => {
+                    let x_val = self.eval(&x);
+                    let y_val = self.eval(&y);
+                    // shift the shape here // 
+                    Value::Tuple(vec![x_val, y_val])
+                },
+                StatementKind::Stretch(x, y) => {
+                    let x_val = self.eval(&x);
+                    let y_val = self.eval(&y);
+                    // stretch the shape here //
+                    Value::Tuple(vec![x_val, y_val])
+                },
+                StatementKind::Rotate(angle) => {
+                    let angle_val = self.eval(&angle);
+                    // rotate the shape here //
+                    angle_val
+                },
+
+            },
+
+            Node::Identifier(identifier) => {
+                let name = &identifier.name;
+                match self.symbol_table.get(name) {
+                    Some(value) => unimplemented!(), //value.clone(),
+                    None => panic!("Undefined variable: {}", name),
+                }
+            },
+
+            Node::Shape(Shape) => {
+                unimplemented!()
+            },
+            Node::BinaryExpression(expression) => {
+                unimplemented!()
+            }
+            Node::Block(expression) => {
+                unimplemented!()
+            }
+            Node::Property(expression) => {
+                unimplemented!()
+            },
+            Node::NumberLiteral(expression) => {
+                unimplemented!()
+            }
+            Node::StringLiteral(expression) => {
+                unimplemented!()
+            }
+            Node::BooleanLiteral(expression) => {
+                unimplemented!()
+            },
+            Node::TupleLiteral(expression) => {
+                unimplemented!()
+            },
+            Node::FunctionCall(expression) => {
+                unimplemented!()
+            },
+            Node::VariableDeclaration(expression) => {
+                unimplemented!()
+            },
+            Node::VariableAssignment(expression) => {
+                unimplemented!()
+            },
+            Node::IfStatement(expression) => {
+                unimplemented!()
+            },
+            Node::WhileLoop(expression) => {
+                unimplemented!()
+            },
+            Node::ForLoop(expression) => {
+                unimplemented!()
+            },
+
+
+            
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /* pub fn new(ast: ProgramNode) -> Interpreter {
         Interpreter {
             ast: ast,
             symbol_table: HashMap::new(),
@@ -71,5 +180,7 @@ impl Interpreter {
         }
 
         
-    }
+    } */
+
+    
 }
