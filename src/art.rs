@@ -98,6 +98,7 @@ impl Circle {
                     .set("stroke-width", 1),
                 path: Data::new(),
                 center: (0.0, 0.0),
+                dimensions: (0.0, 0.0),
                 fill: (0, 0, 0),
                 outline_color: (0, 0, 0),
                 outline_width: 1.0,

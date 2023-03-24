@@ -26,8 +26,8 @@ pub enum Shapes {
 
 impl Interpreter {
     pub fn run(&mut self) {
-        for statements in self.ast.statements.iter() {
-            self.eval(statements);
+        for statement in self.ast.statements.clone().iter() {
+            self.eval(statement);
         }
     }
 
@@ -40,7 +40,7 @@ impl Interpreter {
                 Value::Statements(program.statements.clone())
             }
 
-            Node::Statement(statement) => match statement.kind {
+            Node::Statement(statement) => match statement.clone().kind {
                 StatementKind::DrawShape(name, properties) => {
                     unimplemented!()
                 },
@@ -115,24 +115,9 @@ impl Interpreter {
             },
             Node::ForLoop(expression) => {
                 unimplemented!()
-            },
-
-
-            
+            },    
+        }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     /* pub fn new(ast: ProgramNode) -> Interpreter {
         Interpreter {
@@ -181,6 +166,5 @@ impl Interpreter {
 
         
     } */
-
     
 }
