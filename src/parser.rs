@@ -287,7 +287,7 @@ impl Parser {
                     self.advance_past(TokenType::NUMBER);
 
                     return Node::NumberLiteral(NumberLiteralNode {
-                        value: token.value.parse::<f64>().unwrap(),
+                        value: token.value.parse::<f32>().unwrap(),
                     });
                 },
                 _ => {

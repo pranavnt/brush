@@ -73,12 +73,13 @@ impl Interpreter {
                     match self.symbol_table.get(&name) {
                         Some(value) => {
                             match value {
-                                Value::Shape(shape) => {
+                                Value::Shape(ref shape) => {
                                     match shape {
-                                        Shapes::Circle(circle) => {
+                                        Shapes::Circle(ref circle) => {
                                             for prop in &properties {
                                                 match prop.name.as_str() {
                                                     "radius" => {
+                                                        // value to scale by
                                                         let sc = self.tmp_eval(&prop.value).unwrap();
 
                                                         match sc {
@@ -91,6 +92,33 @@ impl Interpreter {
                                                             }
                                                         }
                                                         // circle.stretch(prop.value, prop.value)
+                                                    }
+
+                                                    "center" => {
+                                                        // tuple to recenter by (default circle at 0,0)
+                                                        let tp =  self.tmp_eval(&prop.value).unwrap();
+
+                                                        match tp {
+                                                            Value::Tuple(tup) => {
+                                                                // guys im ngl this is really scuffed
+                                                                let first = tup.get(0).unwrap();
+                                                                let second = tup.get(1).unwrap();
+
+                                                                match (first, second) {
+                                                                    (Value::Number(f), Value::Number(s)) => {
+                                                                        circle.shift(f.clone(), s.clone());
+                                                                    }
+
+                                                                    _ => {
+                                                                        panic!("wrong type somewhere");
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            _ => {
+                                                                panic!("wrong type somewhere");
+                                                            }
+                                                        }
                                                     }
 
                                                     _ => {}
@@ -120,13 +148,17 @@ impl Interpreter {
                     let x_val = self.tmp_eval(&x).unwrap();
                     let y_val = self.tmp_eval(&y).unwrap();
                     // shift the shape here // 
-                    Some(Value::Tuple(vec![x_val, y_val]))
+                    // Some(Value::Tuple(vec![x_val, y_val]))
+
+                    None
                 },
                 StatementKind::Stretch(x, y) => {
                     let x_val = self.tmp_eval(&x).unwrap();
                     let y_val = self.tmp_eval(&y).unwrap();
                     // stretch the shape here //
-                    Some(Value::Tuple(vec![x_val, y_val]))
+                    // Some(Value::Tuple(vec![x_val, y_val]))
+
+                    None
                 },
                 StatementKind::Rotate(angle) => {
                     let angle_val = self.tmp_eval(&angle);
@@ -162,8 +194,14 @@ impl Interpreter {
             Node::BooleanLiteral(expression) => {
                 unimplemented!()
             },
-            Node::TupleLiteral(expression) => {
-                unimplemented!()
+            Node::TupleLiteral(expression) => { // this needs to be fixed to handle tuples > 2 things
+                let mut tup = Vec::new();
+
+                for val in &expression.values {
+                    tup.push(self.tmp_eval(&val).unwrap());
+                }
+
+                Some(Value::Tuple(tup))
             },
             Node::FunctionCall(expression) => {
                 unimplemented!()
