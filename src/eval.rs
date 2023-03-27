@@ -7,20 +7,21 @@ pub struct Interpreter {
     pub ast: ProgramNode,
     pub symbol_table: HashMap<String, Value>,
     pub call_stack: Vec<Node>,
-
     pub shapes: Vec<Shape>,
 }
 
-#[derive(Debug)]
 pub enum Value {
     Number(f32),
     String(String),
     Tuple(Vec<Value>),
+    Evolve(EvolveFn),
     Shape(Shapes),
     Statements(Vec<Node>),
 }
 
-#[derive(Debug)]
+pub type EvolveFn = Box<dyn FnOnce(&Circle)>;
+
+#[derive(Debug, Clone)]
 pub enum Shapes {
     Circle(Circle),
     Rectangle(Rectangle),
@@ -41,25 +42,49 @@ impl Interpreter {
 
     pub fn run(&mut self) {
         for statement in self.ast.statements.clone().iter() {
-            self.tmp_eval(statement);
+            self.eval(statement.clone());
         }
     }
 
-    pub fn tmp_eval(&mut self, node: &Node) -> Option<Value> {
+    pub fn eval(&mut self, node: Node) -> Option<Value> {
         match node {
             Node::Program(program) => { // this code is never going to reach ???
                 None
             }
 
             Node::Shape(shape) => {
-                // println!("shape: {:#?}", shape);
-
                 let name = &shape.name;
                 match self.symbol_table.get(name) {
                     Some(value) => panic!("variable already declared with name: {}", name),
-
                     None => {
-                        self.symbol_table.insert(name.clone(), Value::Shape(Shapes::Circle(Circle::new(0.0, 0.0, 1.0))));
+                        let evolveFn = move |circle: &Circle| {
+                            for statement in shape.statements {
+                                // if statement is shift, then shift by the value
+                                // if statement is stretch, then stretch by the value
+
+                                match statement {
+                                    Node::Statement(statement) => {
+                                        match statement.kind {
+                                            StatementKind::Shift(x, y) => {
+                                                // shift by x, y
+                                                circle.shape.shift(x, y);
+                                            }
+
+                                            StatementKind::Stretch(x, y) => {
+                                                // stretch by x, y (will be same value for both lol) 
+                                                circle.shape.stretch(x, y);
+                                            }
+
+                                            _ => {}
+                                        }
+                                    }
+
+                                    _ => {}
+                                }
+                            }
+                        };
+
+                        self.symbol_table.insert(name.clone(), Value::Evolve(Box::new(evolveFn)));
                     }
                 }
 
@@ -70,102 +95,103 @@ impl Interpreter {
                 StatementKind::DrawShape(name, properties) => {
                     println!("{:#?}\n\n", statement);
 
-                    match self.symbol_table.get(&name) {
-                        Some(value) => {
-                            match value {
-                                Value::Shape(ref shape) => {
-                                    match shape {
-                                        Shapes::Circle(ref circle) => {
-                                            for prop in &properties {
-                                                match prop.name.as_str() {
-                                                    "radius" => {
-                                                        // value to scale by
-                                                        let sc = self.tmp_eval(&prop.value).unwrap();
+                    let n = self.symbol_table.get(&name).clone();
 
-                                                        match sc {
-                                                            Value::Number(num) => {
-                                                                circle.stretch(num, num);
-                                                            }
+                    let mut generations = 1;
+                    let mut circle_config = (0.0, (0.0, 0.0));
 
-                                                            _ => {
-                                                                panic!("wrong type somewhere");
-                                                            }
-                                                        }
-                                                        // circle.stretch(prop.value, prop.value)
-                                                    }
-
-                                                    "center" => {
-                                                        // tuple to recenter by (default circle at 0,0)
-                                                        let tp =  self.tmp_eval(&prop.value).unwrap();
-
-                                                        match tp {
-                                                            Value::Tuple(tup) => {
-                                                                // guys im ngl this is really scuffed
-                                                                let first = tup.get(0).unwrap();
-                                                                let second = tup.get(1).unwrap();
-
-                                                                match (first, second) {
-                                                                    (Value::Number(f), Value::Number(s)) => {
-                                                                        circle.shift(f.clone(), s.clone());
-                                                                    }
-
-                                                                    _ => {
-                                                                        panic!("wrong type somewhere");
-                                                                    }
-                                                                }
-                                                            }
-
-                                                            _ => {
-                                                                panic!("wrong type somewhere");
-                                                            }
-                                                        }
-                                                    }
-
-                                                    _ => {}
-                                                }
-                                            }
-                                        }
-
-                                        _ => {}
-                                    }
-
+                    // parse properties
+                    for property in properties {
+                        if property.name == "radius" {
+                            circle_config.0 = match *property.value {
+                                Node::NumberLiteral(num) => {
+                                    num.value
+                                },
+                                _ => {
+                                    panic!("wrong type somewhere");
                                 }
-                                _ => {}
                             }
-                        }
+                        } else if property.name == "center" {
+                            circle_config.1 = match *property.value {
+                                Node::TupleLiteral(tuple) => {
+                                    // idk fix this by adding more nested matches 
+                                    // and whatever is below
+                                    let x = match tuple.values[0] {
+                                        Node::NumberLiteral(num) => {
+                                            num.value
+                                        },
+                                        _ => {
+                                            panic!("wrong type somewhere");
+                                        }
+                                    };
 
-                        None => {
-                            panic!("shape not found");
+                                    let y = match tuple.values[1] {
+                                        Node::NumberLiteral(num) => {
+                                            num.value
+                                        },
+                                        _ => {
+                                            panic!("wrong type somewhere");
+                                        }
+                                    };
+
+                                    (x, y)
+                                },
+                                _ => {
+                                    panic!("wrong type somewhere");
+                                }
+                            }
+                        } else if property.name == "generations" {
+                            generations = match *property.value {
+                                Node::NumberLiteral(num) => {
+                                    num.value as i32
+                                },
+                                _ => {
+                                    panic!("wrong type somewhere");
+                                }
+                            }
+                        } else {
+                            panic!("unknown property");
                         }
+                    }
+
+                    // create boilerplate circle with radius and center
+
+                    for i in 0..generations {
+                        // run clone
+                        // run evolve
+                        // push to shapes
+
+                        evolveFn(&circle);
+                        self.shapes.push(Shape::Circle(circle));
                     }
 
                     None
                 },
-                StatementKind::Expression(expression) => self.tmp_eval(&expression),
-                StatementKind::Return(expression) => self.tmp_eval(&expression),
+                // StatementKind::Expression(expression) => self.tmp_eval(*expression),
+                // StatementKind::Return(expression) => self.tmp_eval(*expression),
 
-                StatementKind::Shift(x,y) => {
-                    let x_val = self.tmp_eval(&x).unwrap();
-                    let y_val = self.tmp_eval(&y).unwrap();
-                    // shift the shape here // 
-                    // Some(Value::Tuple(vec![x_val, y_val]))
+                // StatementKind::Shift(x,y) => {
+                //     let x_val = self.tmp_eval(*x).unwrap();
+                //     let y_val = self.tmp_eval(*y).unwrap();
+                //     // shift the shape here // 
+                //     // Some(Value::Tuple(vec![x_val, y_val]))
 
-                    None
-                },
-                StatementKind::Stretch(x, y) => {
-                    let x_val = self.tmp_eval(&x).unwrap();
-                    let y_val = self.tmp_eval(&y).unwrap();
-                    // stretch the shape here //
-                    // Some(Value::Tuple(vec![x_val, y_val]))
+                //     None
+                // },
+                // StatementKind::Stretch(x, y) => {
+                //     let x_val = self.tmp_eval(*x).unwrap();
+                //     let y_val = self.tmp_eval(*y).unwrap();
+                //     // stretch the shape here //
+                //     // Some(Value::Tuple(vec![x_val, y_val]))
 
-                    None
-                },
-                StatementKind::Rotate(angle) => {
-                    let angle_val = self.tmp_eval(&angle);
-                    // rotate the shape here //
-                    angle_val
-                },
-
+                //     None
+                // },
+                // StatementKind::Rotate(angle) => {
+                //     let angle_val = self.tmp_eval(*angle);
+                //     // rotate the shape here //
+                //     angle_val
+                // },
+                _ => None,
             },
 
             Node::Identifier(identifier) => {
@@ -195,10 +221,12 @@ impl Interpreter {
                 unimplemented!()
             },
             Node::TupleLiteral(expression) => { // this needs to be fixed to handle tuples > 2 things
-                let mut tup = Vec::new();
+                let mut tup: Vec<Value> = Vec::new();
 
                 for val in &expression.values {
-                    tup.push(self.tmp_eval(&val).unwrap());
+                    tup.push(
+                        self.eval(val.clone()).unwrap()
+                    );
                 }
 
                 Some(Value::Tuple(tup))

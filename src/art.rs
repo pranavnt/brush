@@ -8,7 +8,7 @@ use svg::node::element::{Line, Path};
 use svg::parser::Event;
 use svg::Document;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Shape {
     pub svg: Path,
     path: Data,
@@ -31,26 +31,26 @@ pub trait Drawable {
     fn update(&mut self);
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Circle {
     pub shape: Shape,
     radius: f32,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Rectangle {
     shape: Shape,
     width: f32,
     height: f32,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Polygon {
     shape: Shape,
     points: Vec<(f32, f32)>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct SVG {
     shape: Shape,
     dimensions: (f32, f32),
