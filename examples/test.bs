@@ -1,0 +1,6 @@
+let my_shape = circle {}
+
+my_shape(
+    radius = 100
+    center = (100, 100)
+)

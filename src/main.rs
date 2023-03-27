@@ -49,13 +49,13 @@ fn main() {
 
                 let ast = parser.parse_program();
 
-                println!("{:#?}", ast);
+                // println!("{:#?}", ast);
 
-                // let interpreter = Interpreter::new(ast);
+                let mut interpreter = Interpreter::new(ast);
 
-                // interpreter.run();
+                interpreter.run();
 
-                transform_test();
+                // transform_test();
             }
 
             Err(e) => {
