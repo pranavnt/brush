@@ -276,7 +276,7 @@ impl Parser {
                         values: vec![x, y],
                     });
                 } else {
-                    panic!("Invalid expression");
+                    panic!("Invalid expression {} {}", self.current, end_pos);
                 }
             }
 

@@ -57,7 +57,7 @@ pub struct SVG {
 }
 
 impl Circle {
-    pub fn new(x: f32, y: f32, radius: f32) -> Circle {
+    pub fn new(x: f32, y: f32, radius: f32, outline_color: Option<(u8, u8, u8)>) -> Circle {
         let mut cdata = Data::new();
 
         for i in 0..=360 {
@@ -78,14 +78,14 @@ impl Circle {
             shape: Shape {
                 svg: Path::new()
                     .set("fill", "none")
-                    .set("stroke", "black")
+                    .set("stroke", "#000000")
                     .set("stroke-width", 1)
                     .set("d", cdata.clone()),
                 path: cdata,
                 center: (x, y),
                 dimensions: (0.0, 0.0),
                 fill: (0, 0, 0),
-                outline_color: (0, 0, 0),
+                outline_color: outline_color.unwrap_or((0, 0, 0)),
                 outline_width: 1.0,
                 rotation: 0.0,
                 stretch: (1.0, 1.0),
@@ -178,11 +178,7 @@ impl Drawable for Shape {
 
         self.path = newData.close();
 
-        self.svg = Path::new()
-                    .set("fill", "none")
-                    .set("stroke", "black")
-                    .set("stroke-width", 1)
-                    .set("d", self.path.clone());
+        self.update();
     }
 
     fn shift_to(&mut self, x: f32, y: f32) {
@@ -242,11 +238,7 @@ impl Drawable for Shape {
 
         self.path = newData.close();
 
-        self.svg = Path::new()
-                    .set("fill", "none")
-                    .set("stroke", "black")
-                    .set("stroke-width", 1)
-                    .set("d", self.path.clone());
+        self.update();
     }
 
     fn stretch_to(&mut self, x: f32, y: f32) {
@@ -254,7 +246,13 @@ impl Drawable for Shape {
     }
 
     fn update(&mut self) {
-        unimplemented!();
+        let o_color = format!("#{:02x?}{:02x?}{:02x?}", self.outline_color.0, self.outline_color.1, self.outline_color.2);
+
+        self.svg = Path::new()
+                    .set("fill", "none")
+                    .set("stroke", o_color)
+                    .set("stroke-width", 1)
+                    .set("d", self.path.clone());
     }
 }
 
@@ -290,7 +288,7 @@ impl Drawable for Circle {
     }
 
     fn update(&mut self) {
-        unimplemented!();
+        self.shape.update();
     }
 }
 
