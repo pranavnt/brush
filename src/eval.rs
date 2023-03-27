@@ -14,12 +14,12 @@ pub enum Value {
     Number(f32),
     String(String),
     Tuple(Vec<Value>),
-    Evolve(EvolveFn),
+    Evolve(EvolveFn, Vec<Node>),
     Shape(Shapes),
     Statements(Vec<Node>),
 }
 
-pub type EvolveFn = Box<dyn FnOnce(&mut Circle)>;
+pub type EvolveFn = for<'a> fn(&'a mut Circle, Vec<Node>) -> ();
 
 #[derive(Debug, Clone)]
 pub enum Shapes {
@@ -59,11 +59,9 @@ impl Interpreter {
                 match self.symbol_table.get(name) {
                     Some(value) => panic!("variable already declared with name: {}", name),
                     None => {
-                        let evolveFn = move |circle: &mut Circle| {
-                            for statement in shape.statements {
-                                // if statement is shift, then shift by the value
-                                // if statement is stretch, then stretch by the value
-
+                        let evolve_fn: for<'a> fn(&'a mut Circle, Vec<_>) -> _ = |circle: &mut Circle, statements: Vec<Node>| {
+                            // Access variables from above and modify the Circle struct
+                            for statement in statements {
                                 match statement {
                                     Node::Statement(statement) => {
                                         match statement.kind {
@@ -116,9 +114,67 @@ impl Interpreter {
                                     _ => {}
                                 }
                             }
-                        };
+                        };                        
+                        // let evolveFn = |circle: &Circle| {
+                        //     for statement in &shape.statements {
+                        //         // if statement is shift, then shift by the value
+                        //         // if statement is stretch, then stretch by the value
 
-                        self.symbol_table.insert(name.clone(), Value::Evolve(Box::new(evolveFn)));
+                        //         match statement {
+                        //             Node::Statement(statement) => {
+                        //                 match statement.kind {
+                        //                     StatementKind::Shift(x, y) => {
+                        //                         // shift by x, y
+                        //                         let x = match *x {
+                        //                             Node::NumberLiteral(num) => {
+                        //                                 num.value
+                        //                             },
+                        //                             _ => {
+                        //                                 panic!("wrong type somewhere");
+                        //                             }
+                        //                         };
+                        //                         let y = match *y {
+                        //                             Node::NumberLiteral(num) => {
+                        //                                 num.value
+                        //                             },
+                        //                             _ => {
+                        //                                 panic!("wrong type somewhere");
+                        //                             }
+                        //                         };
+                        //                         circle.shape.shift(x, y);
+                        //                     }
+
+                        //                     StatementKind::Stretch(x, y) => {
+                        //                         // stretch by x, y (will be same value for both lol) 
+                        //                         let x = match *x {
+                        //                             Node::NumberLiteral(num) => {
+                        //                                 num.value
+                        //                             },
+                        //                             _ => {
+                        //                                 panic!("wrong type somewhere");
+                        //                             }
+                        //                         };
+                        //                         let y = match *y {
+                        //                             Node::NumberLiteral(num) => {
+                        //                                 num.value
+                        //                             },
+                        //                             _ => {
+                        //                                 panic!("wrong type somewhere");
+                        //                             }
+                        //                         };
+                        //                         circle.shape.stretch(x, y);
+                        //                     }
+
+                        //                     _ => {}
+                        //                 }
+                        //             }
+
+                        //             _ => {}
+                        //         }
+                        //     }
+                        // };
+
+                        self.symbol_table.insert(name.clone(), Value::Evolve(evolve_fn, shape.statements.clone()));
                     }
                 }
 
@@ -129,7 +185,21 @@ impl Interpreter {
                 StatementKind::DrawShape(name, properties) => {
                     println!("{:#?}\n\n", statement);
 
-                    let n = self.symbol_table.get(&name).clone();
+                    let (evolve_fn, statements) = match self.symbol_table.get(&name) {
+                        Some(value) => {
+                            match value {
+                                Value::Evolve(evolveFn, statements) => {
+                                    (evolveFn, statements)
+                                },
+                                _ => {
+                                    panic!("wrong type somewhere");
+                                }
+                            }
+                        },
+                        _ => {
+                            panic!("shape not found");
+                        }
+                    };
 
                     let mut circle_config = (0.0, (0.0, 0.0));
                     let mut generations = 1;
@@ -189,20 +259,19 @@ impl Interpreter {
                     }
 
                     // create boilerplate circle with radius and center
-                    let circle = Circle::new(
+                    let mut circle = Circle::new(
                         circle_config.1.0,
                         circle_config.1.1,
                         circle_config.0,
                     );
 
-
                     for i in 0..generations {
                         // push to shapes
-                        self.shapes.push(Shape::Circle(circle.clone()));
+                        self.shapes.push(circle.clone().shape);
 
+                        circle = circle.clone();
 
-                        
-                        // run evolve
+                        evolve_fn(&mut circle, statements.clone());
                     }
 
                     match draw(self.shapes.clone()) {
