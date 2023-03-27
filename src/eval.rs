@@ -1,6 +1,6 @@
 use std::collections::*;
 use crate::ast::*;
-use crate::art::{Circle, Rectangle, Polygon, SVG, Shape, Drawable};
+use crate::art::{Circle, Rectangle, Polygon, SVG, Shape, Drawable, draw};
 use crate::tokens::{Token, TokenType};
 
 pub struct Interpreter {
@@ -19,7 +19,7 @@ pub enum Value {
     Statements(Vec<Node>),
 }
 
-pub type EvolveFn = Box<dyn FnOnce(&Circle)>;
+pub type EvolveFn = Box<dyn FnOnce(&mut Circle)>;
 
 #[derive(Debug, Clone)]
 pub enum Shapes {
@@ -44,6 +44,8 @@ impl Interpreter {
         for statement in self.ast.statements.clone().iter() {
             self.eval(statement.clone());
         }
+
+
     }
 
     pub fn eval(&mut self, node: Node) -> Option<Value> {
@@ -57,7 +59,7 @@ impl Interpreter {
                 match self.symbol_table.get(name) {
                     Some(value) => panic!("variable already declared with name: {}", name),
                     None => {
-                        let evolveFn = move |circle: &Circle| {
+                        let evolveFn = move |circle: &mut Circle| {
                             for statement in shape.statements {
                                 // if statement is shift, then shift by the value
                                 // if statement is stretch, then stretch by the value
@@ -67,11 +69,43 @@ impl Interpreter {
                                         match statement.kind {
                                             StatementKind::Shift(x, y) => {
                                                 // shift by x, y
+                                                let x = match *x {
+                                                    Node::NumberLiteral(num) => {
+                                                        num.value
+                                                    },
+                                                    _ => {
+                                                        panic!("wrong type somewhere");
+                                                    }
+                                                };
+                                                let y = match *y {
+                                                    Node::NumberLiteral(num) => {
+                                                        num.value
+                                                    },
+                                                    _ => {
+                                                        panic!("wrong type somewhere");
+                                                    }
+                                                };
                                                 circle.shape.shift(x, y);
                                             }
 
                                             StatementKind::Stretch(x, y) => {
                                                 // stretch by x, y (will be same value for both lol) 
+                                                let x = match *x {
+                                                    Node::NumberLiteral(num) => {
+                                                        num.value
+                                                    },
+                                                    _ => {
+                                                        panic!("wrong type somewhere");
+                                                    }
+                                                };
+                                                let y = match *y {
+                                                    Node::NumberLiteral(num) => {
+                                                        num.value
+                                                    },
+                                                    _ => {
+                                                        panic!("wrong type somewhere");
+                                                    }
+                                                };
                                                 circle.shape.stretch(x, y);
                                             }
 
@@ -97,8 +131,8 @@ impl Interpreter {
 
                     let n = self.symbol_table.get(&name).clone();
 
-                    let mut generations = 1;
                     let mut circle_config = (0.0, (0.0, 0.0));
+                    let mut generations = 1;
 
                     // parse properties
                     for property in properties {
@@ -116,7 +150,7 @@ impl Interpreter {
                                 Node::TupleLiteral(tuple) => {
                                     // idk fix this by adding more nested matches 
                                     // and whatever is below
-                                    let x = match tuple.values[0] {
+                                    let x = match &tuple.values[0] {
                                         Node::NumberLiteral(num) => {
                                             num.value
                                         },
@@ -125,7 +159,7 @@ impl Interpreter {
                                         }
                                     };
 
-                                    let y = match tuple.values[1] {
+                                    let y = match &tuple.values[1] {
                                         Node::NumberLiteral(num) => {
                                             num.value
                                         },
@@ -155,14 +189,27 @@ impl Interpreter {
                     }
 
                     // create boilerplate circle with radius and center
+                    let circle = Circle::new(
+                        circle_config.1.0,
+                        circle_config.1.1,
+                        circle_config.0,
+                    );
+
 
                     for i in 0..generations {
-                        // run clone
-                        // run evolve
                         // push to shapes
+                        self.shapes.push(Shape::Circle(circle.clone()));
 
-                        evolveFn(&circle);
-                        self.shapes.push(Shape::Circle(circle));
+
+                        
+                        // run evolve
+                    }
+
+                    match draw(self.shapes.clone()) {
+                        Ok(_) => {},
+                        Err(e) => {
+                            panic!("error drawing");
+                        }
                     }
 
                     None
