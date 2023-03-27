@@ -34,7 +34,7 @@ pub trait Drawable {
 #[derive(Debug, Clone)]
 pub struct Circle {
     pub shape: Shape,
-    radius: f32,
+    pub radius: f32,
 }
 
 #[derive(Debug, Clone)]

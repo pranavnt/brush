@@ -83,7 +83,7 @@ impl Interpreter {
                                                         panic!("wrong type somewhere");
                                                     }
                                                 };
-                                                circle.shape.shift(x, y);
+                                                circle.shift(x, y);
                                             }
 
                                             StatementKind::Stretch(x, y) => {
@@ -104,7 +104,7 @@ impl Interpreter {
                                                         panic!("wrong type somewhere");
                                                     }
                                                 };
-                                                circle.shape.stretch(x, y);
+                                                circle.stretch(x, y);
                                             }
 
                                             _ => {}
@@ -183,7 +183,7 @@ impl Interpreter {
 
             Node::Statement(statement) => match statement.clone().kind {
                 StatementKind::DrawShape(name, properties) => {
-                    println!("{:#?}\n\n", statement);
+                    // println!("{:#?}\n\n", statement);
 
                     let (evolve_fn, statements) = match self.symbol_table.get(&name) {
                         Some(value) => {
@@ -270,7 +270,6 @@ impl Interpreter {
                         self.shapes.push(circle.clone().shape);
 
                         circle = circle.clone();
-
                         evolve_fn(&mut circle, statements.clone());
                     }
 
