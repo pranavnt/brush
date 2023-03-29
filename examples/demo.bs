@@ -1,0 +1,10 @@
+let some_shape = circle {
+    shift(5, 5)
+    stretch(0.97, 0.97)
+}
+
+some_shape(
+    radius = 250
+    center = (300, 250)
+    generations = 10
+)

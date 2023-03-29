@@ -307,6 +307,7 @@ impl Interpreter {
 
                     for i in 0..generations {
                         // push to shapes
+                        circle.shape.update();
                         self.shapes.push(circle.clone().shape);
 
                         circle = circle.clone();

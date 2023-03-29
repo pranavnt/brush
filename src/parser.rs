@@ -266,14 +266,25 @@ impl Parser {
                 if self.tokens[self.current as usize].token_type == TokenType::L_PAREN {
                     self.advance_past(TokenType::L_PAREN);
                     
-                    let x = self.parse_expression(self.get_next(TokenType::COMMA));
-                    self.advance_past(TokenType::COMMA);
-                    
-                    let y = self.parse_expression(self.get_next(TokenType::R_PAREN));
+                    let mut pt = Vec::<Node>::new();
+
+                    // while token k is not a r_paren, starting at i, advance k, 
+                    // &self.tokens[i as usize];
+
+                    while let testtok = &self.tokens[self.current as usize + 1] {
+                        if testtok.token_type == TokenType::R_PAREN {
+                            break;
+                        }
+
+                        pt.push(self.parse_expression(self.get_next(TokenType::COMMA)));
+                        self.advance_past(TokenType::COMMA);
+                    }
+
+                    pt.push(self.parse_expression(self.get_next(TokenType::R_PAREN)));
                     self.advance_past(TokenType::R_PAREN);
 
                     return Node::TupleLiteral(TupleLiteralNode {
-                        values: vec![x, y],
+                        values: pt,
                     });
                 } else {
                     panic!("Invalid expression {} {}", self.current, end_pos);
