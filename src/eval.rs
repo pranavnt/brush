@@ -107,6 +107,21 @@ impl Interpreter {
                                                 circle.stretch(x, y);
                                             }
 
+                                            StatementKind::HueShift(amount) => {
+                                                let hue_offset = match *amount {
+                                                    Node::NumberLiteral(num) => {
+                                                        // mod by 360 degrees protects shift amount
+                                                        num.value % 360.0
+                                                    }
+
+                                                    _ => {
+                                                        panic!("wrong type somewhere");
+                                                    }
+                                                };
+
+                                                circle.hue_shift(hue_offset);
+                                            }
+
                                             _ => {}
                                         }
                                     }
@@ -311,7 +326,7 @@ impl Interpreter {
                         self.shapes.push(circle.clone().shape);
 
                         circle = circle.clone();
-                        circle.hue_shift(5.0);
+                        // circle.hue_shift(5.0);
                         evolve_fn(&mut circle, statements.clone());
                     }
 

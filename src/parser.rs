@@ -175,7 +175,7 @@ impl Parser {
                 return Node::Statement(StatementNode {
                     kind: StatementKind::Shift(Box::new(x), Box::new(y)),
                 });
-            },    
+            },
             TokenType::ROTATE_KEYWORD => {
                 self.advance_past(TokenType::ROTATE_KEYWORD);
 
@@ -203,6 +203,18 @@ impl Parser {
                     kind: StatementKind::Stretch(Box::new(x), Box::new(y)),
                 });
             },
+            TokenType::HUE_SHIFT_KEYWORD => {
+                self.advance_past(TokenType::HUE_SHIFT_KEYWORD);
+
+                self.advance_past(TokenType::L_PAREN);
+                let amount = self.parse_expression(self.get_next(TokenType::R_PAREN));
+
+                self.advance_past(TokenType::ENDLINE);
+
+                return Node::Statement(StatementNode {
+                    kind: StatementKind::HueShift(Box::new(amount)),
+                });
+            },
             TokenType::KEYWORD => {
                 let keyword = self.tokens[self.current as usize].value.clone();
 
@@ -212,6 +224,7 @@ impl Parser {
 
                 unimplemented!();
             },
+
             _ => {
                 panic!("Invalid statement");
             }
