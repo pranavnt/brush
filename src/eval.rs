@@ -276,7 +276,7 @@ impl Interpreter {
                                         }
                                     };
 
-                                    let b = match &tuple.values[1] {
+                                    let b = match &tuple.values[2] {
                                         Node::NumberLiteral(num) => {
                                             num.value
                                         },
