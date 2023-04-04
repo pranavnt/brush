@@ -28,6 +28,7 @@ pub trait Drawable {
     fn shift_to(&mut self, x: f32, y: f32);
     fn stretch(&mut self, x: f32, y: f32);
     fn stretch_to(&mut self, x: f32, y: f32);
+    fn hue_shift(&mut self, amount: f32);
     fn update(&mut self);
 }
 
@@ -144,35 +145,9 @@ impl Drawable for Shape {
                     newData = newData.line_to((para.get(0).unwrap() + x, para.get(1).unwrap() + y));
                 }
 
-                Command::HorizontalLine(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::VerticalLine(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::QuadraticCurve(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::SmoothQuadraticCurve(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::SmoothCubicCurve(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::EllipticalArc(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::CubicCurve(pos, para) => {
-                    unimplemented!();
-                }
-
                 Command::Close => {}
+
+                _ => {  unimplemented!() }
             }
         }
 
@@ -204,35 +179,12 @@ impl Drawable for Shape {
                     newData = newData.line_to((para.get(0).unwrap() * x, para.get(1).unwrap() * y));
                 }
 
-                Command::HorizontalLine(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::VerticalLine(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::QuadraticCurve(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::SmoothQuadraticCurve(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::SmoothCubicCurve(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::EllipticalArc(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::CubicCurve(pos, para) => {
-                    unimplemented!();
-                }
+                // HorizontalLine, VerticalLine, QuadraticCurve, SmoothQuadraticCurve
+                // SmoothCubicCurve, EllipticalArc, CubicCurve
 
                 Command::Close => {}
+
+                _ => {  unimplemented!() }
             }
         }
 
@@ -243,6 +195,49 @@ impl Drawable for Shape {
 
     fn stretch_to(&mut self, x: f32, y: f32) {
         unimplemented!();
+    }
+
+    fn hue_shift(&mut self, amount: f32) {
+        // Convert RGB to HSL
+        let r = self.outline_color.0 as f32 / 255.0;
+        let g = self.outline_color.1 as f32 / 255.0;
+        let b = self.outline_color.2 as f32 / 255.0;
+    
+        let max = r.max(g).max(b);
+        let min = r.min(g).min(b);
+        let chroma = max - min;
+    
+        let hue = if chroma == 0.0 {
+            0.0
+        } else if max == r {
+            ((g - b) / chroma) % 6.0
+        } else if max == g {
+            ((b - r) / chroma) + 2.0
+        } else {
+            ((r - g) / chroma) + 4.0
+        };
+    
+        let hue_shifted = (hue + amount / 60.0) % 6.0;
+    
+        // Convert back to RGB
+        let c = (max + min) / 2.0;
+        let x = chroma * (1.0 - ((hue_shifted % 2.0) - 1.0).abs());
+        let m = c - (chroma / 2.0);
+    
+        let (r, g, b) = if max == r {
+            (c, x, 0.0)
+        } else if max == g {
+            (x, c, 0.0)
+        } else {
+            (0.0, x, c)
+        };
+    
+        let r = ((r + m) * 255.0) as u8;
+        let g = ((g + m) * 255.0) as u8;
+        let b = ((b + m) * 255.0) as u8;
+    
+        self.outline_color = (r, g, b);
+        self.update();
     }
 
     fn update(&mut self) {
@@ -285,6 +280,10 @@ impl Drawable for Circle {
 
     fn stretch_to(&mut self, x: f32, y: f32) {
         unimplemented!();
+    }
+
+    fn hue_shift(&mut self, amount: f32) {
+        self.shape.hue_shift(amount);
     }
 
     fn update(&mut self) {
