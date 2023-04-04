@@ -210,33 +210,47 @@ impl Drawable for Shape {
         let hue = if chroma == 0.0 {
             0.0
         } else if max == r {
-            ((g - b) / chroma) % 6.0
+            60.0 * ((g - b) / chroma % 6.0)
         } else if max == g {
-            ((b - r) / chroma) + 2.0
+            60.0 * ((b - r) / chroma + 2.0)
         } else {
-            ((r - g) / chroma) + 4.0
+            60.0 * ((r - g) / chroma + 4.0)
         };
     
-        let hue_shifted = (hue + amount / 60.0) % 6.0;
-    
+        let hue_shifted = (hue + amount) % 360.0;
+        let lightness = 0.5 * (max + min);
+        let saturation = if chroma == 0.0 {
+            0.0
+        } else {
+            chroma / (1.0 - (2.0 * lightness - 1.0).abs())
+        };
+
         // Convert back to RGB
-        let c = (max + min) / 2.0;
-        let x = chroma * (1.0 - ((hue_shifted % 2.0) - 1.0).abs());
-        let m = c - (chroma / 2.0);
-    
-        let (r, g, b) = if max == r {
+        let c = (1.0 - (2.0 * lightness - 1.0).abs()) * saturation;
+        let x = c * (1.0 - ((hue_shifted / 60.0) % 2.0 - 1.0).abs());
+        let m = lightness - c / 2.0;
+
+        let (r, g, b) = if hue_shifted < 60.0 {
             (c, x, 0.0)
-        } else if max == g {
+        } else if hue_shifted < 120.0 {
             (x, c, 0.0)
-        } else {
+        } else if hue_shifted < 180.0 {
+            (0.0, c, x)
+        } else if hue_shifted < 240.0 {
             (0.0, x, c)
+        } else if hue_shifted < 300.0 {
+            (x, 0.0, c)
+        } else {
+            (c, 0.0, x)
         };
+
+        // new rgb colors
+        let rn = ((r + m) * 255.0) as u8;
+        let gn = ((g + m) * 255.0) as u8;
+        let bn = ((b + m) * 255.0) as u8;
     
-        let r = ((r + m) * 255.0) as u8;
-        let g = ((g + m) * 255.0) as u8;
-        let b = ((b + m) * 255.0) as u8;
-    
-        self.outline_color = (r, g, b);
+        self.outline_color = (rn, gn, bn);
+        // println!("{:#?}", self.outline_color);
         self.update();
     }
 

@@ -311,7 +311,7 @@ impl Interpreter {
                         self.shapes.push(circle.clone().shape);
 
                         circle = circle.clone();
-                        // circle.hue_shift(0.1);
+                        circle.hue_shift(5.0);
                         evolve_fn(&mut circle, statements.clone());
                     }
 
