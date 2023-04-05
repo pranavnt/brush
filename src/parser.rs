@@ -175,7 +175,7 @@ impl Parser {
                 return Node::Statement(StatementNode {
                     kind: StatementKind::Shift(Box::new(x), Box::new(y)),
                 });
-            },    
+            },
             TokenType::ROTATE_KEYWORD => {
                 self.advance_past(TokenType::ROTATE_KEYWORD);
 
@@ -203,6 +203,18 @@ impl Parser {
                     kind: StatementKind::Stretch(Box::new(x), Box::new(y)),
                 });
             },
+            TokenType::HUE_SHIFT_KEYWORD => {
+                self.advance_past(TokenType::HUE_SHIFT_KEYWORD);
+
+                self.advance_past(TokenType::L_PAREN);
+                let amount = self.parse_expression(self.get_next(TokenType::R_PAREN));
+
+                self.advance_past(TokenType::ENDLINE);
+
+                return Node::Statement(StatementNode {
+                    kind: StatementKind::HueShift(Box::new(amount)),
+                });
+            },
             TokenType::KEYWORD => {
                 let keyword = self.tokens[self.current as usize].value.clone();
 
@@ -212,6 +224,7 @@ impl Parser {
 
                 unimplemented!();
             },
+
             _ => {
                 panic!("Invalid statement");
             }
@@ -266,17 +279,28 @@ impl Parser {
                 if self.tokens[self.current as usize].token_type == TokenType::L_PAREN {
                     self.advance_past(TokenType::L_PAREN);
                     
-                    let x = self.parse_expression(self.get_next(TokenType::COMMA));
-                    self.advance_past(TokenType::COMMA);
-                    
-                    let y = self.parse_expression(self.get_next(TokenType::R_PAREN));
+                    let mut pt = Vec::<Node>::new();
+
+                    // while token k is not a r_paren, starting at i, advance k, 
+                    // &self.tokens[i as usize];
+
+                    while let testtok = &self.tokens[self.current as usize + 1] {
+                        if testtok.token_type == TokenType::R_PAREN {
+                            break;
+                        }
+
+                        pt.push(self.parse_expression(self.get_next(TokenType::COMMA)));
+                        self.advance_past(TokenType::COMMA);
+                    }
+
+                    pt.push(self.parse_expression(self.get_next(TokenType::R_PAREN)));
                     self.advance_past(TokenType::R_PAREN);
 
                     return Node::TupleLiteral(TupleLiteralNode {
-                        values: vec![x, y],
+                        values: pt,
                     });
                 } else {
-                    panic!("Invalid expression");
+                    panic!("Invalid expression {} {}", self.current, end_pos);
                 }
             }
 

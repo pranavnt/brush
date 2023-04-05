@@ -92,6 +92,7 @@ impl Lexer {
                             "circle" => all_tokens.push(Token::new(TokenType::SHAPE_KEYWORD, keyw)),
                             "triangle" => all_tokens.push(Token::new(TokenType::SHAPE_KEYWORD, keyw)),
                             "shift" => all_tokens.push(Token::new(TokenType::SHIFT_KEYWORD, keyw)),
+                            "hue_shift" => all_tokens.push(Token::new(TokenType::HUE_SHIFT_KEYWORD, keyw)),
                             "stretch" => all_tokens.push(Token::new(TokenType::STRETCH_KEYWORD, keyw)),
                             "rotate" => all_tokens.push(Token::new(TokenType::ROTATE_KEYWORD, keyw)),
                             "evolve" => all_tokens.push(Token::new(TokenType::EVOLVE_KEYWORD, keyw)),

@@ -64,14 +64,3 @@ fn main() {
         }
     }
 }
-
-fn transform_test() {
-    let mut testcircle = Circle::new(500.0, 500.0, 100.0);
-    
-    testcircle.shift(200.0, 0.0);
-    testcircle.stretch(3.0, 3.0);
-
-    let mut shapes = Vec::new();
-    shapes.push(testcircle.shape);
-    draw(shapes);
-}
