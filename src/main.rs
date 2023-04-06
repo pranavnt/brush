@@ -11,7 +11,7 @@ use crate::lexer::Lexer;
 use crate::parser::Parser;
 
 use crate::art::draw;
-use crate::art::Circle;
+use crate::art::BCircle;
 use crate::art::Drawable;
 
 use std::env;

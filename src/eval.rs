@@ -1,6 +1,6 @@
 use std::collections::*;
 use crate::ast::*;
-use crate::art::{Circle, Rectangle, Polygon, SVG, Shape, Drawable, draw};
+use crate::art::{BCircle, Rectangle, Polygon, SVG, Shape, Drawable, draw};
 use crate::tokens::{Token, TokenType};
 
 pub struct Interpreter {
@@ -19,11 +19,11 @@ pub enum Value {
     Statements(Vec<Node>),
 }
 
-pub type EvolveFn = for<'a> fn(&'a mut Circle, Vec<Node>) -> ();
+pub type EvolveFn = for<'a> fn(&'a mut BCircle, Vec<Node>) -> ();
 
 #[derive(Debug, Clone)]
 pub enum Shapes {
-    Circle(Circle),
+    Circle(BCircle),
     Rectangle(Rectangle),
     Polygon(Polygon),
     SVG(SVG),
@@ -59,7 +59,7 @@ impl Interpreter {
                 match self.symbol_table.get(name) {
                     Some(value) => panic!("variable already declared with name: {}", name),
                     None => {
-                        let evolve_fn: for<'a> fn(&'a mut Circle, Vec<_>) -> _ = |circle: &mut Circle, statements: Vec<Node>| {
+                        let evolve_fn: for<'a> fn(&'a mut BCircle, Vec<_>) -> _ = |circle: &mut BCircle, statements: Vec<Node>| {
                             // Access variables from above and modify the Circle struct
                             for statement in statements {
                                 match statement {
@@ -313,7 +313,7 @@ impl Interpreter {
                     }
 
                     // create boilerplate circle with radius and center
-                    let mut circle = Circle::new(
+                    let mut circle = BCircle::new(
                         circle_config.1.0,
                         circle_config.1.1,
                         circle_config.0,
@@ -322,7 +322,7 @@ impl Interpreter {
 
                     for i in 0..generations {
                         // push to shapes
-                        circle.shape.update();
+                        circle.update();
                         self.shapes.push(circle.clone().shape);
 
                         circle = circle.clone();
