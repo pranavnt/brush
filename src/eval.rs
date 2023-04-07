@@ -1,6 +1,6 @@
 use std::collections::*;
 use crate::ast::*;
-use crate::art::{BCircle, Rectangle, Polygon, SVG, Shape, Drawable, draw};
+use crate::art::{Shape,BCircle, Rectangle, Polygon, SVG, Drawable, draw};
 use crate::tokens::{Token, TokenType};
 
 pub struct Interpreter {
