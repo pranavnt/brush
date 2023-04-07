@@ -6,13 +6,12 @@ mod lexer;
 mod parser;
 mod tokens;
 
+
 use crate::eval::Interpreter;
 use crate::lexer::Lexer;
 use crate::parser::Parser;
 
-use crate::art::draw;
-use crate::art::Circle;
-use crate::art::Drawable;
+use crate::art::{draw, BCircle, Drawable};
 
 use std::env;
 use std::fs::File;
