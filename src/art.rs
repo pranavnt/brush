@@ -1,3 +1,5 @@
+mod circle;
+mod shape;
 
 use std::ops::DerefMut;
 use std::ptr::addr_of;
@@ -5,22 +7,11 @@ use std::ptr::addr_of;
 use crate::error::Error;
 use svg::node::element::path::{Command, Data, Parameters};
 use svg::node::element::tag::Path;
-use svg::node::element::{Line, Path};
+use svg::node::element::{Line, Path, Circle};
 use svg::parser::Event;
 use svg::Document;
 
-#[derive(Debug, Clone)]
-pub struct Shape {
-    pub svg: Path,
-    path: Data,
-    pub center: (f32, f32),
-    dimensions: (f32, f32),
-    fill: (u8, u8, u8),
-    outline_color: (u8, u8, u8),
-    outline_width: f32,
-    rotation: f32,
-    stretch: (f32, f32),
-}
+// use crate::eval::art::circle::{};
 
 pub trait Drawable {
     fn rotate(&mut self, angle: f32);
@@ -29,11 +20,30 @@ pub trait Drawable {
     fn shift_to(&mut self, x: f32, y: f32);
     fn stretch(&mut self, x: f32, y: f32);
     fn stretch_to(&mut self, x: f32, y: f32);
+    fn hue_shift(&mut self, amount: f32);
     fn update(&mut self);
 }
 
 #[derive(Debug, Clone)]
-pub struct Circle {
+pub struct Shape {
+    // for custom shapes
+    pub svg: Option<Path>,
+    pub path: Option<Data>,
+
+    // for presets
+    pub circ: Option<Circle>,
+
+    pub center: (f32, f32),
+    pub dimensions: (f32, f32),
+    pub fill: (u8, u8, u8),
+    pub outline_color: (u8, u8, u8),
+    pub outline_width: f32,
+    pub rotation: f32,
+    pub stretch: (f32, f32),
+}
+
+#[derive(Debug, Clone)]
+pub struct BCircle {
     pub shape: Shape,
     pub radius: f32,
 }
@@ -57,330 +67,6 @@ pub struct SVG {
     dimensions: (f32, f32),
 }
 
-impl Circle {
-    pub fn new(x: f32, y: f32, radius: f32) -> Circle {
-        let mut cdata = Data::new();
-
-        for i in 0..=360 {
-            let theta = i as f32;
-            let tx = theta.to_radians().cos() * radius + x;
-            let ty = theta.to_radians().sin() * radius + y;
-
-            if i == 0 {
-                cdata = cdata.move_to((tx, ty));
-            } else {
-                cdata = cdata.line_to((tx, ty));
-            }
-        }
-
-        cdata = cdata.close();
-
-        Circle {
-            shape: Shape {
-                svg: Path::new()
-                    .set("fill", "none")
-                    .set("stroke", "black")
-                    .set("stroke-width", 1)
-                    .set("d", cdata.clone()),
-                path: cdata,
-                center: (x, y),
-                dimensions: (0.0, 0.0),
-                fill: (0, 0, 0),
-                outline_color: (0, 0, 0),
-                outline_width: 1.0,
-                rotation: 0.0,
-                stretch: (1.0, 1.0),
-            },
-            radius: radius,
-        }
-    }
-
-    pub fn new_default() -> Circle {
-        Circle {
-            shape: Shape {
-                svg: Path::new()
-                    .set("fill", "none")
-                    .set("stroke", "black")
-                    .set("stroke-width", 1),
-                path: Data::new(),
-                center: (0.0, 0.0),
-                dimensions: (0.0, 0.0),
-                fill: (0, 0, 0),
-                outline_color: (0, 0, 0),
-                outline_width: 1.0,
-                rotation: 0.0,
-                stretch: (1.0, 1.0),
-            },
-            radius: 0.0,
-        }
-    }
-}
-
-impl Drawable for Shape {
-    fn rotate(&mut self, angle: f32) {
-        let mut cdata = self.path.clone();
-        let mut newData = Data::new();
-
-        // bruh we have to handle each type of command
-        for cmd in cdata.iter() {
-            // derefererence error here
-            match cmd {
-                Command::Move(_pos, para) => {
-                    let x = para.get(0).unwrap();
-                    let y = para.get(1).unwrap();
-                    newData = newData.move_to((x * angle.cos() - y * angle.sin(), x * angle.sin(), y * angle.cos()));
-                }
-
-                Command::Line(_pos, para) => {
-                    let x = para.get(0).unwrap();
-                    let y = para.get(1).unwrap();
-                    newData = newData.line_to((x * angle.cos() - y * angle.sin(), x * angle.sin(), y * angle.cos()));
-                }
-
-                Command::HorizontalLine(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::VerticalLine(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::QuadraticCurve(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::SmoothQuadraticCurve(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::SmoothCubicCurve(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::EllipticalArc(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::CubicCurve(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::Close => {}
-            }
-        }
-    }
-
-    fn rotate_to(&mut self, angle: f32) {
-        unimplemented!();
-    }
-
-    fn shift(&mut self, x: f32, y: f32) {
-        self.center.0 += x;
-        self.center.1 += y;
-
-        // iterate through the path and shift each point
-        let mut cdata = self.path.clone();
-        let mut newData = Data::new();
-
-        // bruh we have to handle each type of command
-        for cmd in cdata.iter() {
-            // derefererence error here
-            match cmd {
-                Command::Move(_pos, para) => {
-                    newData = newData.move_to((para.get(0).unwrap() + x, para.get(1).unwrap() + y));
-                }
-
-                Command::Line(_pos, para) => {
-                    newData = newData.line_to((para.get(0).unwrap() + x, para.get(1).unwrap() + y));
-                }
-
-                Command::HorizontalLine(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::VerticalLine(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::QuadraticCurve(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::SmoothQuadraticCurve(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::SmoothCubicCurve(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::EllipticalArc(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::CubicCurve(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::Close => {}
-            }
-        }
-
-        self.path = newData.close();
-
-        self.svg = Path::new()
-                    .set("fill", "none")
-                    .set("stroke", "black")
-                    .set("stroke-width", 1)
-                    .set("d", self.path.clone());
-    }
-
-    fn shift_to(&mut self, x: f32, y: f32) {
-        unimplemented!();
-    }
-
-    fn stretch(&mut self, x: f32, y: f32) {
-        self.center.0 *= x;
-        self.center.1 *= y;
-
-        let mut cdata = self.path.clone();
-        let mut newData = Data::new();
-
-        // bruh we have to handle each type of command
-        for cmd in cdata.iter() {
-            // derefererence error here
-            match cmd {
-                Command::Move(_pos, para) => {
-                    newData = newData.move_to((para.get(0).unwrap() * x, para.get(1).unwrap() * y));
-                }
-
-                Command::Line(_pos, para) => {
-                    newData = newData.line_to((para.get(0).unwrap() * x, para.get(1).unwrap() * y));
-                }
-
-                Command::HorizontalLine(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::VerticalLine(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::QuadraticCurve(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::SmoothQuadraticCurve(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::SmoothCubicCurve(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::EllipticalArc(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::CubicCurve(pos, para) => {
-                    unimplemented!();
-                }
-
-                Command::Close => {}
-            }
-        }
-
-        self.path = newData.close();
-
-        self.svg = Path::new()
-                    .set("fill", "none")
-                    .set("stroke", "black")
-                    .set("stroke-width", 1)
-                    .set("d", self.path.clone());
-    }
-
-    fn stretch_to(&mut self, x: f32, y: f32) {
-        unimplemented!();
-    }
-
-    fn update(&mut self) {
-        unimplemented!();
-    }
-}
-
-impl Drawable for Circle {
-    fn rotate(&mut self, angle: f32) {
-        unimplemented!();
-    }
-
-    fn rotate_to(&mut self, angle: f32) {
-        unimplemented!();
-    }
-
-    fn shift(&mut self, x: f32, y: f32) {
-        // self.shape.center = (self.shape.center.0 + x, self.shape.center.1 + y);
-        self.shape.shift(x, y);
-    }
-
-    fn shift_to(&mut self, x: f32, y: f32) {
-        self.shape.center = (x, y);
-    }
-
-    fn stretch(&mut self, x: f32, y: f32) {
-        if x == y {
-            self.radius *= x;
-            self.shape.stretch(x, y);
-            //shift to scale about center
-            self.shape.shift(self.shape.center.0 / x - self.shape.center.0, self.shape.center.1 / y - self.shape.center.1);
-        }
-    }
-
-    fn stretch_to(&mut self, x: f32, y: f32) {
-        unimplemented!();
-    }
-
-    fn update(&mut self) {
-        unimplemented!();
-    }
-}
-
-impl Drawable for Rectangle {
-    fn rotate(&mut self, angle: f32) {
-        self.rotate(angle);
-    }
-
-    fn rotate_to(&mut self, angle: f32) {
-        unimplemented!();
-    }
-
-    fn shift(&mut self, x: f32, y: f32) {
-        // self.shape.center = (self.shape.center.0 + x, self.shape.center.1 + y);
-        self.shape.shift(x, y);
-    }
-
-    fn shift_to(&mut self, x: f32, y: f32) {
-        self.shape.center = (x, y);
-    }
-
-    fn stretch(&mut self, x: f32, y: f32) {
-        if x == y {
-            self.width *= x;
-            self.height *= y;
-            self.shape.stretch(x, y);
-            //shift to scale about center
-            self.shape.shift(self.shape.center.0 / x - self.shape.center.0, self.shape.center.1 / y - self.shape.center.1);
-        }
-    }
-
-    fn stretch_to(&mut self, x: f32, y: f32) {
-        unimplemented!();
-    }
-
-    fn update(&mut self) {
-        unimplemented!();
-    }
-}
-
 pub fn draw(shapes: Vec<Shape>) -> Result<(), Error> {
     let mut canvas: Document = Document::new()
         .set("viewBox", (0, 0, 1000, 1000))
@@ -389,7 +75,12 @@ pub fn draw(shapes: Vec<Shape>) -> Result<(), Error> {
         .set("preserveAspectRatio", "xMidYMid meet");
 
     for shape in shapes {
-        canvas = canvas.add(shape.svg);
+        if shape.circ.is_some() {
+            canvas = canvas.add(shape.circ.unwrap());
+        }
+        else {
+            canvas = canvas.add(shape.svg.unwrap());
+        }
     }
 
     svg::save("art.svg", &canvas).unwrap();

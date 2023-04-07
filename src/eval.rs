@@ -1,6 +1,6 @@
 use std::collections::*;
 use crate::ast::*;
-use crate::art::{Circle, Rectangle, Polygon, SVG, Shape, Drawable, draw};
+use crate::art::{Shape,BCircle, Rectangle, Polygon, SVG, Drawable, draw};
 use crate::tokens::{Token, TokenType};
 
 pub struct Interpreter {
@@ -19,11 +19,11 @@ pub enum Value {
     Statements(Vec<Node>),
 }
 
-pub type EvolveFn = for<'a> fn(&'a mut Circle, Vec<Node>) -> ();
+pub type EvolveFn = for<'a> fn(&'a mut BCircle, Vec<Node>) -> ();
 
 #[derive(Debug, Clone)]
 pub enum Shapes {
-    Circle(Circle),
+    Circle(BCircle),
     Rectangle(Rectangle),
     Polygon(Polygon),
     SVG(SVG),
@@ -59,7 +59,7 @@ impl Interpreter {
                 match self.symbol_table.get(name) {
                     Some(value) => panic!("variable already declared with name: {}", name),
                     None => {
-                        let evolve_fn: for<'a> fn(&'a mut Circle, Vec<_>) -> _ = |circle: &mut Circle, statements: Vec<Node>| {
+                        let evolve_fn: for<'a> fn(&'a mut BCircle, Vec<_>) -> _ = |circle: &mut BCircle, statements: Vec<Node>| {
                             // Access variables from above and modify the Circle struct
                             for statement in statements {
                                 match statement {
@@ -105,6 +105,21 @@ impl Interpreter {
                                                     }
                                                 };
                                                 circle.stretch(x, y);
+                                            }
+
+                                            StatementKind::HueShift(amount) => {
+                                                let hue_offset = match *amount {
+                                                    Node::NumberLiteral(num) => {
+                                                        // mod by 360 degrees protects shift amount
+                                                        num.value % 360.0
+                                                    }
+
+                                                    _ => {
+                                                        panic!("wrong type somewhere");
+                                                    }
+                                                };
+
+                                                circle.hue_shift(hue_offset);
                                             }
 
                                             _ => {}
@@ -201,7 +216,7 @@ impl Interpreter {
                         }
                     };
 
-                    let mut circle_config = (0.0, (0.0, 0.0));
+                    let mut circle_config = (0.0, (0.0, 0.0), (u8::from(0), u8::from(0), u8::from(0)));
                     let mut generations = 1;
 
                     // parse properties
@@ -253,23 +268,65 @@ impl Interpreter {
                                     panic!("wrong type somewhere");
                                 }
                             }
-                        } else {
+                        } else if property.name == "color" {
+                            circle_config.2 = match *property.value {
+                                Node::TupleLiteral(tuple) => {
+                                    // idk fix this by adding more nested matches 
+                                    // and whatever is below
+                                    let r = match &tuple.values[0] {
+                                        Node::NumberLiteral(num) => {
+                                            num.value
+                                        },
+                                        _ => {
+                                            panic!("wrong type somewhere");
+                                        }
+                                    };
+
+                                    let g = match &tuple.values[1] {
+                                        Node::NumberLiteral(num) => {
+                                            num.value
+                                        },
+                                        _ => {
+                                            panic!("wrong type somewhere");
+                                        }
+                                    };
+
+                                    let b = match &tuple.values[2] {
+                                        Node::NumberLiteral(num) => {
+                                            num.value
+                                        },
+                                        _ => {
+                                            panic!("wrong type somewhere");
+                                        }
+                                    };
+
+                                    (r as u8, g as u8, b as u8)
+                                },
+                                _ => {
+                                    panic!("wrong type somewhere");
+                                }
+                            }
+                        }
+                        else {
                             panic!("unknown property");
                         }
                     }
 
                     // create boilerplate circle with radius and center
-                    let mut circle = Circle::new(
+                    let mut circle = BCircle::new(
                         circle_config.1.0,
                         circle_config.1.1,
                         circle_config.0,
+                        Some(circle_config.2)
                     );
 
                     for i in 0..generations {
                         // push to shapes
+                        circle.update();
                         self.shapes.push(circle.clone().shape);
 
                         circle = circle.clone();
+                        // circle.hue_shift(5.0);
                         evolve_fn(&mut circle, statements.clone());
                     }
 
