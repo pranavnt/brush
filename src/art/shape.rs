@@ -22,13 +22,13 @@ impl Drawable for Shape {
                 Command::Move(_pos, para) => {
                     let x = para.get(0).unwrap();
                     let y = para.get(1).unwrap();
-                    newData = newData.move_to((x * angle.cos() - y * angle.sin(), x * angle.sin(), y * angle.cos()));
+                    newData = newData.move_to((x * angle.cos() - y * angle.sin(), x * angle.sin() + y * angle.cos()));
                 }
 
                 Command::Line(_pos, para) => {
                     let x = para.get(0).unwrap();
                     let y = para.get(1).unwrap();
-                    newData = newData.line_to((x * angle.cos() - y * angle.sin(), x * angle.sin(), y * angle.cos()));
+                    newData = newData.line_to((x * angle.cos() - y * angle.sin(), x * angle.sin() + y * angle.cos()));
                 }
 
                 Command::Close => {}
