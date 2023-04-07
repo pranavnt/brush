@@ -12,7 +12,30 @@ use crate::art::{Drawable, Shape};
 
 impl Drawable for Shape {
     fn rotate(&mut self, angle: f32) {
-        unimplemented!();
+        let mut cdata = self.path.clone().unwrap();
+        let mut newData = Data::new();
+
+        // bruh we have to handle each type of command
+        for cmd in cdata.iter() {
+            // derefererence error here
+            match cmd {
+                Command::Move(_pos, para) => {
+                    let x = para.get(0).unwrap();
+                    let y = para.get(1).unwrap();
+                    newData = newData.move_to((x * angle.cos() - y * angle.sin(), x * angle.sin(), y * angle.cos()));
+                }
+
+                Command::Line(_pos, para) => {
+                    let x = para.get(0).unwrap();
+                    let y = para.get(1).unwrap();
+                    newData = newData.line_to((x * angle.cos() - y * angle.sin(), x * angle.sin(), y * angle.cos()));
+                }
+
+                Command::Close => {}
+
+                _ => { unimplemented!() }
+            }
+        }
     }
 
     fn rotate_to(&mut self, angle: f32) {
