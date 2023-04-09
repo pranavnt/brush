@@ -20,6 +20,7 @@ pub trait Drawable {
     fn shift_to(&mut self, x: f32, y: f32);
     fn stretch(&mut self, x: f32, y: f32);
     fn stretch_to(&mut self, x: f32, y: f32);
+    fn reflect(&mut self, p1: (f32, f32), p2: (f32, f32));
     fn hue_shift(&mut self, amount: f32);
     fn update(&mut self);
 }
@@ -49,7 +50,7 @@ pub struct BCircle {
 }
 
 #[derive(Debug, Clone)]
-pub struct Rectangle {
+pub struct BRectangle {
     shape: Shape,
     width: f32,
     height: f32,

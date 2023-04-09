@@ -12,6 +12,8 @@ use crate::art::{Drawable, Shape};
 
 impl Drawable for Shape {
     fn rotate(&mut self, angle: f32) {
+        self.rotation += angle;
+        // iterate through the path and rotate each point
         let mut cdata = self.path.clone().unwrap();
         let mut newData = Data::new();
 
@@ -109,7 +111,42 @@ impl Drawable for Shape {
     fn stretch_to(&mut self, x: f32, y: f32) {
         unimplemented!();
     }
+    
+    fn reflect(&mut self, p1: (f32, f32), p2: (f32, f32)) {
+        // get line properties
+        let slope = (p2.1 - p1.1) / (p2.0 - p1.0);
+        let intercept = p1.1 - slope * p1.0;
+        // reflect the center
+        self.center.0 = self.center.0 - (2.0 * (slope * self.center.1 - self.center.0 + intercept)) / (slope.powi(2) + 1.0);
+        self.center.1 = self.center.1 + slope * ((2.0 * (slope * self.center.1 - self.center.0 + intercept)) / (slope.powi(2) + 1.0))- 2.0 * intercept;
 
+        // iterate through the path and shift each point
+        let mut cdata = self.path.clone().unwrap();
+        let mut newData = Data::new();
+
+        // bruh we have to handle each type of command
+        for cmd in cdata.iter() {
+            // derefererence error here
+            match cmd {
+                Command::Move(_pos, para) => {
+                    newData = newData.move_to((para.get(0).unwrap() - (2.0 * (slope * para.get(1).unwrap() - para.get(0).unwrap() + intercept)) / (slope.powi(2) + 1.0), 
+                    para.get(1).unwrap() + slope * (2.0 * (slope * para.get(1).unwrap() - para.get(0).unwrap() + intercept)) / (slope.powi(2) + 1.0) - 2.0 * intercept));
+                }
+
+                Command::Line(_pos, para) => {
+                    newData = newData.line_to((para.get(0).unwrap() - (2.0 * (slope * para.get(1).unwrap() - para.get(0).unwrap() + intercept)) / (slope.powi(2) + 1.0), 
+                    para.get(1).unwrap() + slope * (2.0 * (slope * para.get(1).unwrap() - para.get(0).unwrap() + intercept)) / (slope.powi(2) + 1.0) - 2.0 * intercept));
+                }
+
+                Command::Close => {}
+
+                _ => {  unimplemented!() }
+            }
+        }
+
+        self.path = Some(newData.close());
+
+    }
     fn hue_shift(&mut self, amount: f32) {
         // Convert RGB to HSL
         let r = self.outline_color.0 as f32 / 255.0;

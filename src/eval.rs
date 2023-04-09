@@ -1,6 +1,6 @@
 use std::collections::*;
 use crate::ast::*;
-use crate::art::{Shape,BCircle, Rectangle, Polygon, SVG, Drawable, draw};
+use crate::art::{Shape, BCircle, BRectangle, Polygon, SVG, Drawable, draw};
 use crate::tokens::{Token, TokenType};
 
 pub struct Interpreter {
@@ -24,7 +24,7 @@ pub type EvolveFn = for<'a> fn(&'a mut BCircle, Vec<Node>) -> ();
 #[derive(Debug, Clone)]
 pub enum Shapes {
     Circle(BCircle),
-    Rectangle(Rectangle),
+    Rectangle(BRectangle),
     Polygon(Polygon),
     SVG(SVG),
 }
@@ -306,7 +306,7 @@ impl Interpreter {
                                     panic!("wrong type somewhere");
                                 }
                             }
-                        }
+                        } 
                         else {
                             panic!("unknown property");
                         }
