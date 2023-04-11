@@ -19,7 +19,7 @@ pub enum Value {
     Statements(Vec<Node>),
 }
 
-pub type EvolveFn = for<'a> fn(&'a mut Shapes, Vec<Node>) -> Shapes;
+pub type EvolveFn = for<'a> fn(&'a mut dyn Drawable, Vec<Node>) -> ();
 
 #[derive(Debug, Clone)]
 pub enum Shapes {
@@ -58,160 +58,78 @@ impl Interpreter {
                 match self.symbol_table.get(name) {
                     Some(value) => panic!("variable already declared with name: {}", name),
                     None => {
-                        let evolve_fn: for<'a> fn(&'a mut Shapes, Vec<_>) -> Shapes =
-                            |ev_shape: &mut Shapes, statements: Vec<Node>| {
-                                match ev_shape {
-                                    Shapes::Rectangle(rect) => {
-                                        for statement in statements {
-                                            match statement {
-                                                Node::Statement(statement) => {
-                                                    match statement.kind {
-                                                        StatementKind::Shift(x, y) => {
-                                                            // shift by x, y
-                                                            let x = match *x {
-                                                                Node::NumberLiteral(num) => {
-                                                                    num.value
-                                                                }
-                                                                _ => {
-                                                                    panic!("wrong type somewhere");
-                                                                }
-                                                            };
-                                                            let y = match *y {
-                                                                Node::NumberLiteral(num) => {
-                                                                    num.value
-                                                                }
-                                                                _ => {
-                                                                    panic!("wrong type somewhere");
-                                                                }
-                                                            };
-                                                            rect.shift(x, y);
+                        let evolve_fn: for<'a> fn(&'a mut dyn Drawable, Vec<_>) -> _ =
+                            |ev_shape: &mut dyn Drawable, statements: Vec<Node>| {
+                                for statement in statements {
+                                    match statement {
+                                        Node::Statement(statement) => {
+                                            match statement.kind {
+                                                StatementKind::Shift(x, y) => {
+                                                    // shift by x, y
+                                                    let x = match *x {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
                                                         }
-
-                                                        StatementKind::Stretch(x, y) => {
-                                                            // stretch by x, y (will be same value for both lol)
-                                                            let x = match *x {
-                                                                Node::NumberLiteral(num) => {
-                                                                    num.value
-                                                                }
-                                                                _ => {
-                                                                    panic!("wrong type somewhere");
-                                                                }
-                                                            };
-                                                            let y = match *y {
-                                                                Node::NumberLiteral(num) => {
-                                                                    num.value
-                                                                }
-                                                                _ => {
-                                                                    panic!("wrong type somewhere");
-                                                                }
-                                                            };
-                                                            rect.stretch(x, y);
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
                                                         }
-
-                                                        StatementKind::HueShift(amount) => {
-                                                            let hue_offset = match *amount {
-                                                                Node::NumberLiteral(num) => {
-                                                                    // mod by 360 degrees protects shift amount
-                                                                    num.value % 360.0
-                                                                }
-
-                                                                _ => {
-                                                                    panic!("wrong type somewhere");
-                                                                }
-                                                            };
-
-                                                            rect.hue_shift(hue_offset);
+                                                    };
+                                                    let y = match *y {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
                                                         }
-
-                                                        _ => {  unimplemented!() }
-                                                    }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+                                                    ev_shape.shift(x, y);
                                                 }
 
-                                                _ => {}
+                                                StatementKind::Stretch(x, y) => {
+                                                    // stretch by x, y (will be same value for both lol)
+                                                    let x = match *x {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+                                                    let y = match *y {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+                                                    ev_shape.stretch(x, y);
+                                                }
+
+                                                StatementKind::HueShift(amount) => {
+                                                    let hue_offset = match *amount {
+                                                        Node::NumberLiteral(num) => {
+                                                            // mod by 360 degrees protects shift amount
+                                                            num.value % 360.0
+                                                        }
+
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    ev_shape.hue_shift(hue_offset);
+                                                }
+
+                                                _ => {  unimplemented!() }
                                             }
                                         }
 
-                                        Shapes::Rectangle(rect.clone())
-                                    }
-
-                                    Shapes::Circle(circle) => {
-                                        // Access variables from above and modify the Circle struct
-                                        for statement in statements {
-                                            match statement {
-                                                Node::Statement(statement) => {
-                                                    match statement.kind {
-                                                        StatementKind::Shift(x, y) => {
-                                                            // shift by x, y
-                                                            let x = match *x {
-                                                                Node::NumberLiteral(num) => {
-                                                                    num.value
-                                                                }
-                                                                _ => {
-                                                                    panic!("wrong type somewhere");
-                                                                }
-                                                            };
-                                                            let y = match *y {
-                                                                Node::NumberLiteral(num) => {
-                                                                    num.value
-                                                                }
-                                                                _ => {
-                                                                    panic!("wrong type somewhere");
-                                                                }
-                                                            };
-                                                            circle.shift(x, y);
-                                                        }
-
-                                                        StatementKind::Stretch(x, y) => {
-                                                            // stretch by x, y (will be same value for both lol)
-                                                            let x = match *x {
-                                                                Node::NumberLiteral(num) => {
-                                                                    num.value
-                                                                }
-                                                                _ => {
-                                                                    panic!("wrong type somewhere");
-                                                                }
-                                                            };
-                                                            let y = match *y {
-                                                                Node::NumberLiteral(num) => {
-                                                                    num.value
-                                                                }
-                                                                _ => {
-                                                                    panic!("wrong type somewhere");
-                                                                }
-                                                            };
-                                                            circle.stretch(x, y);
-                                                        }
-
-                                                        StatementKind::HueShift(amount) => {
-                                                            let hue_offset = match *amount {
-                                                                Node::NumberLiteral(num) => {
-                                                                    // mod by 360 degrees protects shift amount
-                                                                    num.value % 360.0
-                                                                }
-
-                                                                _ => {
-                                                                    panic!("wrong type somewhere");
-                                                                }
-                                                            };
-
-                                                            circle.hue_shift(hue_offset);
-                                                        }
-
-                                                        _ => {  unimplemented!() }
-                                                    }
-                                                }
-
-                                                _ => {}
-                                            }
-                                        }
-
-                                        Shapes::Circle(circle.clone())
-                                    }
-
-                                    _ => {
-                                        unimplemented!()
+                                        _ => {}
                                     }
                                 }
+
+                                ()
                             };
                         // let evolveFn = |circle: &Circle| {
                         //     for statement in &shape.statements {
@@ -417,13 +335,8 @@ impl Interpreter {
                                 rect.update();
                                 self.shapes.push(rect.clone().shape);
 
-                                match evolve_fn(&mut Shapes::Rectangle(rect.clone()), statements.clone()) {
-                                    Shapes::Rectangle(r) => {
-                                        rect = r;
-                                    }
-
-                                    _ => { panic!("this is very bad") }   
-                                }
+                                rect = rect.clone();
+                                evolve_fn(&mut rect, statements.clone());
                             }
                         }
 
@@ -524,13 +437,8 @@ impl Interpreter {
                                 circle.update();
                                 self.shapes.push(circle.clone().shape);
 
-                                match evolve_fn(&mut Shapes::Circle(circle.clone()), statements.clone()) {
-                                    Shapes::Circle(c) => {
-                                        circle = c;
-                                    }
-
-                                    _ => { panic!("this is very bad") }   
-                                }
+                                circle = circle.clone();
+                                evolve_fn(&mut circle, statements.clone());
                             }
                         }
 
