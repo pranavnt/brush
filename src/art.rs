@@ -80,6 +80,9 @@ pub fn draw(shapes: Vec<Shape>) -> Result<(), Error> {
         if shape.circ.is_some() {
             canvas = canvas.add(shape.circ.unwrap());
         }
+        else if shape.rect.is_some() {
+            canvas = canvas.add(shape.rect.unwrap());
+        }
         else {
             canvas = canvas.add(shape.svg.unwrap());
         }

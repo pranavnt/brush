@@ -1,6 +1,9 @@
-let test = rectangle {}
+let test = rectangle {
+    stretch(0.97, 1)
+}
 
 test(
     position = (50, 75)
-    size = (200, 100)
+    size = (500, 400)
+    generations = 20
 )

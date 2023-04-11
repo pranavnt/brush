@@ -61,6 +61,79 @@ impl Interpreter {
                         let evolve_fn: for<'a> fn(&'a mut Shapes, Vec<_>) -> Shapes =
                             |ev_shape: &mut Shapes, statements: Vec<Node>| {
                                 match ev_shape {
+                                    Shapes::Rectangle(rect) => {
+                                        for statement in statements {
+                                            match statement {
+                                                Node::Statement(statement) => {
+                                                    match statement.kind {
+                                                        StatementKind::Shift(x, y) => {
+                                                            // shift by x, y
+                                                            let x = match *x {
+                                                                Node::NumberLiteral(num) => {
+                                                                    num.value
+                                                                }
+                                                                _ => {
+                                                                    panic!("wrong type somewhere");
+                                                                }
+                                                            };
+                                                            let y = match *y {
+                                                                Node::NumberLiteral(num) => {
+                                                                    num.value
+                                                                }
+                                                                _ => {
+                                                                    panic!("wrong type somewhere");
+                                                                }
+                                                            };
+                                                            rect.shift(x, y);
+                                                        }
+
+                                                        StatementKind::Stretch(x, y) => {
+                                                            // stretch by x, y (will be same value for both lol)
+                                                            let x = match *x {
+                                                                Node::NumberLiteral(num) => {
+                                                                    num.value
+                                                                }
+                                                                _ => {
+                                                                    panic!("wrong type somewhere");
+                                                                }
+                                                            };
+                                                            let y = match *y {
+                                                                Node::NumberLiteral(num) => {
+                                                                    num.value
+                                                                }
+                                                                _ => {
+                                                                    panic!("wrong type somewhere");
+                                                                }
+                                                            };
+                                                            rect.stretch(x, y);
+                                                        }
+
+                                                        StatementKind::HueShift(amount) => {
+                                                            let hue_offset = match *amount {
+                                                                Node::NumberLiteral(num) => {
+                                                                    // mod by 360 degrees protects shift amount
+                                                                    num.value % 360.0
+                                                                }
+
+                                                                _ => {
+                                                                    panic!("wrong type somewhere");
+                                                                }
+                                                            };
+
+                                                            rect.hue_shift(hue_offset);
+                                                        }
+
+                                                        _ => {  unimplemented!() }
+                                                    }
+                                                }
+
+                                                _ => {}
+                                            }
+                                        }
+
+                                        Shapes::Rectangle(rect.clone())
+                                    }
+
                                     Shapes::Circle(circle) => {
                                         // Access variables from above and modify the Circle struct
                                         for statement in statements {
