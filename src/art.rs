@@ -52,9 +52,9 @@ pub struct BCircle {
 
 #[derive(Debug, Clone)]
 pub struct BRectangle {
-    shape: Shape,
-    width: f32,
-    height: f32,
+    pub shape: Shape,
+    pub width: f32,
+    pub height: f32,
 }
 
 #[derive(Debug, Clone)]

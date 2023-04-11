@@ -61,15 +61,13 @@ impl Drawable for BRectangle {
     }
 
     fn stretch(&mut self, x: f32, y: f32) {
-        if x == y {
-            self.radius *= x;
-        }
+        self.width *= x;
+        self.height *= y;
     }
 
     fn stretch_to(&mut self, x: f32, y: f32) {
-        if x == y {
-            self.radius = x;
-        }
+        self.width = x;
+        self.height = y;
     }
 
     fn hue_shift(&mut self, amount: f32) {
@@ -79,12 +77,14 @@ impl Drawable for BRectangle {
     fn update(&mut self) {
         let o_color = format!("#{:02x?}{:02x?}{:02x?}", self.shape.outline_color.0, self.shape.outline_color.1, self.shape.outline_color.2);
 
-        self.shape.circ = Some(Circle::new()
+        self.shape.rect = Some(Rectangle::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
                     .set("stroke-width", 1)
-                    .set("r", self.radius)
-                    .set("cx", self.shape.center.0)
-                    .set("cy", self.shape.center.1));
+                    .set("x", self.shape.center.0)
+                    .set("y", self.shape.center.0)
+                    .set("width", self.width)
+                    .set("height", self.height)
+                );
     }
 }

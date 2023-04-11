@@ -1,7 +1,7 @@
-use std::collections::*;
+use crate::art::{draw, BCircle, BRectangle, Drawable, Polygon, Shape, SVG};
 use crate::ast::*;
-use crate::art::{Shape, BCircle, BRectangle, Polygon, SVG, Drawable, draw};
 use crate::tokens::{Token, TokenType};
+use std::collections::*;
 
 pub struct Interpreter {
     pub ast: ProgramNode,
@@ -19,7 +19,7 @@ pub enum Value {
     Statements(Vec<Node>),
 }
 
-pub type EvolveFn = for<'a> fn(&'a mut BCircle, Vec<Node>) -> ();
+pub type EvolveFn = for<'a> fn(&'a mut Shapes, Vec<Node>) -> Shapes;
 
 #[derive(Debug, Clone)]
 pub enum Shapes {
@@ -36,7 +36,7 @@ impl Interpreter {
             symbol_table: HashMap::new(),
             call_stack: Vec::new(),
 
-            shapes: Vec::new()
+            shapes: Vec::new(),
         }
     }
 
@@ -48,7 +48,8 @@ impl Interpreter {
 
     pub fn eval(&mut self, node: Node) -> Option<Value> {
         match node {
-            Node::Program(program) => { // this code is never going to reach ???
+            Node::Program(program) => {
+                // this code is never going to reach ???
                 None
             }
 
@@ -57,77 +58,88 @@ impl Interpreter {
                 match self.symbol_table.get(name) {
                     Some(value) => panic!("variable already declared with name: {}", name),
                     None => {
-                        let evolve_fn: for<'a> fn(&'a mut BCircle, Vec<_>) -> _ = |circle: &mut BCircle, statements: Vec<Node>| {
-                            // Access variables from above and modify the Circle struct
-                            for statement in statements {
-                                match statement {
-                                    Node::Statement(statement) => {
-                                        match statement.kind {
-                                            StatementKind::Shift(x, y) => {
-                                                // shift by x, y
-                                                let x = match *x {
-                                                    Node::NumberLiteral(num) => {
-                                                        num.value
-                                                    },
-                                                    _ => {
-                                                        panic!("wrong type somewhere");
+                        let evolve_fn: for<'a> fn(&'a mut Shapes, Vec<_>) -> Shapes =
+                            |ev_shape: &mut Shapes, statements: Vec<Node>| {
+                                match ev_shape {
+                                    Shapes::Circle(circle) => {
+                                        // Access variables from above and modify the Circle struct
+                                        for statement in statements {
+                                            match statement {
+                                                Node::Statement(statement) => {
+                                                    match statement.kind {
+                                                        StatementKind::Shift(x, y) => {
+                                                            // shift by x, y
+                                                            let x = match *x {
+                                                                Node::NumberLiteral(num) => {
+                                                                    num.value
+                                                                }
+                                                                _ => {
+                                                                    panic!("wrong type somewhere");
+                                                                }
+                                                            };
+                                                            let y = match *y {
+                                                                Node::NumberLiteral(num) => {
+                                                                    num.value
+                                                                }
+                                                                _ => {
+                                                                    panic!("wrong type somewhere");
+                                                                }
+                                                            };
+                                                            circle.shift(x, y);
+                                                        }
+
+                                                        StatementKind::Stretch(x, y) => {
+                                                            // stretch by x, y (will be same value for both lol)
+                                                            let x = match *x {
+                                                                Node::NumberLiteral(num) => {
+                                                                    num.value
+                                                                }
+                                                                _ => {
+                                                                    panic!("wrong type somewhere");
+                                                                }
+                                                            };
+                                                            let y = match *y {
+                                                                Node::NumberLiteral(num) => {
+                                                                    num.value
+                                                                }
+                                                                _ => {
+                                                                    panic!("wrong type somewhere");
+                                                                }
+                                                            };
+                                                            circle.stretch(x, y);
+                                                        }
+
+                                                        StatementKind::HueShift(amount) => {
+                                                            let hue_offset = match *amount {
+                                                                Node::NumberLiteral(num) => {
+                                                                    // mod by 360 degrees protects shift amount
+                                                                    num.value % 360.0
+                                                                }
+
+                                                                _ => {
+                                                                    panic!("wrong type somewhere");
+                                                                }
+                                                            };
+
+                                                            circle.hue_shift(hue_offset);
+                                                        }
+
+                                                        _ => {  unimplemented!() }
                                                     }
-                                                };
-                                                let y = match *y {
-                                                    Node::NumberLiteral(num) => {
-                                                        num.value
-                                                    },
-                                                    _ => {
-                                                        panic!("wrong type somewhere");
-                                                    }
-                                                };
-                                                circle.shift(x, y);
+                                                }
+
+                                                _ => {}
                                             }
-
-                                            StatementKind::Stretch(x, y) => {
-                                                // stretch by x, y (will be same value for both lol) 
-                                                let x = match *x {
-                                                    Node::NumberLiteral(num) => {
-                                                        num.value
-                                                    },
-                                                    _ => {
-                                                        panic!("wrong type somewhere");
-                                                    }
-                                                };
-                                                let y = match *y {
-                                                    Node::NumberLiteral(num) => {
-                                                        num.value
-                                                    },
-                                                    _ => {
-                                                        panic!("wrong type somewhere");
-                                                    }
-                                                };
-                                                circle.stretch(x, y);
-                                            }
-
-                                            StatementKind::HueShift(amount) => {
-                                                let hue_offset = match *amount {
-                                                    Node::NumberLiteral(num) => {
-                                                        // mod by 360 degrees protects shift amount
-                                                        num.value % 360.0
-                                                    }
-
-                                                    _ => {
-                                                        panic!("wrong type somewhere");
-                                                    }
-                                                };
-
-                                                circle.hue_shift(hue_offset);
-                                            }
-
-                                            _ => {}
                                         }
+
+                                        Shapes::Circle(circle.clone())
                                     }
 
-                                    _ => {}
+                                    _ => {
+                                        unimplemented!()
+                                    }
                                 }
-                            }
-                        };                        
+                            };
                         // let evolveFn = |circle: &Circle| {
                         //     for statement in &shape.statements {
                         //         // if statement is shift, then shift by the value
@@ -158,7 +170,7 @@ impl Interpreter {
                         //                     }
 
                         //                     StatementKind::Stretch(x, y) => {
-                        //                         // stretch by x, y (will be same value for both lol) 
+                        //                         // stretch by x, y (will be same value for both lol)
                         //                         let x = match *x {
                         //                             Node::NumberLiteral(num) => {
                         //                                 num.value
@@ -187,26 +199,27 @@ impl Interpreter {
                         //     }
                         // };
 
-                        self.symbol_table.insert(name.clone(), Value::Evolve(shape.kind, evolve_fn, shape.statements.clone()));
+                        self.symbol_table.insert(
+                            name.clone(),
+                            Value::Evolve(shape.kind, evolve_fn, shape.statements.clone()),
+                        );
                     }
                 }
 
                 None
-            },
+            }
 
             Node::Statement(statement) => match statement.clone().kind {
                 StatementKind::DrawShape(name, properties) => {
                     // println!("{:#?}\n\n", statement);
 
                     let (shape_kind, evolve_fn, statements) = match self.symbol_table.get(&name) {
-                        Some(value) => {
-                            match value {
-                                Value::Evolve(shapeKind, evolveFn, statements) => {
-                                    (shapeKind, evolveFn, statements)
-                                },
-                                _ => {
-                                    panic!("wrong type somewhere");
-                                }
+                        Some(value) => match value {
+                            Value::Evolve(shapeKind, evolveFn, statements) => {
+                                (shapeKind, evolveFn, statements)
+                            }
+                            _ => {
+                                panic!("wrong type somewhere");
                             }
                         },
                         _ => {
@@ -217,35 +230,35 @@ impl Interpreter {
                     match shape_kind {
                         ShapeKind::Rectangle => {
                             // ((x,y), (w, h), color)
-                            let mut rect_config = ((0.0, 0.0), (0.0, 0.0), (u8::from(0), u8::from(0), u8::from(0)));
+                            let mut rect_config = (
+                                (0.0, 0.0),
+                                (0.0, 0.0),
+                                (u8::from(0), u8::from(0), u8::from(0)),
+                            );
                             let mut generations = 1;
 
                             for property in properties {
                                 if property.name == "position" {
                                     rect_config.0 = match *property.value {
                                         Node::TupleLiteral(tuple) => {
-                                            // idk fix this by adding more nested matches 
+                                            // idk fix this by adding more nested matches
                                             // and whatever is below
                                             let x = match &tuple.values[0] {
-                                                Node::NumberLiteral(num) => {
-                                                    num.value
-                                                },
+                                                Node::NumberLiteral(num) => num.value,
                                                 _ => {
                                                     panic!("wrong type somewhere");
                                                 }
                                             };
-        
+
                                             let y = match &tuple.values[1] {
-                                                Node::NumberLiteral(num) => {
-                                                    num.value
-                                                },
+                                                Node::NumberLiteral(num) => num.value,
                                                 _ => {
                                                     panic!("wrong type somewhere");
                                                 }
                                             };
-        
+
                                             (x, y)
-                                        },
+                                        }
                                         _ => {
                                             panic!("wrong type somewhere");
                                         }
@@ -253,37 +266,31 @@ impl Interpreter {
                                 } else if property.name == "size" {
                                     rect_config.1 = match *property.value {
                                         Node::TupleLiteral(tuple) => {
-                                            // idk fix this by adding more nested matches 
+                                            // idk fix this by adding more nested matches
                                             // and whatever is below
                                             let w = match &tuple.values[0] {
-                                                Node::NumberLiteral(num) => {
-                                                    num.value
-                                                },
+                                                Node::NumberLiteral(num) => num.value,
                                                 _ => {
                                                     panic!("wrong type somewhere");
                                                 }
                                             };
-        
+
                                             let h = match &tuple.values[1] {
-                                                Node::NumberLiteral(num) => {
-                                                    num.value
-                                                },
+                                                Node::NumberLiteral(num) => num.value,
                                                 _ => {
                                                     panic!("wrong type somewhere");
                                                 }
                                             };
-        
+
                                             (w, h)
-                                        },
+                                        }
                                         _ => {
                                             panic!("wrong type somewhere");
                                         }
                                     }
                                 } else if property.name == "generations" {
                                     generations = match *property.value {
-                                        Node::NumberLiteral(num) => {
-                                            num.value as i32
-                                        },
+                                        Node::NumberLiteral(num) => num.value as i32,
                                         _ => {
                                             panic!("wrong type somewhere");
                                         }
@@ -291,37 +298,31 @@ impl Interpreter {
                                 } else if property.name == "color" {
                                     rect_config.2 = match *property.value {
                                         Node::TupleLiteral(tuple) => {
-                                            // idk fix this by adding more nested matches 
+                                            // idk fix this by adding more nested matches
                                             // and whatever is below
                                             let r = match &tuple.values[0] {
-                                                Node::NumberLiteral(num) => {
-                                                    num.value
-                                                },
+                                                Node::NumberLiteral(num) => num.value,
                                                 _ => {
                                                     panic!("wrong type somewhere");
                                                 }
                                             };
-        
+
                                             let g = match &tuple.values[1] {
-                                                Node::NumberLiteral(num) => {
-                                                    num.value
-                                                },
+                                                Node::NumberLiteral(num) => num.value,
                                                 _ => {
                                                     panic!("wrong type somewhere");
                                                 }
                                             };
-        
+
                                             let b = match &tuple.values[2] {
-                                                Node::NumberLiteral(num) => {
-                                                    num.value
-                                                },
+                                                Node::NumberLiteral(num) => num.value,
                                                 _ => {
                                                     panic!("wrong type somewhere");
                                                 }
                                             };
-        
+
                                             (r as u8, g as u8, b as u8)
-                                        },
+                                        }
                                         _ => {
                                             panic!("wrong type somewhere");
                                         }
@@ -331,36 +332,39 @@ impl Interpreter {
 
                             // create boilerplate rectangle
                             let mut rect = BRectangle::new(
-                                rect_config.0.0,
-                                rect_config.0.1,
-                                rect_config.1.0,
-                                rect_config.1.1,
-                                Some(rect_config.2)
+                                rect_config.0 .0,
+                                rect_config.0 .1,
+                                rect_config.1 .0,
+                                rect_config.1 .1,
+                                Some(rect_config.2),
                             );
-        
+
                             for i in 0..generations {
                                 // push to shapes
-                                circle.update();
-                                self.shapes.push(circle.clone().shape);
-        
-                                circle = circle.clone();
-                                // circle.hue_shift(5.0);
-                                evolve_fn(&mut circle, statements.clone());
+                                rect.update();
+                                self.shapes.push(rect.clone().shape);
+
+                                match evolve_fn(&mut Shapes::Rectangle(rect.clone()), statements.clone()) {
+                                    Shapes::Rectangle(r) => {
+                                        rect = r;
+                                    }
+
+                                    _ => { panic!("this is very bad") }   
+                                }
                             }
                         }
 
                         ShapeKind::Circle => {
                             // (radius, center, color)
-                            let mut circle_config = (0.0, (0.0, 0.0), (u8::from(0), u8::from(0), u8::from(0)));
+                            let mut circle_config =
+                                (0.0, (0.0, 0.0), (u8::from(0), u8::from(0), u8::from(0)));
                             let mut generations = 1;
-        
+
                             // parse properties
                             for property in properties {
                                 if property.name == "radius" {
                                     circle_config.0 = match *property.value {
-                                        Node::NumberLiteral(num) => {
-                                            num.value
-                                        },
+                                        Node::NumberLiteral(num) => num.value,
                                         _ => {
                                             panic!("wrong type somewhere");
                                         }
@@ -368,37 +372,31 @@ impl Interpreter {
                                 } else if property.name == "center" {
                                     circle_config.1 = match *property.value {
                                         Node::TupleLiteral(tuple) => {
-                                            // idk fix this by adding more nested matches 
+                                            // idk fix this by adding more nested matches
                                             // and whatever is below
                                             let x = match &tuple.values[0] {
-                                                Node::NumberLiteral(num) => {
-                                                    num.value
-                                                },
+                                                Node::NumberLiteral(num) => num.value,
                                                 _ => {
                                                     panic!("wrong type somewhere");
                                                 }
                                             };
-        
+
                                             let y = match &tuple.values[1] {
-                                                Node::NumberLiteral(num) => {
-                                                    num.value
-                                                },
+                                                Node::NumberLiteral(num) => num.value,
                                                 _ => {
                                                     panic!("wrong type somewhere");
                                                 }
                                             };
-        
+
                                             (x, y)
-                                        },
+                                        }
                                         _ => {
                                             panic!("wrong type somewhere");
                                         }
                                     }
                                 } else if property.name == "generations" {
                                     generations = match *property.value {
-                                        Node::NumberLiteral(num) => {
-                                            num.value as i32
-                                        },
+                                        Node::NumberLiteral(num) => num.value as i32,
                                         _ => {
                                             panic!("wrong type somewhere");
                                         }
@@ -406,85 +404,84 @@ impl Interpreter {
                                 } else if property.name == "color" {
                                     circle_config.2 = match *property.value {
                                         Node::TupleLiteral(tuple) => {
-                                            // idk fix this by adding more nested matches 
+                                            // idk fix this by adding more nested matches
                                             // and whatever is below
                                             let r = match &tuple.values[0] {
-                                                Node::NumberLiteral(num) => {
-                                                    num.value
-                                                },
+                                                Node::NumberLiteral(num) => num.value,
                                                 _ => {
                                                     panic!("wrong type somewhere");
                                                 }
                                             };
-        
+
                                             let g = match &tuple.values[1] {
-                                                Node::NumberLiteral(num) => {
-                                                    num.value
-                                                },
+                                                Node::NumberLiteral(num) => num.value,
                                                 _ => {
                                                     panic!("wrong type somewhere");
                                                 }
                                             };
-        
+
                                             let b = match &tuple.values[2] {
-                                                Node::NumberLiteral(num) => {
-                                                    num.value
-                                                },
+                                                Node::NumberLiteral(num) => num.value,
                                                 _ => {
                                                     panic!("wrong type somewhere");
                                                 }
                                             };
-        
+
                                             (r as u8, g as u8, b as u8)
-                                        },
+                                        }
                                         _ => {
                                             panic!("wrong type somewhere");
                                         }
                                     }
-                                }
-                                else {
+                                } else {
                                     panic!("unknown property");
                                 }
                             }
-        
+
                             // create boilerplate circle with radius and center
                             let mut circle = BCircle::new(
-                                circle_config.1.0,
-                                circle_config.1.1,
+                                circle_config.1 .0,
+                                circle_config.1 .1,
                                 circle_config.0,
-                                Some(circle_config.2)
+                                Some(circle_config.2),
                             );
-        
+
                             for i in 0..generations {
                                 // push to shapes
                                 circle.update();
                                 self.shapes.push(circle.clone().shape);
-        
-                                circle = circle.clone();
-                                // circle.hue_shift(5.0);
-                                evolve_fn(&mut circle, statements.clone());
+
+                                match evolve_fn(&mut Shapes::Circle(circle.clone()), statements.clone()) {
+                                    Shapes::Circle(c) => {
+                                        circle = c;
+                                    }
+
+                                    _ => { panic!("this is very bad") }   
+                                }
                             }
                         }
 
-                        _ => { unimplemented!() }
+                        _ => {
+                            unimplemented!()
+                        }
                     }
 
                     match draw(self.shapes.clone()) {
-                        Ok(_) => {},
+                        Ok(_) => {}
                         Err(e) => {
                             panic!("error drawing");
                         }
                     }
 
                     None
-                },
+                }
                 // StatementKind::Expression(expression) => self.tmp_eval(*expression),
                 // StatementKind::Return(expression) => self.tmp_eval(*expression),
 
                 // StatementKind::Shift(x,y) => {
                 //     let x_val = self.tmp_eval(*x).unwrap();
                 //     let y_val = self.tmp_eval(*y).unwrap();
-                //     // shift the shape here // 
+                //     // shift the shape here //
                 //     // Some(Value::Tuple(vec![x_val, y_val]))
 
                 //     None
@@ -511,7 +508,7 @@ impl Interpreter {
                     Some(value) => unimplemented!(), //value.clone(),
                     None => panic!("Undefined variable: {}", name),
                 }
-            },
+            }
 
             Node::BinaryExpression(expression) => {
                 unimplemented!()
@@ -521,45 +518,42 @@ impl Interpreter {
             }
             Node::Property(expression) => {
                 unimplemented!()
-            },
-            Node::NumberLiteral(expression) => {
-                Some(Value::Number(expression.value))
             }
+            Node::NumberLiteral(expression) => Some(Value::Number(expression.value)),
             Node::StringLiteral(expression) => {
                 unimplemented!()
             }
             Node::BooleanLiteral(expression) => {
                 unimplemented!()
-            },
-            Node::TupleLiteral(expression) => { // this needs to be fixed to handle tuples > 2 things
+            }
+            Node::TupleLiteral(expression) => {
+                // this needs to be fixed to handle tuples > 2 things
                 let mut tup: Vec<Value> = Vec::new();
 
                 for val in &expression.values {
-                    tup.push(
-                        self.eval(val.clone()).unwrap()
-                    );
+                    tup.push(self.eval(val.clone()).unwrap());
                 }
 
                 Some(Value::Tuple(tup))
-            },
+            }
             Node::FunctionCall(expression) => {
                 unimplemented!()
-            },
+            }
             Node::VariableDeclaration(expression) => {
                 unimplemented!()
-            },
+            }
             Node::VariableAssignment(expression) => {
                 unimplemented!()
-            },
+            }
             Node::IfStatement(expression) => {
                 unimplemented!()
-            },
+            }
             Node::WhileLoop(expression) => {
                 unimplemented!()
-            },
+            }
             Node::ForLoop(expression) => {
                 unimplemented!()
-            },    
+            }
         }
     }
 }
