@@ -1,4 +1,5 @@
 mod circle;
+mod rectangle;
 mod shape;
 
 use std::ops::DerefMut;
@@ -7,7 +8,7 @@ use std::ptr::addr_of;
 use crate::error::Error;
 use svg::node::element::path::{Command, Data, Parameters};
 use svg::node::element::tag::Path;
-use svg::node::element::{Line, Path, Circle};
+use svg::node::element::{Line, Path, Circle, Rectangle};
 use svg::parser::Event;
 use svg::Document;
 
@@ -32,6 +33,7 @@ pub struct Shape {
 
     // for presets
     pub circ: Option<Circle>,
+    pub rect: Option<Rectangle>,
 
     pub center: (f32, f32),
     pub dimensions: (f32, f32),
@@ -49,7 +51,7 @@ pub struct BCircle {
 }
 
 #[derive(Debug, Clone)]
-pub struct Rectangle {
+pub struct BRectangle {
     shape: Shape,
     width: f32,
     height: f32,

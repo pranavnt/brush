@@ -1,0 +1,6 @@
+let test = rectangle {}
+
+test(
+    position = (50, 75)
+    size = (200, 100)
+)

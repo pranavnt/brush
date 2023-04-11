@@ -4,28 +4,29 @@ use std::ptr::addr_of;
 use crate::error::Error;
 use svg::node::element::path::{Command, Data, Parameters};
 use svg::node::element::tag::Path;
-use svg::node::element::{Line, Path, Circle};
+use svg::node::element::{Line, Path, Rectangle};
 use svg::parser::Event;
 use svg::Document;
 
-use crate::art::{Drawable, Shape, BCircle};
+use crate::art::{Drawable, Shape, BRectangle};
 
-impl BCircle {
-    pub fn new(x: f32, y: f32, radius: f32, outline_color: Option<(u8, u8, u8)>) -> BCircle {
-        BCircle {
+impl BRectangle {
+    pub fn new(x: f32, y: f32, width: f32, height: f32, outline_color: Option<(u8, u8, u8)>) -> BRectangle {
+        BRectangle {
             shape: Shape {
                 svg: None,
                 path: None,
 
-                circ: Some(Circle::new()
+                circ: None,
+                rect: Some(Rectangle::new()
                     .set("fill", "none")
                     .set("stroke", "#000000")
                     .set("stroke-width", 1)
-                    .set("r", radius)
-                    .set("cx", x)
-                    .set("cy", y)
+                    .set("width", width)
+                    .set("height", height)
+                    .set("x", x)
+                    .set("y", y)
                 ),
-                rect: None,
 
                 center: (x, y),
                 dimensions: (0.0, 0.0),
@@ -36,12 +37,13 @@ impl BCircle {
                 stretch: (1.0, 1.0),
             },
 
-            radius: radius,
+            width: width,
+            height: height
         }
     }
 }
 
-impl Drawable for BCircle {
+impl Drawable for BRectangle {
     fn rotate(&mut self, angle: f32) {
         unimplemented!();
     }

@@ -89,8 +89,11 @@ impl Lexer {
     
                         match keyw.as_str() {
                             "let" => all_tokens.push(Token::new(TokenType::LET, keyw)),
+
                             "circle" => all_tokens.push(Token::new(TokenType::SHAPE_KEYWORD, keyw)),
                             "triangle" => all_tokens.push(Token::new(TokenType::SHAPE_KEYWORD, keyw)),
+                            "rectangle" => all_tokens.push(Token::new(TokenType::SHAPE_KEYWORD, keyw)),
+
                             "shift" => all_tokens.push(Token::new(TokenType::SHIFT_KEYWORD, keyw)),
                             "hue_shift" => all_tokens.push(Token::new(TokenType::HUE_SHIFT_KEYWORD, keyw)),
                             "stretch" => all_tokens.push(Token::new(TokenType::STRETCH_KEYWORD, keyw)),
