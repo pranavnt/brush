@@ -13,7 +13,7 @@
    </form>
    <p id="output"></p>
    <script type="module">
-       import init, { process_file } from "pkg\brush_bg.js";
+       import init, { process_file } from "pkg\brush.js";
        init().then(() => {
            console.log("Wasm module loaded");
        });
@@ -26,11 +26,13 @@
            reader.readAsText(file);
            reader.onload = function() {
                const fileContent = reader.result;
-               process_file(fileContent);
-               //document.getElementById("output").textContent = output;
+               process_file(fileContent, function(output){
+            const img = new Image();
+            img.src = "art.svg";
+            document.body.appendChild(img);
+        });
            };
        }
    </script>
-   <img src="art.svg">
   </body>
 </html>

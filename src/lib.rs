@@ -38,8 +38,10 @@ use std::string::String;
 
 #[no_mangle]
 #[wasm_bindgen]
-pub fn process_file(content: String) {
+pub fn process_file(content: &str, callback: &mut dyn FnMut(String)) {
     process(content);
+    let output = "some output";
+    callback(output.to_owned());
 }
 
 
@@ -50,7 +52,7 @@ pub fn process_file(content: String) {
 //     Ok(rdin)
 // }
 
-fn process(content: String) {
+fn process(content: &str) {
 
     let mut lex = Lexer::new(content.to_string());
     let tokens = lex.lex();
