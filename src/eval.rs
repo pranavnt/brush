@@ -339,10 +339,6 @@ impl Interpreter {
                                 evolve_fn(&mut rect, statements.clone());
                             }
                         } 
-                        else {
-                            panic!("unknown property");
-
-                        }
 
                         ShapeKind::Circle => {
                             // (radius, center, color)

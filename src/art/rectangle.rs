@@ -70,6 +70,9 @@ impl Drawable for BRectangle {
         self.height = y;
     }
 
+    fn reflect(&mut self, p1: (f32, f32), p2: (f32, f32)) {
+        self.shape.reflect(p1, p2);
+    }
     fn hue_shift(&mut self, amount: f32) {
         self.shape.hue_shift(amount);
     }
@@ -87,4 +90,6 @@ impl Drawable for BRectangle {
                     .set("height", self.height)
                 );
     }
+
+    
 }
