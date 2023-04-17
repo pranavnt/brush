@@ -81,8 +81,8 @@ impl Drawable for BRectangle {
                     .set("fill", "none")
                     .set("stroke", o_color)
                     .set("stroke-width", 1)
-                    .set("x", self.shape.center.0)
-                    .set("y", self.shape.center.0)
+                    .set("x", self.shape.center.0 - self.width / 2.0)
+                    .set("y", self.shape.center.1 - self.height / 2.0)
                     .set("width", self.width)
                     .set("height", self.height)
                 );
