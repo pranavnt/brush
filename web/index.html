@@ -5,11 +5,32 @@
     <title>brush example</title>
   </head>
   <body>
-    <script type="module">
-      import init, { greet } from "../pkg/brush.js";
-      init().then(() => {
-        greet("WebAssembly");
-      });
-    </script>
+   <form>
+       <label for="text">Enter text:</label>
+       <textarea id="text" name="text"></textarea>
+       <br>
+       <button type="button" onclick="processText()">Process text</button>
+   </form>
+   <p id="output"></p>
+   <script type="module">
+       import init, { process_file } from "pkg\brush_bg.js";
+       init().then(() => {
+           console.log("Wasm module loaded");
+       });
+
+       function processText() {
+           const name = "filePros";
+           const text = document.getElementById("text").value;
+           const file = new Blob([text], { type: "text/plain" });
+           const reader = new FileReader();
+           reader.readAsText(file);
+           reader.onload = function() {
+               const fileContent = reader.result;
+               process_file(fileContent);
+               //document.getElementById("output").textContent = output;
+           };
+       }
+   </script>
+   <img src="art.svg">
   </body>
 </html>
