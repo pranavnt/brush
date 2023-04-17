@@ -1,4 +1,5 @@
 mod circle;
+mod rectangle;
 mod shape;
 
 use std::ops::DerefMut;
@@ -7,7 +8,7 @@ use std::ptr::addr_of;
 use crate::error::Error;
 use svg::node::element::path::{Command, Data, Parameters};
 use svg::node::element::tag::Path;
-use svg::node::element::{Line, Path, Circle};
+use svg::node::element::{Line, Path, Circle, Rectangle};
 use svg::parser::Event;
 use svg::Document;
 
@@ -32,6 +33,7 @@ pub struct Shape {
 
     // for presets
     pub circ: Option<Circle>,
+    pub rect: Option<Rectangle>,
 
     pub center: (f32, f32),
     pub dimensions: (f32, f32),
@@ -49,10 +51,10 @@ pub struct BCircle {
 }
 
 #[derive(Debug, Clone)]
-pub struct Rectangle {
-    shape: Shape,
-    width: f32,
-    height: f32,
+pub struct BRectangle {
+    pub shape: Shape,
+    pub width: f32,
+    pub height: f32,
 }
 
 #[derive(Debug, Clone)]
@@ -77,6 +79,9 @@ pub fn draw(shapes: Vec<Shape>) -> Result<(), Error> {
     for shape in shapes {
         if shape.circ.is_some() {
             canvas = canvas.add(shape.circ.unwrap());
+        }
+        else if shape.rect.is_some() {
+            canvas = canvas.add(shape.rect.unwrap());
         }
         else {
             canvas = canvas.add(shape.svg.unwrap());

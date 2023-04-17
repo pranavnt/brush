@@ -4,28 +4,29 @@ use std::ptr::addr_of;
 use crate::error::Error;
 use svg::node::element::path::{Command, Data, Parameters};
 use svg::node::element::tag::Path;
-use svg::node::element::{Line, Path, Circle};
+use svg::node::element::{Line, Path, Rectangle};
 use svg::parser::Event;
 use svg::Document;
 
-use crate::art::{Drawable, Shape, BCircle};
+use crate::art::{Drawable, Shape, BRectangle};
 
-impl BCircle {
-    pub fn new(x: f32, y: f32, radius: f32, outline_color: Option<(u8, u8, u8)>) -> BCircle {
-        BCircle {
+impl BRectangle {
+    pub fn new(x: f32, y: f32, width: f32, height: f32, outline_color: Option<(u8, u8, u8)>) -> BRectangle {
+        BRectangle {
             shape: Shape {
                 svg: None,
                 path: None,
 
-                circ: Some(Circle::new()
+                circ: None,
+                rect: Some(Rectangle::new()
                     .set("fill", "none")
                     .set("stroke", "#000000")
                     .set("stroke-width", 1)
-                    .set("r", radius)
-                    .set("cx", x)
-                    .set("cy", y)
+                    .set("width", width)
+                    .set("height", height)
+                    .set("x", x)
+                    .set("y", y)
                 ),
-                rect: None,
 
                 center: (x, y),
                 dimensions: (0.0, 0.0),
@@ -36,12 +37,13 @@ impl BCircle {
                 stretch: (1.0, 1.0),
             },
 
-            radius: radius,
+            width: width,
+            height: height
         }
     }
 }
 
-impl Drawable for BCircle {
+impl Drawable for BRectangle {
     fn rotate(&mut self, angle: f32) {
         unimplemented!();
     }
@@ -59,15 +61,13 @@ impl Drawable for BCircle {
     }
 
     fn stretch(&mut self, x: f32, y: f32) {
-        if x == y {
-            self.radius *= x;
-        }
+        self.width *= x;
+        self.height *= y;
     }
 
     fn stretch_to(&mut self, x: f32, y: f32) {
-        if x == y {
-            self.radius = x;
-        }
+        self.width = x;
+        self.height = y;
     }
 
     fn hue_shift(&mut self, amount: f32) {
@@ -77,12 +77,14 @@ impl Drawable for BCircle {
     fn update(&mut self) {
         let o_color = format!("#{:02x?}{:02x?}{:02x?}", self.shape.outline_color.0, self.shape.outline_color.1, self.shape.outline_color.2);
 
-        self.shape.circ = Some(Circle::new()
+        self.shape.rect = Some(Rectangle::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
                     .set("stroke-width", 1)
-                    .set("r", self.radius)
-                    .set("cx", self.shape.center.0)
-                    .set("cy", self.shape.center.1));
+                    .set("x", self.shape.center.0 - self.width / 2.0)
+                    .set("y", self.shape.center.1 - self.height / 2.0)
+                    .set("width", self.width)
+                    .set("height", self.height)
+                );
     }
 }
