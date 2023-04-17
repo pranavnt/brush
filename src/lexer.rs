@@ -99,6 +99,7 @@ impl Lexer {
                             "stretch" => all_tokens.push(Token::new(TokenType::STRETCH_KEYWORD, keyw)),
                             "rotate" => all_tokens.push(Token::new(TokenType::ROTATE_KEYWORD, keyw)),
                             "evolve" => all_tokens.push(Token::new(TokenType::EVOLVE_KEYWORD, keyw)),
+                            "reflect" => all_tokens.push(Token::new(TokenType::REFLECT_KEYWORD, keyw)),
 
                             "true" => all_tokens.push(Token::new(TokenType::BOOLEAN, keyw)),
                             "false" => all_tokens.push(Token::new(TokenType::BOOLEAN, keyw)),

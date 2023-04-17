@@ -38,6 +38,7 @@ pub enum StatementKind {
     HueShift(Box<Node>),
     Stretch(Box<Node>, Box<Node>),
     Rotate(Box<Node>),
+    Reflect((Box<Node>, Box<Node>), (Box<Node>, Box<Node>)),
     // Warp(String, Box<Node>, Box<Node>),
 }
 

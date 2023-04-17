@@ -215,6 +215,36 @@ impl Parser {
                     kind: StatementKind::HueShift(Box::new(amount)),
                 });
             },
+            /* 
+            TokenType::REFLECT_KEYWORD => {
+                self.advance_past(TokenType::REFLECT_KEYWORD);
+
+                self.advance_past(TokenType::L_PAREN);
+
+
+                self.advance_past(TokenType::L_PAREN);
+                let p1x = self.parse_expression(self.get_next(TokenType::COMMA));
+
+                self.advance_past(TokenType::COMMA);
+                let p1y = self.parse_expression(self.get_next(TokenType::R_PAREN));
+
+                self.advance_past(TokenType::R_PAREN);
+                self.advance_past(TokenType::COMMA);
+
+
+                self.advance_past(TokenType::L_PAREN);
+                let p2x = self.parse_expression(self.get_next(TokenType::COMMA));
+
+                self.advance_past(TokenType::COMMA);
+                let p2y = self.parse_expression(self.get_next(TokenType::R_PAREN));
+
+                self.advance_past(TokenType::ENDLINE);
+                return Node::Statement(StatementNode {
+                    kind: StatementKind::Reflect(Box::new((p1x, p1y)), Box::new((p2x, p2y))),
+                }); 
+                
+
+            } */
             TokenType::KEYWORD => {
                 let keyword = self.tokens[self.current as usize].value.clone();
 
