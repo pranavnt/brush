@@ -38,7 +38,7 @@ use std::string::String;
 
 #[no_mangle]
 #[wasm_bindgen]
-pub fn process_file(content: &str) -> String {
+pub fn process_file(content: String) {
     process(content);
 }
 
@@ -50,17 +50,16 @@ pub fn process_file(content: &str) -> String {
 //     Ok(rdin)
 // }
 
-fn process(content: &string) {
+fn process(content: String) {
 
-    let mut lex = Lexer::new(content);
+    let mut lex = Lexer::new(content.to_string());
     let tokens = lex.lex();
     let mut parser = Parser::new(tokens);
     let ast = parser.parse_program();
     let mut interpreter = Interpreter::new(ast);
     interpreter.run();
-}
 
-    // transform_test();
+      // transform_test();
 //    let mut args = env::args();
 
     /*if args.len() > 1 {
@@ -94,4 +93,8 @@ fn process(content: &string) {
              }
          }
      }
- }
+    }
+    */
+}
+
+  
