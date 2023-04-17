@@ -121,6 +121,18 @@ impl Interpreter {
                                                     ev_shape.hue_shift(hue_offset);
                                                 }
 
+                                                StatementKind::Rotate(angle) => {
+                                                    let angle = match *angle {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    ev_shape.rotate(angle);
+                                                }
                                                 _ => {  unimplemented!() }
                                             }
                                         }

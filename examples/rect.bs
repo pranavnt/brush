@@ -1,5 +1,5 @@
 let test = rectangle {
-    stretch(0.97, 1)
+    rotate(10)
 }
 
 test(

@@ -45,7 +45,7 @@ impl BRectangle {
 
 impl Drawable for BRectangle {
     fn rotate(&mut self, angle: f32) {
-        unimplemented!();
+        self.shape.rotate(angle);
     }
 
     fn rotate_to(&mut self, angle: f32) {

@@ -1,22 +1,10 @@
 <svg height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1000 1000" width="100%" xmlns="http://www.w3.org/2000/svg">
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="500" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="485" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="470.45" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="456.33652" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="442.64642" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="429.36703" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="416.48602" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="403.99146" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="391.87173" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="380.1156" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="368.71216" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="357.65082" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="346.9213" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="336.51367" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="326.41827" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="316.62573" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="307.12698" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="297.91318" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="288.9758" x="50" y="50"/>
-<rect fill="none" height="400" stroke="#000000" stroke-width="1" width="280.30655" x="50" y="50"/>
+<circle cx="100" cy="100" fill="none" r="100" stroke="#000000" stroke-width="1"/>
+<circle cx="100" cy="100" fill="none" r="50" stroke="#000000" stroke-width="1"/>
+<circle cx="100" cy="100" fill="none" r="25" stroke="#000000" stroke-width="1"/>
+<circle cx="100" cy="100" fill="none" r="12.5" stroke="#000000" stroke-width="1"/>
+<circle cx="100" cy="100" fill="none" r="6.25" stroke="#000000" stroke-width="1"/>
+<circle cx="100" cy="100" fill="none" r="3.125" stroke="#000000" stroke-width="1"/>
+<circle cx="100" cy="100" fill="none" r="1.5625" stroke="#000000" stroke-width="1"/>
+<circle cx="100" cy="100" fill="none" r="0.78125" stroke="#000000" stroke-width="1"/>
 </svg>
