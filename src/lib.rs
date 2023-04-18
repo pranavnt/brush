@@ -38,10 +38,8 @@ use std::string::String;
 
 #[no_mangle]
 #[wasm_bindgen]
-pub fn process_file(content: &str, callback: &mut dyn FnMut(String)) {
+pub fn process_file(content: &str) {
     process(content);
-    let output = "some output";
-    callback(output.to_owned());
 }
 
 

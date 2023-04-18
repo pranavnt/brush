@@ -5,15 +5,15 @@
     <title>brush example</title>
   </head>
   <body>
-   <form>
-       <label for="text">Enter text:</label>
-       <textarea id="text" name="text"></textarea>
-       <br>
-       <button type="button" onclick="processText()">Process text</button>
-   </form>
-   <p id="output"></p>
+    <form>
+        <label for="text">Enter text:</label>
+        <textarea id="text" name="text"></textarea>
+        <br>
+        <button onclick="processText()">Process text</button>
+    </form>
+    <p id="output"></p>
    <script type="module">
-       import init, { process_file } from "pkg\brush.js";
+       import init, { process_file } from "../pkg/brush.js";
        init().then(() => {
            console.log("Wasm module loaded");
        });
