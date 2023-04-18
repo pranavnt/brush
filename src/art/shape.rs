@@ -38,6 +38,7 @@ impl Drawable for Shape {
                 _ => { unimplemented!() }
             }
         }
+        self.path = Some(newData.close());
     }
 
     fn rotate_to(&mut self, angle: f32) {
