@@ -1,10 +1,12 @@
 <svg height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1000 1000" width="100%" xmlns="http://www.w3.org/2000/svg">
-<circle cx="100" cy="100" fill="none" r="100" stroke="#000000" stroke-width="1"/>
-<circle cx="100" cy="100" fill="none" r="50" stroke="#000000" stroke-width="1"/>
-<circle cx="100" cy="100" fill="none" r="25" stroke="#000000" stroke-width="1"/>
-<circle cx="100" cy="100" fill="none" r="12.5" stroke="#000000" stroke-width="1"/>
-<circle cx="100" cy="100" fill="none" r="6.25" stroke="#000000" stroke-width="1"/>
-<circle cx="100" cy="100" fill="none" r="3.125" stroke="#000000" stroke-width="1"/>
-<circle cx="100" cy="100" fill="none" r="1.5625" stroke="#000000" stroke-width="1"/>
-<circle cx="100" cy="100" fill="none" r="0.78125" stroke="#000000" stroke-width="1"/>
+<rect fill="none" height="50" stroke="#000000" stroke-width="1" width="50" x="500" y="500"/>
+<rect fill="none" height="50" stroke="#000000" stroke-width="1" width="50" x="308.8944" y="633.8136"/>
+<rect fill="none" height="50" stroke="#000000" stroke-width="1" width="50" x="83.54697" y="694.1952"/>
+<rect fill="none" height="50" stroke="#000000" stroke-width="1" width="50" x="-148.8621" y="673.86206"/>
+<rect fill="none" height="50" stroke="#000000" stroke-width="1" width="50" x="-360.30084" y="575.26654"/>
+<rect fill="none" height="50" stroke="#000000" stroke-width="1" width="50" x="-525.26654" y="410.30078"/>
+<rect fill="none" height="50" stroke="#000000" stroke-width="1" width="50" x="-623.86206" y="198.86203"/>
+<rect fill="none" height="50" stroke="#000000" stroke-width="1" width="50" x="-644.1952" y="-33.54712"/>
+<rect fill="none" height="50" stroke="#000000" stroke-width="1" width="50" x="-583.81354" y="-258.89453"/>
+<rect fill="none" height="50" stroke="#000000" stroke-width="1" width="50" x="-449.99997" y="-450.00003"/>
 </svg>

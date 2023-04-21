@@ -1,9 +1,9 @@
 let test = rectangle {
-    rotate(10)
+    rotate(20)
 }
 
 test(
-    position = (50, 75)
-    size = (500, 400)
-    generations = 20
+    position = (500, 500)
+    size = (50, 50)
+    generations = 10
 )

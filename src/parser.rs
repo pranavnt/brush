@@ -215,7 +215,7 @@ impl Parser {
                     kind: StatementKind::HueShift(Box::new(amount)),
                 });
             },
-            /* 
+            
             TokenType::REFLECT_KEYWORD => {
                 self.advance_past(TokenType::REFLECT_KEYWORD);
 
@@ -239,12 +239,13 @@ impl Parser {
                 let p2y = self.parse_expression(self.get_next(TokenType::R_PAREN));
 
                 self.advance_past(TokenType::ENDLINE);
-                return Node::Statement(StatementNode {
-                    kind: StatementKind::Reflect(Box::new((p1x, p1y)), Box::new((p2x, p2y))),
-                }); 
+
+                return Node::Statement(StatementNode { 
+                    kind: StatementKind::Reflect(Box::new(p1x), Box::new(p2x)),
+                 })
                 
 
-            } */
+            } 
             TokenType::KEYWORD => {
                 let keyword = self.tokens[self.current as usize].value.clone();
 
