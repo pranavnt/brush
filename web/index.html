@@ -6,33 +6,28 @@
   </head>
   <body>
     <form>
-        <label for="text">Enter text:</label>
-        <textarea id="text" name="text"></textarea>
-        <br>
-        <button onclick="processText()">Process text</button>
-    </form>
-    <p id="output"></p>
-   <script type="module">
-       import init, { process_file } from "../pkg/brush.js";
-       init().then(() => {
-           console.log("Wasm module loaded");
-       });
-
-       function processText() {
-           const name = "filePros";
-           const text = document.getElementById("text").value;
-           const file = new Blob([text], { type: "text/plain" });
-           const reader = new FileReader();
-           reader.readAsText(file);
-           reader.onload = function() {
-               const fileContent = reader.result;
-               process_file(fileContent, function(output){
-            const img = new Image();
-            img.src = "art.svg";
-            document.body.appendChild(img);
-        });
-           };
-       }
-   </script>
+      <label for="text">Enter text:</label>
+      <textarea id="text" name="text"></textarea>
+      <br>
+      <button onclick="process-button">Process text</button>
+     </form>
+    <script type="module">
+      import init, { process_file } from "../pkg/brush.js";
+      init().then(() => {
+          console.log("Wasm module loaded");
+          const processButton = document.getElementById("process-button");
+        processButton.addEventListener("click", processText);
+      });
+      function processText() {
+       console.log("got to function");
+      // event.preventDefault(); // prevent the form submission
+       const text = document.getElementById("text").value;
+       console.log(text);
+       const svgString = process_file(text); // call the Rust function to generate the SVG string
+       const img = document.createElement("img");
+       img.src = "data:image/svg+xml;base64," + btoa(svgString); // convert the SVG string to a data URL
+       document.forms[0].appendChild(img); // add the image to the HTML form
+     }
+  </script>
   </body>
 </html>

@@ -17,6 +17,7 @@ use crate::art::Drawable;
 use std::env;
 use std::fs::File;
 use std::io::Read;
+use  std::fmt::Display;
 
 use svg::node::element::path::Data;
 use svg::node::element::Path;
@@ -36,10 +37,16 @@ pub fn greet(name: &str) {
 }
 use std::string::String;
 
-#[no_mangle]
 #[wasm_bindgen]
-pub fn process_file(content: &str) {
+pub extern "C" fn process_file(content: &str) -> String{
     process(content);
+    let svg = format!(
+        r#"<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><text x="10" y="50">{}</text></svg>"#,
+        read_art_file()
+    );
+
+    // Return the SVG string
+    svg
 }
 
 
@@ -49,7 +56,12 @@ pub fn process_file(content: &str) {
 //     file.read_to_string(&mut rdin)?;
 //     Ok(rdin)
 // }
+use std::fs;
 
+pub fn read_art_file() -> String {
+    let svg_contents = fs::read_to_string("art.svg");
+    svg_contents.unwrap_or_else(|error| error.to_string())
+}
 fn process(content: &str) {
 
     let mut lex = Lexer::new(content.to_string());
