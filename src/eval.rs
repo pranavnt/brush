@@ -134,6 +134,17 @@ impl Interpreter {
                                                     ev_shape.rotate(angle);
                                                 }
 
+                                                StatementKind::RotateTo(angle) => {
+                                                    let angle = match *angle {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+                                                }
+
                                                 StatementKind::Reflect(p1, p2) => {
                                                     unimplemented!();
                                                 }

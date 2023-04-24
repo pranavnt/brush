@@ -98,6 +98,7 @@ impl Lexer {
                             "hue_shift" => all_tokens.push(Token::new(TokenType::HUE_SHIFT_KEYWORD, keyw)),
                             "stretch" => all_tokens.push(Token::new(TokenType::STRETCH_KEYWORD, keyw)),
                             "rotate" => all_tokens.push(Token::new(TokenType::ROTATE_KEYWORD, keyw)),
+                            "rotate_to" => all_tokens.push(Token::new(TokenType::ROTATETO_KEYWORD, keyw)),
                             "evolve" => all_tokens.push(Token::new(TokenType::EVOLVE_KEYWORD, keyw)),
                             "reflect" => all_tokens.push(Token::new(TokenType::REFLECT_KEYWORD, keyw)),
 

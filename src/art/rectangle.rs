@@ -26,6 +26,7 @@ impl BRectangle {
                     .set("height", height)
                     .set("x", x)
                     .set("y", y)
+                    .set("transform", "rotate")
                 ),
 
                 center: (x, y),
@@ -35,6 +36,7 @@ impl BRectangle {
                 outline_width: 1.0,
                 rotation: 0.0,
                 stretch: (1.0, 1.0),
+                
             },
 
             width: width,
@@ -46,44 +48,11 @@ impl BRectangle {
 
 impl Drawable for BRectangle {
     fn rotate(&mut self, angle: f32) {
-        
-        self.shape.rotation += angle;
-        let rad = self.shape.rotation * PI / 180.0;
-        let temp = self.shape.center;
-        self.shape.center = (0.0,0.0);
-
-        let p1 = (self.shape.center.0 - self.width / 2.0, self.shape.center.1 - self.height / 2.0);
-
-        /*let p2 = (self.shape.center.0 + self.width / 2.0, self.shape.center.1 - self.height / 2.0);
-        let p3 = (self.shape.center.0 - self.width / 2.0, self.shape.center.1 + self.height / 2.0);
-        let p4 = (self.shape.center.0 + self.width / 2.0, self.shape.center.1 + self.height / 2.0);
-        */
-        let rp1 = (p1.0 * rad.cos() - p1.1 * rad.sin(), 
-                            p1.0 * rad.sin() + p1.1 * rad.cos()); 
-        /*let rp2 = (p2.0 * self.shape.rotation.cos() - p2.1 * self.shape.rotation.sin(), 
-                            p2.0 * self.shape.rotation.sin() + p2.1 * self.shape.rotation.cos());
-
-        let rp3 = (p3.0 * self.shape.rotation.cos() - p3.1 * self.shape.rotation.sin(), 
-                            p3.0 * self.shape.rotation.sin() + p3.1 * self.shape.rotation.cos());
-
-        let rp4 = (p4.0 * self.shape.rotation.cos() - p4.1 * self.shape.rotation.sin(), 
-                            p4.0 * self.shape.rotation.sin() + p4.1 * self.shape.rotation.cos());
-        */
-        self.shape.center = temp;
-        self.shape.rect = Some(Rectangle::new()
-                    .set("fill", "none")
-                    .set("stroke", format!("#{:02x?}{:02x?}{:02x?}", self.shape.outline_color.0, self.shape.outline_color.1, self.shape.outline_color.2))
-                    .set("stroke-width", 1)
-                    .set("x", rp1.0)
-                    .set("y", rp1.1)
-                    .set("width", self.width)
-                    .set("height", self.height)
-                );
-        
+        self.shape.rotate(angle);
     }
         
     fn rotate_to(&mut self, angle: f32) {
-        unimplemented!();
+        self.shape.rotate_to(angle);
     }
 
     fn shift(&mut self, x: f32, y: f32) {
@@ -118,7 +87,7 @@ impl Drawable for BRectangle {
 
     fn update(&mut self) {
         let o_color = format!("#{:02x?}{:02x?}{:02x?}", self.shape.outline_color.0, self.shape.outline_color.1, self.shape.outline_color.2);
-        /* 
+        let rotate = format!("rotate({} {} {})", self.shape.rotation, self.shape.center.0, self.shape.center.1);
         self.shape.rect = Some(Rectangle::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
@@ -127,8 +96,9 @@ impl Drawable for BRectangle {
                     .set("y", self.shape.center.1 - self.height / 2.0)
                     .set("width", self.width)
                     .set("height", self.height)
+                    .set("transform", rotate)
                 );
-                */
+                
     }
 
     

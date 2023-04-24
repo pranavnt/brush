@@ -188,6 +188,18 @@ impl Parser {
                     kind: StatementKind::Rotate(Box::new(angle)),
                 });
             },
+            TokenType::ROTATETO_KEYWORD => {
+                self.advance_past(TokenType::ROTATETO_KEYWORD);
+
+                self.advance_past(TokenType::L_PAREN);
+                let angle = self.parse_expression(self.get_next(TokenType::R_PAREN));
+
+                self.advance_past(TokenType::ENDLINE);
+
+                return Node::Statement(StatementNode {
+                    kind: StatementKind::RotateTo(Box::new(angle)),
+                });
+            }
             TokenType::STRETCH_KEYWORD => {
                 self.advance_past(TokenType::STRETCH_KEYWORD);
 
