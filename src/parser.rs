@@ -188,6 +188,18 @@ impl Parser {
                     kind: StatementKind::Rotate(Box::new(angle)),
                 });
             },
+            TokenType::ROTATETO_KEYWORD => {
+                self.advance_past(TokenType::ROTATETO_KEYWORD);
+
+                self.advance_past(TokenType::L_PAREN);
+                let angle = self.parse_expression(self.get_next(TokenType::R_PAREN));
+
+                self.advance_past(TokenType::ENDLINE);
+
+                return Node::Statement(StatementNode {
+                    kind: StatementKind::RotateTo(Box::new(angle)),
+                });
+            }
             TokenType::STRETCH_KEYWORD => {
                 self.advance_past(TokenType::STRETCH_KEYWORD);
 
@@ -215,6 +227,37 @@ impl Parser {
                     kind: StatementKind::HueShift(Box::new(amount)),
                 });
             },
+            
+            TokenType::REFLECT_KEYWORD => {
+                self.advance_past(TokenType::REFLECT_KEYWORD);
+
+                self.advance_past(TokenType::L_PAREN);
+
+
+                self.advance_past(TokenType::L_PAREN);
+                let p1x = self.parse_expression(self.get_next(TokenType::COMMA));
+
+                self.advance_past(TokenType::COMMA);
+                let p1y = self.parse_expression(self.get_next(TokenType::R_PAREN));
+
+                self.advance_past(TokenType::R_PAREN);
+                self.advance_past(TokenType::COMMA);
+
+
+                self.advance_past(TokenType::L_PAREN);
+                let p2x = self.parse_expression(self.get_next(TokenType::COMMA));
+
+                self.advance_past(TokenType::COMMA);
+                let p2y = self.parse_expression(self.get_next(TokenType::R_PAREN));
+
+                self.advance_past(TokenType::ENDLINE);
+
+                return Node::Statement(StatementNode { 
+                    kind: StatementKind::Reflect(Box::new(p1x), Box::new(p2x)),
+                 })
+                
+
+            } 
             TokenType::KEYWORD => {
                 let keyword = self.tokens[self.current as usize].value.clone();
 

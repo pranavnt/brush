@@ -1,9 +1,10 @@
 let test = rectangle {
-    stretch(0.97, 1)
+    shift(10, 0)
+    rotate(10)
 }
 
 test(
-    position = (50, 75)
-    size = (500, 400)
-    generations = 20
+    position = (0, 500)
+    size = (100, 100)
+    generations = 100
 )

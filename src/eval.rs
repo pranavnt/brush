@@ -1,5 +1,5 @@
-use crate::art::{draw, BCircle, BRectangle, Drawable, Polygon, Shape, SVG};
 use crate::ast::*;
+use crate::art::{Shape, BCircle, BRectangle, Polygon, SVG, Drawable, draw};
 use crate::tokens::{Token, TokenType};
 use std::collections::*;
 
@@ -121,6 +121,33 @@ impl Interpreter {
                                                     ev_shape.hue_shift(hue_offset);
                                                 }
 
+                                                StatementKind::Rotate(angle) => {
+                                                    let angle = match *angle {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    ev_shape.rotate(angle);
+                                                }
+
+                                                StatementKind::RotateTo(angle) => {
+                                                    let angle = match *angle {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+                                                }
+
+                                                StatementKind::Reflect(p1, p2) => {
+                                                    unimplemented!();
+                                                }
                                                 _ => {  unimplemented!() }
                                             }
                                         }
@@ -338,7 +365,7 @@ impl Interpreter {
                                 rect = rect.clone();
                                 evolve_fn(&mut rect, statements.clone());
                             }
-                        }
+                        } 
 
                         ShapeKind::Circle => {
                             // (radius, center, color)
@@ -440,6 +467,7 @@ impl Interpreter {
                                 circle = circle.clone();
                                 evolve_fn(&mut circle, statements.clone());
                             }
+
                         }
 
                         _ => {

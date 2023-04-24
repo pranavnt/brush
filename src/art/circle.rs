@@ -70,6 +70,10 @@ impl Drawable for BCircle {
         }
     }
 
+    fn reflect(&mut self, p1: (f32, f32), p2: (f32, f32)) {
+        self.shape.reflect(p1, p2);
+    }
+
     fn hue_shift(&mut self, amount: f32) {
         self.shape.hue_shift(amount);
     }
@@ -85,4 +89,6 @@ impl Drawable for BCircle {
                     .set("cx", self.shape.center.0)
                     .set("cy", self.shape.center.1));
     }
+
+    
 }
