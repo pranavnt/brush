@@ -10,7 +10,6 @@ use svg::parser::Event;
 use svg::Document;
 
 use crate::art::{Drawable, Shape, BRectangle};
-
 impl BRectangle {
     pub fn new(x: f32, y: f32, width: f32, height: f32, outline_color: Option<(u8, u8, u8)>) -> BRectangle {
         BRectangle {
@@ -50,6 +49,8 @@ impl Drawable for BRectangle {
         
         self.shape.rotation += angle;
         let rad = self.shape.rotation * PI / 180.0;
+        let temp = self.shape.center;
+        self.shape.center = (0.0,0.0);
 
         let p1 = (self.shape.center.0 - self.width / 2.0, self.shape.center.1 - self.height / 2.0);
 
@@ -59,7 +60,6 @@ impl Drawable for BRectangle {
         */
         let rp1 = (p1.0 * rad.cos() - p1.1 * rad.sin(), 
                             p1.0 * rad.sin() + p1.1 * rad.cos()); 
-
         /*let rp2 = (p2.0 * self.shape.rotation.cos() - p2.1 * self.shape.rotation.sin(), 
                             p2.0 * self.shape.rotation.sin() + p2.1 * self.shape.rotation.cos());
 
@@ -69,12 +69,13 @@ impl Drawable for BRectangle {
         let rp4 = (p4.0 * self.shape.rotation.cos() - p4.1 * self.shape.rotation.sin(), 
                             p4.0 * self.shape.rotation.sin() + p4.1 * self.shape.rotation.cos());
         */
+        self.shape.center = temp;
         self.shape.rect = Some(Rectangle::new()
                     .set("fill", "none")
                     .set("stroke", format!("#{:02x?}{:02x?}{:02x?}", self.shape.outline_color.0, self.shape.outline_color.1, self.shape.outline_color.2))
                     .set("stroke-width", 1)
-                    .set("x", rp1.0 + self.width / 2.0)
-                    .set("y", rp1.1 + self.height / 2.0)
+                    .set("x", rp1.0)
+                    .set("y", rp1.1)
                     .set("width", self.width)
                     .set("height", self.height)
                 );
