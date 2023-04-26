@@ -50,6 +50,10 @@ impl Drawable for BCircle {
         unimplemented!();
     }
 
+    fn rotate_about(&mut self, angle: f32, x: f32, y: f32) {
+        self.shape.rotate_about(angle, x, y);
+    }
+
     fn shift(&mut self, x: f32, y: f32) {
         self.shape.center = (self.shape.center.0 + x, self.shape.center.1 + y);
     }

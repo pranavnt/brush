@@ -1,10 +1,10 @@
 let test = rectangle {
     shift(10, 0)
-    rotate(10)
+    rotate_about(10, 500, 500)
 }
 
 test(
-    position = (0, 500)
+    position = (250, 500)
     size = (100, 100)
     generations = 100
 )

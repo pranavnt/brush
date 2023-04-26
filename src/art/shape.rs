@@ -11,6 +11,7 @@ use svg::Document;
 use crate::art::{Drawable, Shape};
 
 impl Drawable for Shape {
+    
     fn rotate(&mut self, angle: f32) {
         self.rotation += angle;
         
@@ -20,6 +21,12 @@ impl Drawable for Shape {
         self.rotation = angle;
     }
 
+    fn rotate_about(&mut self, angle: f32, x: f32, y: f32) {
+        self.rotation += angle;
+        self.dimensions.0 = x;
+        self.dimensions.1 = y;
+    }
+    
     fn shift(&mut self, x: f32, y: f32) {
         self.center.0 += x;
         self.center.1 += y;
@@ -182,11 +189,13 @@ impl Drawable for Shape {
     fn update(&mut self) {
         let o_color = format!("#{:02x?}{:02x?}{:02x?}", self.outline_color.0, self.outline_color.1, self.outline_color.2);
         let rotate = format!("rotate({} {} {})", self.rotation, self.center.0, self.center.1);
+        let rotate_about = format!("rotate({} {} {})", self.rotation, self.dimensions.0, self.dimensions.1);
         self.svg = Some(Path::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
                     .set("stroke-width", 1)
                     .set("transform", rotate)
+                    .set("transform", rotate_about)
                     .set("d", self.path.clone().unwrap()))
                     
     }

@@ -17,6 +17,7 @@ use svg::Document;
 pub trait Drawable {
     fn rotate(&mut self, angle: f32);
     fn rotate_to(&mut self, angle: f32);
+    fn rotate_about(&mut self, angle: f32, x: f32, y: f32);
     fn shift(&mut self, x: f32, y: f32);
     fn shift_to(&mut self, x: f32, y: f32);
     fn stretch(&mut self, x: f32, y: f32);

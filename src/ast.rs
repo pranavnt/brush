@@ -39,6 +39,7 @@ pub enum StatementKind {
     Stretch(Box<Node>, Box<Node>),
     Rotate(Box<Node>),
     RotateTo(Box<Node>),
+    RotateAbout(Box<Node>, Box<Node>, Box<Node>),
     Reflect(Box<Node>, Box<Node>),
     // Warp(String, Box<Node>, Box<Node>),
 }

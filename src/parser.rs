@@ -200,6 +200,25 @@ impl Parser {
                     kind: StatementKind::RotateTo(Box::new(angle)),
                 });
             }
+
+            TokenType::ROTATEABOUT_KEYWORD => {
+                self.advance_past(TokenType::ROTATEABOUT_KEYWORD);
+
+                self.advance_past(TokenType::L_PAREN);
+                let angle = self.parse_expression(self.get_next(TokenType::COMMA));
+
+                self.advance_past(TokenType::COMMA);
+                let cx = self.parse_expression(self.get_next(TokenType::COMMA));
+
+                self.advance_past(TokenType::COMMA);
+                let cy = self.parse_expression(self.get_next(TokenType::R_PAREN));
+
+                self.advance_past(TokenType::ENDLINE);
+
+                return Node::Statement(StatementNode {
+                    kind: StatementKind::RotateAbout(Box::new(angle), Box::new(cx), Box::new(cy)),
+                });
+            }
             TokenType::STRETCH_KEYWORD => {
                 self.advance_past(TokenType::STRETCH_KEYWORD);
 

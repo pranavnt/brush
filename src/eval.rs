@@ -145,6 +145,36 @@ impl Interpreter {
                                                     };
                                                 }
 
+                                                StatementKind::RotateAbout(angle, cx, cy) => {
+                                                    let angle = match *angle {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    let cx = match *cx {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    let cy = match *cy {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+                                                }
+
                                                 StatementKind::Reflect(p1, p2) => {
                                                     unimplemented!();
                                                 }
