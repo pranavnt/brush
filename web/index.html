@@ -1,33 +1,37 @@
 <!DOCTYPE html>
 <html lang="en-US">
-  <head>
-    <meta charset="utf-8" />
-    <title>brush example</title>
-  </head>
-  <body>
-    <form>
-      <label for="text">Enter text:</label>
-      <textarea id="text" name="text"></textarea>
-      <br>
-      <button onclick="process-button">Process text</button>
-     </form>
-    <script type="module">
-      import init, { process_file } from "../pkg/brush.js";
-      init().then(() => {
-          console.log("Wasm module loaded");
-          const processButton = document.getElementById("process-button");
-        processButton.addEventListener("click", processText);
-      });
-      function processText() {
-       console.log("got to function");
-      // event.preventDefault(); // prevent the form submission
-       const text = document.getElementById("text").value;
-       console.log(text);
-       const svgString = process_file(text); // call the Rust function to generate the SVG string
-       const img = document.createElement("img");
-       img.src = "data:image/svg+xml;base64," + btoa(svgString); // convert the SVG string to a data URL
-       document.forms[0].appendChild(img); // add the image to the HTML form
-     }
+
+<head>
+  <meta charset="utf-8" />
+  <title>brush example</title>
+</head>
+
+<body>
+  
+  <label for="text">Enter text:</label>
+  <textarea id="text" name="text"></textarea>
+  <br>
+  <button onclick="window.processText()">Process text</button>
+
+  <script type="module" defer>
+    import init, { process_file } from "../pkg/brush.js";
+    init().then(() => {
+      console.log("Wasm module loaded");
+    });
+
+    function processText() {
+        console.log("got to function");
+        // event.preventDefault(); // prevent the form submission
+        const text = document.getElementById("text").value;
+        console.log(text);
+        const svgString = process_file(text); // call the Rust function to generate the SVG string
+        console.log("produce string");
+        const img = document.createElement("img");
+        img.src = "data:image/svg+xml;base64," + btoa(svgString); // convert the SVG string to a data URL
+        document.body.appendChild(img); // add the image to the HTML form
+      }
+      window.processText = processText
   </script>
-  </body>
+</body>
+
 </html>

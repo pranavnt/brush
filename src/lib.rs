@@ -63,7 +63,6 @@ pub fn read_art_file() -> String {
     svg_contents.unwrap_or_else(|error| error.to_string())
 }
 fn process(content: &str) {
-
     let mut lex = Lexer::new(content.to_string());
     let tokens = lex.lex();
     let mut parser = Parser::new(tokens);
