@@ -1,10 +1,9 @@
 let my_shape = circle {
-  shift(1, 0)
-  rotate_about(10, 500, 500)
+  reflect(0, 0, 500 ,500)
 }
 
 my_shape(
-    radius = 50
+    radius = 10
     center = (500, 500)
-    generations = 700
+    generations = 5
 )

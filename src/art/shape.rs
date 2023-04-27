@@ -96,16 +96,16 @@ impl Drawable for Shape {
         unimplemented!();
     }
     
-    fn reflect(&mut self, p1: (f32, f32), p2: (f32, f32)) {
+    fn reflect(&mut self, p1x: f32, p1y: f32, p2x: f32, p2y: f32) {
         // get line properties
-        let slope = (p2.1 - p1.1) / (p2.0 - p1.0);
-        let intercept = p1.1 - slope * p1.0;
+        let slope = (p2y - p1y) / (p2x - p1x);
+        let intercept = p1y - slope * p1x;
         // reflect the center
         self.center.0 = self.center.0 - (2.0 * (slope * self.center.1 - self.center.0 + intercept)) / (slope.powi(2) + 1.0);
         self.center.1 = self.center.1 + slope * ((2.0 * (slope * self.center.1 - self.center.0 + intercept)) / (slope.powi(2) + 1.0))- 2.0 * intercept;
 
         // iterate through the path and shift each point
-        let mut cdata = self.path.clone().unwrap();
+        /* let mut cdata = self.path.clone().unwrap();
         let mut newData = Data::new();
 
         // bruh we have to handle each type of command
@@ -125,12 +125,10 @@ impl Drawable for Shape {
                 Command::Close => {}
 
                 _ => {  unimplemented!() }
-            }
+            }*/
         }
 
-        self.path = Some(newData.close());
-
-    }
+        //self.path = Some(newData.close());
     fn hue_shift(&mut self, amount: f32) {
         // Convert RGB to HSL
         let r = self.outline_color.0 as f32 / 255.0;

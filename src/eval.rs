@@ -179,9 +179,46 @@ impl Interpreter {
                                                     ev_shape.rotate_about(angle, x, y);
                                                 }
 
-                                                StatementKind::Reflect(p1, p2) => {
-                                                    unimplemented!();
-                                                }
+                                                StatementKind::Reflect(p1x, p1y, p2x, p2y) => {
+                                                    let p1x = match *p1x {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    let p1y = match *p1y {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    let p2x = match *p2x {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    let p2y = match *p2y {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    ev_shape.reflect(p1x, p1y, p2x, p2y);
+                                                 }
                                                 _ => {  unimplemented!() }
                                             }
                                         }

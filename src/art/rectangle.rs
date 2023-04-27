@@ -78,13 +78,8 @@ impl Drawable for BRectangle {
         self.height = y;
     }
 
-    fn reflect(&mut self, p1: (f32, f32), p2: (f32, f32)) {
-        // get line properties
-        let slope = (p2.1 - p1.1) / (p2.0 - p1.0);
-        let intercept = p1.1 - slope * p1.0;
-        // reflect the center
-        self.shape.center.0 = self.shape.center.0 - (2.0 * (slope * self.shape.center.1 - self.shape.center.0 + intercept)) / (slope.powi(2) + 1.0);
-        self.shape.center.1 = self.shape.center.1 + slope * ((2.0 * (slope * self.shape.center.1 - self.shape.center.0 + intercept)) / (slope.powi(2) + 1.0))- 2.0 * intercept;
+    fn reflect(&mut self, p1x: f32, p1y: f32, p2x: f32, p2y: f32) {
+        self.shape.reflect(p1x, p1y, p2x, p2y);
     }
     fn hue_shift(&mut self, amount: f32) {
         self.shape.hue_shift(amount);

@@ -45,11 +45,11 @@ impl BCircle {
 
 impl Drawable for BCircle {
     fn rotate(&mut self, angle: f32) {
-        unimplemented!();
+        self.shape.rotate(angle);
     }
 
     fn rotate_to(&mut self, angle: f32) {
-        unimplemented!();
+        self.shape.rotate_to(angle);
     }
 
     fn rotate_about(&mut self, angle: f32, x: f32, y: f32) {
@@ -76,8 +76,8 @@ impl Drawable for BCircle {
         }
     }
 
-    fn reflect(&mut self, p1: (f32, f32), p2: (f32, f32)) {
-        self.shape.reflect(p1, p2);
+    fn reflect(&mut self, p1x: f32, p1y: f32, p2x: f32, p2y: f32) {
+        self.shape.reflect(p1x, p1y, p2x, p2y);
     }
 
     fn hue_shift(&mut self, amount: f32) {
