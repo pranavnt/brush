@@ -6,5 +6,5 @@ let my_shape = circle {
 my_shape(
     radius = 50
     center = (500, 500)
-    generations = 500
+    generations = 700
 )
