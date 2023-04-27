@@ -104,31 +104,14 @@ impl Drawable for Shape {
         self.center.0 = self.center.0 - (2.0 * (slope * self.center.1 - self.center.0 + intercept)) / (slope.powi(2) + 1.0);
         self.center.1 = self.center.1 + slope * ((2.0 * (slope * self.center.1 - self.center.0 + intercept)) / (slope.powi(2) + 1.0))- 2.0 * intercept;
 
-        // iterate through the path and shift each point
-        /* let mut cdata = self.path.clone().unwrap();
-        let mut newData = Data::new();
+    }
 
-        // bruh we have to handle each type of command
-        for cmd in cdata.iter() {
-            // derefererence error here
-            match cmd {
-                Command::Move(_pos, para) => {
-                    newData = newData.move_to((para.get(0).unwrap() - (2.0 * (slope * para.get(1).unwrap() - para.get(0).unwrap() + intercept)) / (slope.powi(2) + 1.0), 
-                    para.get(1).unwrap() + slope * (2.0 * (slope * para.get(1).unwrap() - para.get(0).unwrap() + intercept)) / (slope.powi(2) + 1.0) - 2.0 * intercept));
-                }
+    fn warp(&mut self, function: String, freq: f32, ampl: f32) {
+        if(function == "ripple") {
 
-                Command::Line(_pos, para) => {
-                    newData = newData.line_to((para.get(0).unwrap() - (2.0 * (slope * para.get(1).unwrap() - para.get(0).unwrap() + intercept)) / (slope.powi(2) + 1.0), 
-                    para.get(1).unwrap() + slope * (2.0 * (slope * para.get(1).unwrap() - para.get(0).unwrap() + intercept)) / (slope.powi(2) + 1.0) - 2.0 * intercept));
-                }
-
-                Command::Close => {}
-
-                _ => {  unimplemented!() }
-            }*/
         }
-
-        //self.path = Some(newData.close());
+    }
+        
     fn hue_shift(&mut self, amount: f32) {
         // Convert RGB to HSL
         let r = self.outline_color.0 as f32 / 255.0;

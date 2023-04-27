@@ -267,10 +267,26 @@ impl Parser {
                 return Node::Statement(StatementNode {
                     kind: StatementKind::Reflect(Box::new(p1x), Box::new(p1y), Box::new(p2x), Box::new(p2y))
                 });
-                
-                
-
             } 
+
+            TokenType::WARP_KEYWORD => {
+                self.advance_past(TokenType::WARP_KEYWORD);
+
+                self.advance_past(TokenType::L_PAREN);
+                let function = self.parse_expression(self.get_next(TokenType::COMMA));
+
+                self.advance_past(TokenType::COMMA);
+                let freq = self.parse_expression(self.get_next(TokenType::COMMA));
+
+                self.advance_past(TokenType::COMMA);
+                let ampl = self.parse_expression(self.get_next(TokenType::R_PAREN));
+
+                self.advance_past(TokenType::ENDLINE);
+
+                return Node::Statement(StatementNode { 
+                    kind: StatementKind::Warp(Box::new(function), Box::new(freq), Box::new(ampl)) 
+                });
+            }
             TokenType::KEYWORD => {
                 let keyword = self.tokens[self.current as usize].value.clone();
 

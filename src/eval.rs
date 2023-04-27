@@ -218,7 +218,41 @@ impl Interpreter {
                                                     };
 
                                                     ev_shape.reflect(p1x, p1y, p2x, p2y);
-                                                 }
+                                                }
+
+                                                StatementKind::Warp(function, freq, ampl) => {
+                                                    let function = match *function {
+                                                        Node::StringLiteral(string) => {
+                                                            string.value
+                                                        }
+
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    let freq = match *freq {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    let ampl = match *ampl {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    ev_shape.warp(function, freq, ampl);
+                                                }
                                                 _ => {  unimplemented!() }
                                             }
                                         }

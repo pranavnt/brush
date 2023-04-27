@@ -100,6 +100,7 @@ impl Lexer {
                             "rotate" => all_tokens.push(Token::new(TokenType::ROTATE_KEYWORD, keyw)),
                             "rotate_to" => all_tokens.push(Token::new(TokenType::ROTATETO_KEYWORD, keyw)),
                             "rotate_about" => all_tokens.push(Token::new(TokenType::ROTATEABOUT_KEYWORD, keyw)),
+                            "warp" => all_tokens.push(Token::new(TokenType::WARP_KEYWORD, keyw)),
                             "evolve" => all_tokens.push(Token::new(TokenType::EVOLVE_KEYWORD, keyw)),
                             "reflect" => all_tokens.push(Token::new(TokenType::REFLECT_KEYWORD, keyw)),
 

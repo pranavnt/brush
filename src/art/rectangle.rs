@@ -81,6 +81,10 @@ impl Drawable for BRectangle {
     fn reflect(&mut self, p1x: f32, p1y: f32, p2x: f32, p2y: f32) {
         self.shape.reflect(p1x, p1y, p2x, p2y);
     }
+
+    fn warp(&mut self, function: String, freq: f32, ampl: f32) {
+        self.shape.warp(function, freq, ampl);
+    }
     fn hue_shift(&mut self, amount: f32) {
         self.shape.hue_shift(amount);
     }

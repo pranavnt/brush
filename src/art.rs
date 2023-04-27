@@ -23,6 +23,7 @@ pub trait Drawable {
     fn stretch(&mut self, x: f32, y: f32);
     fn stretch_to(&mut self, x: f32, y: f32);
     fn reflect(&mut self, p1x: f32, p1y: f32, p2x: f32, p2y: f32);
+    fn warp(&mut self, function: String, freq: f32, ampl: f32);
     fn hue_shift(&mut self, amount: f32);
     fn update(&mut self);
 }

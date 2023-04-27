@@ -80,6 +80,9 @@ impl Drawable for BCircle {
         self.shape.reflect(p1x, p1y, p2x, p2y);
     }
 
+    fn warp(&mut self, function: String, freq: f32, ampl: f32) {
+        self.shape.warp(function, freq, ampl);
+    }
     fn hue_shift(&mut self, amount: f32) {
         self.shape.hue_shift(amount);
     }
