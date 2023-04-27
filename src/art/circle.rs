@@ -86,13 +86,15 @@ impl Drawable for BCircle {
 
     fn update(&mut self) {
         let o_color = format!("#{:02x?}{:02x?}{:02x?}", self.shape.outline_color.0, self.shape.outline_color.1, self.shape.outline_color.2);
+        let rotate = format!("rotate({} {} {})", self.shape.rotation, self.shape.point_of_rotation.0, self.shape.point_of_rotation.1);
         self.shape.circ = Some(Circle::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
                     .set("stroke-width", 1)
                     .set("r", self.radius)
                     .set("cx", self.shape.center.0)
-                    .set("cy", self.shape.center.1));
+                    .set("cy", self.shape.center.1)
+                    .set("transform", rotate));
                     
                     
                     

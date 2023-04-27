@@ -92,7 +92,7 @@ impl Drawable for BRectangle {
 
     fn update(&mut self) {
         let o_color = format!("#{:02x?}{:02x?}{:02x?}", self.shape.outline_color.0, self.shape.outline_color.1, self.shape.outline_color.2);
-        let rotate = format!("rotate({} {} {})", self.shape.rotation, self.shape.center.0, self.shape.center.1);
+        let rotate = format!("rotate({} {} {})", self.shape.rotation, self.shape.point_of_rotation.0, self.shape.point_of_rotation.1);
         self.shape.rect = Some(Rectangle::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
