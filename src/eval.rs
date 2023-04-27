@@ -143,9 +143,11 @@ impl Interpreter {
                                                             panic!("wrong type somewhere");
                                                         }
                                                     };
+
+                                                    ev_shape.rotate(angle);
                                                 }
 
-                                                StatementKind::RotateAbout(angle, cx, cy) => {
+                                                StatementKind::RotateAbout(angle, x, y) => {
                                                     let angle = match *angle {
                                                         Node::NumberLiteral(num) => {
                                                             num.value
@@ -155,7 +157,7 @@ impl Interpreter {
                                                         }
                                                     };
 
-                                                    let cx = match *cx {
+                                                    let x = match *x {
                                                         Node::NumberLiteral(num) => {
                                                             num.value
                                                         }
@@ -164,7 +166,7 @@ impl Interpreter {
                                                         }
                                                     };
 
-                                                    let cy = match *cy {
+                                                    let y = match *y {
                                                         Node::NumberLiteral(num) => {
                                                             num.value
                                                         }
@@ -173,6 +175,8 @@ impl Interpreter {
                                                             panic!("wrong type somewhere");
                                                         }
                                                     };
+
+                                                    ev_shape.rotate_about(angle, x, y);
                                                 }
 
                                                 StatementKind::Reflect(p1, p2) => {

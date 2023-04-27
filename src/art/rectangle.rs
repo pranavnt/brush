@@ -35,6 +35,7 @@ impl BRectangle {
                 outline_color: outline_color.unwrap_or((0, 0, 0)),
                 outline_width: 1.0,
                 rotation: 0.0,
+                point_of_rotation: (0.0, 0.0),
                 stretch: (1.0, 1.0),
                 
             },

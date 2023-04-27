@@ -208,15 +208,15 @@ impl Parser {
                 let angle = self.parse_expression(self.get_next(TokenType::COMMA));
 
                 self.advance_past(TokenType::COMMA);
-                let cx = self.parse_expression(self.get_next(TokenType::COMMA));
+                let x = self.parse_expression(self.get_next(TokenType::COMMA));
 
                 self.advance_past(TokenType::COMMA);
-                let cy = self.parse_expression(self.get_next(TokenType::R_PAREN));
+                let y = self.parse_expression(self.get_next(TokenType::R_PAREN));
 
                 self.advance_past(TokenType::ENDLINE);
 
                 return Node::Statement(StatementNode {
-                    kind: StatementKind::RotateAbout(Box::new(angle), Box::new(cx), Box::new(cy)),
+                    kind: StatementKind::RotateAbout(Box::new(angle), Box::new(x), Box::new(y)),
                 });
             }
             TokenType::STRETCH_KEYWORD => {

@@ -24,6 +24,7 @@ impl BCircle {
                     .set("r", radius)
                     .set("cx", x)
                     .set("cy", y)
+                    .set("transform", "rotate")
                 ),
                 rect: None,
 
@@ -33,6 +34,7 @@ impl BCircle {
                 outline_color: outline_color.unwrap_or((0, 0, 0)),
                 outline_width: 1.0,
                 rotation: 0.0,
+                point_of_rotation: (0.0, 0.0),
                 stretch: (1.0, 1.0),
             },
 
@@ -84,7 +86,6 @@ impl Drawable for BCircle {
 
     fn update(&mut self) {
         let o_color = format!("#{:02x?}{:02x?}{:02x?}", self.shape.outline_color.0, self.shape.outline_color.1, self.shape.outline_color.2);
-
         self.shape.circ = Some(Circle::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
@@ -92,6 +93,9 @@ impl Drawable for BCircle {
                     .set("r", self.radius)
                     .set("cx", self.shape.center.0)
                     .set("cy", self.shape.center.1));
+                    
+                    
+                    
     }
 
     

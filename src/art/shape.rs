@@ -14,17 +14,18 @@ impl Drawable for Shape {
     
     fn rotate(&mut self, angle: f32) {
         self.rotation += angle;
+        self.point_of_rotation = self.center;
         
     }
 
     fn rotate_to(&mut self, angle: f32) {
         self.rotation = angle;
+        self.point_of_rotation = self.center;
     }
 
     fn rotate_about(&mut self, angle: f32, x: f32, y: f32) {
         self.rotation += angle;
-        self.dimensions.0 = x;
-        self.dimensions.1 = y;
+        self.point_of_rotation = (x, y);
     }
     
     fn shift(&mut self, x: f32, y: f32) {
@@ -188,15 +189,13 @@ impl Drawable for Shape {
 
     fn update(&mut self) {
         let o_color = format!("#{:02x?}{:02x?}{:02x?}", self.outline_color.0, self.outline_color.1, self.outline_color.2);
-        let rotate = format!("rotate({} {} {})", self.rotation, self.center.0, self.center.1);
-        let rotate_about = format!("rotate({} {} {})", self.rotation, self.dimensions.0, self.dimensions.1);
+        let rotate = format!("rotate({} {} {})", self.rotation, self.point_of_rotation.0, self.point_of_rotation.1);
         self.svg = Some(Path::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
                     .set("stroke-width", 1)
                     .set("transform", rotate)
-                    .set("transform", rotate_about)
-                    .set("d", self.path.clone().unwrap()))
+                    .set("d", self.path.clone().unwrap()));
                     
     }
 }
