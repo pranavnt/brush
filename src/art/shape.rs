@@ -58,7 +58,32 @@ impl Drawable for Shape {
     }
 
     fn shift_to(&mut self, x: f32, y: f32) {
-        unimplemented!();
+        self.center.0 = x;
+        self.center.1 = y;
+
+        // iterate through the path and shift each point
+        let mut cdata = self.path.clone().unwrap();
+        let mut newData = Data::new();
+
+        // bruh we have to handle each type of command
+        for cmd in cdata.iter() {
+            // derefererence error here
+            match cmd {
+                Command::Move(_pos, para) => {
+                    newData = newData.move_to((para.get(0).unwrap() + x, para.get(1).unwrap() + y));
+                }
+
+                Command::Line(_pos, para) => {
+                    newData = newData.line_to((para.get(0).unwrap() + x, para.get(1).unwrap() + y));
+                }
+
+                Command::Close => {}
+
+                _ => {  unimplemented!() }
+            }
+        }
+
+        self.path = Some(newData.close());
     }
 
     fn stretch(&mut self, x: f32, y: f32) {
