@@ -14,18 +14,17 @@
   <button onclick="window.processText()">Process text</button>
 
   <script type="module" defer>
-    import init, { process_file } from "../pkg/brush.js";
+    import init, { process_file, greet } from "../pkg/brush.js";
     init().then(() => {
       console.log("Wasm module loaded");
     });
 
     function processText() {
         console.log("got to function");
-        // event.preventDefault(); // prevent the form submission
         const text = document.getElementById("text").value;
         console.log(text);
         const svgString = process_file(text); // call the Rust function to generate the SVG string
-        console.log("produce string");
+        console.log(svgString);
         const img = document.createElement("img");
         img.src = "data:image/svg+xml;base64," + btoa(svgString); // convert the SVG string to a data URL
         document.body.appendChild(img); // add the image to the HTML form

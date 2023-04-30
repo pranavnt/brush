@@ -66,8 +66,9 @@ pub struct SVG {
     shape: Shape,
     dimensions: (f32, f32),
 }
+static mut SVG_STRING: Option<String> = None;
 
-pub fn draw(shapes: Vec<Shape>) -> Result<(), Error> {
+pub fn draw(shapes: Vec<Shape>) -> Result<String, Error> {
     let mut canvas: Document = Document::new()
         .set("viewBox", (0, 0, 1000, 1000))
         .set("width", "100%")
@@ -82,8 +83,18 @@ pub fn draw(shapes: Vec<Shape>) -> Result<(), Error> {
             canvas = canvas.add(shape.svg.unwrap());
         }
     }
+    unsafe {
+        SVG_STRING = Some(canvas.to_string());
+    }
+    Ok(canvas.to_string())
 
-    svg::save("art.svg", &canvas).unwrap();
+}   
 
-    Ok(())
+pub fn name() -> String {
+    unsafe {
+        match &SVG_STRING {
+            Some(s) => String::from(s.clone()),
+            None => String::new(),
+        }
+    }
 }

@@ -11,6 +11,7 @@ use crate::lexer::Lexer;
 use crate::parser::Parser;
 
 use crate::art::draw;
+use crate::art::name;
 //use crate::art::Circle;
 use crate::art::Drawable;
 
@@ -26,6 +27,7 @@ use svg::Document;
 
 use wasm_bindgen::prelude::*;
 
+
 #[wasm_bindgen]
 extern {
     pub fn alert(s: &str);
@@ -38,17 +40,11 @@ pub fn greet(name: &str) {
 use std::string::String;
 
 #[wasm_bindgen]
-pub extern "C" fn process_file(content: &str) -> String{
+pub fn process_file(content: &str) -> String{
     process(content);
-    let svg = format!(
-        r#"<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><text x="10" y="50">{}</text></svg>"#,
-        read_art_file()
-    );
-
-    // Return the SVG string
+   let svg = name();
     svg
 }
-
 
 // fn open_file(path: &str) -> Result<String, std::io::Error> {
 //     let mut file = File::open(path)?;
@@ -56,14 +52,9 @@ pub extern "C" fn process_file(content: &str) -> String{
 //     file.read_to_string(&mut rdin)?;
 //     Ok(rdin)
 // }
-use std::fs;
 
-pub fn read_art_file() -> String {
-    let svg_contents = fs::read_to_string("art.svg");
-    svg_contents.unwrap_or_else(|error| error.to_string())
-}
 fn process(content: &str) {
-    let mut lex = Lexer::new(content.to_string());
+    let mut lex = Lexer::new(String::from(content));
     let tokens = lex.lex();
     let mut parser = Parser::new(tokens);
     let ast = parser.parse_program();
