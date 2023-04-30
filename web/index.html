@@ -4,12 +4,54 @@
 <head>
   <meta charset="utf-8" />
   <title>brush example</title>
+  <style>
+    body {
+        background-color: #f5f5f5;
+      }
+      
+      h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+      }
+      
+      button {
+        font-size: 20px;
+        margin-top: 20px;
+      }
+      
+    #container {
+      padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    #text {
+      padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      margin-right: 50px;
+    }
+    #img {
+      padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        max-width: 500px;
+        max-height: 500px;
+      }
+      button:hover {
+        cursor: pointer;
+      }
+  </style>
 </head>
 
 <body>
-  
-  <label for="text">Enter text:</label>
-  <textarea id="text" name="text"></textarea>
+  <h3>Enter code here:</h3>
+  <div id="container">
+    <textarea id="text" name="text" rows="30" cols="60"></textarea>
+    <img id="img" />
+  </div>
   <br>
   <button onclick="window.processText()">Process text</button>
 
@@ -25,9 +67,9 @@
         console.log(text);
         const svgString = process_file(text); // call the Rust function to generate the SVG string
         console.log(svgString);
-        const img = document.createElement("img");
+        const img = document.getElementById("img");
         img.src = "data:image/svg+xml;base64," + btoa(svgString); // convert the SVG string to a data URL
-        document.body.appendChild(img); // add the image to the HTML form
+       // document.body.appendChild(img); // add the image to the HTML form
       }
       window.processText = processText
   </script>
