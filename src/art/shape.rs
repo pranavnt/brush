@@ -122,22 +122,28 @@ impl Drawable for Shape {
     }
     
     fn reflect(&mut self, p1x: f32, p1y: f32, p2x: f32, p2y: f32) {
-        let slope = (p2y - p1y) / (p2x - p1x);
+        if p1x == p2x {
+            self.center.0 = p1x - ((self.center.0 - p1x).abs());
+        } else if p1y == p2y {
+            self.center.1 = 2.0 * p1y - self.center.1;
+        } else {
+            let slope = (p2y - p1y) / (p2x - p1x);
 
-        let y_intercept = p1y - slope * p1x;
-
-        let perp_slope = -1.0 / slope;
-
-        let perp_y_intercept = self.center.1 - perp_slope * self.center.0;
-
-        let x_intersect = (perp_y_intercept - y_intercept) / (slope - perp_slope);
-        let y_intersect = slope * x_intersect + y_intercept;
-
-        let reflected_x = 2.0 * x_intersect - self.center.0;
-        let reflected_y = 2.0 * y_intersect - self.center.1;
-
-        self.center.0 = reflected_x;
-        self.center.1 = reflected_y;
+            let y_intercept = p1y - slope * p1x;
+    
+            let perp_slope = -1.0 / slope;
+    
+            let perp_y_intercept = self.center.1 - perp_slope * self.center.0;
+    
+            let x_intersect = (perp_y_intercept - y_intercept) / (slope - perp_slope);
+            let y_intersect = slope * x_intersect + y_intercept;
+    
+            let reflected_x = 2.0 * x_intersect - self.center.0;
+            let reflected_y = 2.0 * y_intersect - self.center.1;
+    
+            self.center.0 = reflected_x;
+            self.center.1 = reflected_y;
+        }  
     }
 
     fn warp(&mut self, function: String, freq: f32, ampl: f32) {

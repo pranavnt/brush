@@ -1,5 +1,5 @@
 let my_shape = circle {
-  reflect(0, 0, 1000 , 1000)
+  reflect(500, 0, 500, 1000)
   shift(10, 0)
   stretch(1.1, 1.1)
 }
