@@ -22,23 +22,17 @@
     #container {
       padding: 20px;
         border: 1px solid #ddd;
-        border-radius: 5px;
+        border-radius: 0px;
       display: flex;
       flex-direction: row;
       align-items: center;
     }
-    #text {
-      padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      margin-right: 50px;
-    }
     #img {
+      margin-left: 350px;
       padding: 10px;
-        border: 1px solid #ccc;
         border-radius: 5px;
-        max-width: 500px;
-        max-height: 500px;
+        max-width: 600px;
+        max-height: 700px;
       }
       button:hover {
         cursor: pointer;
@@ -47,9 +41,44 @@
         position: absolute;
   top: 0;
   right: 0;
-  padding: 10px;
+  padding: 100px;
   background-color: #f00;
     }
+    .editor {
+  display: inline-flex;
+  gap: 20px;
+  font-family: monospace;
+  background: #282a3a;
+  border-radius: 20px;
+  padding: 20px 10px;
+}
+
+.line-numbers {
+  width: 40px;
+  text-align: right;
+}
+
+.line-numbers span {
+  counter-increment: linenumber;
+}
+
+.line-numbers span::before {
+  content: counter(linenumber);
+  display: block;
+  color: #506882;
+}
+
+textarea {
+  line-height: 15px;
+  overflow-y: hidden;
+  padding: 0;
+  border: 0;
+  background: #282a3a;
+  color: #FFF;
+  min-width: 800px;
+  outline: none;
+  resize: none;
+}
   </style>
 </head>
 
@@ -57,7 +86,10 @@
   <a href="API.html" id="API-link">API</a>
   <h3>Enter code here:</h3>
   <div id="container">
-    <textarea id="text" name="text" rows="30" cols="60"></textarea>
+    <div class="editor">
+      <div class="line-numbers"></div>
+      <textarea id="text" name="text" rows="40" cols="60"></textarea>
+    </div>
     <img id="img" />
   </div>
   <br>
@@ -81,6 +113,20 @@
       }
       window.processText = processText
   </script>
+  <script>
+    const textarea = document.getElementById("text");
+const lineNumbers = document.querySelector(".line-numbers");
+
+textarea.addEventListener("input", () => {
+  const lines = textarea.value.split("\n").length;
+  lineNumbers.innerHTML = "";
+  for (let i = 1; i <= lines; i++) {
+    lineNumbers.innerHTML += `<span></span>`;
+  }
+});
+
+  </script>
+  
 </body>
 
 </html>
