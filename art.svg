@@ -1,502 +1,102 @@
 <svg height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1000 1000" width="100%" xmlns="http://www.w3.org/2000/svg">
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(70 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(140 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(210 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(280 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(350 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(420 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(490 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(560 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(630 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(700 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(770 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(840 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(910 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(980 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(1050 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(1120 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(1190 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(1260 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(1330 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(1400 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(1470 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(1540 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(1610 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(1680 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(1750 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(1820 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(1890 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(1960 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(2030 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(2100 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(2170 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(2240 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(2310 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(2380 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(2450 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(2520 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(2590 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(2660 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(2730 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(2800 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(2870 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(2940 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(3010 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(3080 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(3150 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(3220 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(3290 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(3360 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(3430 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(3500 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(3570 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(3640 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(3710 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(3780 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(3850 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(3920 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(3990 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(4060 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(4130 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(4200 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(4270 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(4340 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(4410 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(4480 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(4550 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(4620 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(4690 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(4760 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(4830 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(4900 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(4970 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(5040 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(5110 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(5180 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(5250 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(5320 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(5390 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(5460 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(5530 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(5600 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(5670 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(5740 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(5810 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(5880 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(5950 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(6020 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(6090 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(6160 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(6230 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(6300 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(6370 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(6440 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(6510 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(6580 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(6650 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(6720 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(6790 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(6860 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(6930 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(7000 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(7070 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(7140 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(7210 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(7280 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(7350 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(7420 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(7490 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(7560 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(7630 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(7700 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(7770 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(7840 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(7910 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(7980 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(8050 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(8120 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(8190 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(8260 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(8330 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(8400 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(8470 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(8540 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(8610 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(8680 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(8750 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(8820 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(8890 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(8960 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(9030 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(9100 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(9170 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(9240 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(9310 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(9380 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(9450 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(9520 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(9590 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(9660 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(9730 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(9800 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(9870 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(9940 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(10010 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(10080 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(10150 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(10220 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(10290 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(10360 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(10430 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(10500 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(10570 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(10640 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(10710 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(10780 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(10850 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(10920 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(10990 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(11060 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(11130 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(11200 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(11270 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(11340 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(11410 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(11480 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(11550 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(11620 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(11690 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(11760 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(11830 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(11900 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(11970 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(12040 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(12110 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(12180 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(12250 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(12320 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(12390 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(12460 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(12530 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(12600 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(12670 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(12740 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(12810 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(12880 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(12950 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(13020 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(13090 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(13160 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(13230 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(13300 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(13370 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(13440 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(13510 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(13580 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(13650 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(13720 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(13790 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(13860 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(13930 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(14000 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(14070 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(14140 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(14210 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(14280 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(14350 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(14420 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(14490 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(14560 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(14630 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(14700 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(14770 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(14840 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(14910 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(14980 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(15050 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(15120 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(15190 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(15260 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(15330 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(15400 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(15470 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(15540 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(15610 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(15680 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(15750 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(15820 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(15890 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(15960 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(16030 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(16100 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(16170 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(16240 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(16310 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(16380 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(16450 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(16520 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(16590 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(16660 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(16730 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(16800 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(16870 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(16940 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(17010 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(17080 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(17150 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(17220 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(17290 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(17360 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(17430 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(17500 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(17570 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(17640 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(17710 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(17780 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(17850 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(17920 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(17990 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(18060 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(18130 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(18200 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(18270 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(18340 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(18410 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(18480 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(18550 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(18620 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(18690 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(18760 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(18830 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(18900 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(18970 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(19040 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(19110 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(19180 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(19250 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(19320 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(19390 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(19460 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(19530 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(19600 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(19670 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(19740 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(19810 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(19880 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(19950 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(20020 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(20090 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(20160 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(20230 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(20300 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(20370 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(20440 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(20510 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(20580 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(20650 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(20720 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(20790 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(20860 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(20930 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(21000 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(21070 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(21140 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(21210 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(21280 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(21350 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(21420 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(21490 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(21560 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(21630 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(21700 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(21770 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(21840 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(21910 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(21980 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(22050 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(22120 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(22190 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(22260 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(22330 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(22400 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(22470 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(22540 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(22610 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(22680 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(22750 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(22820 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(22890 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(22960 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(23030 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(23100 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(23170 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(23240 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(23310 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(23380 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(23450 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(23520 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(23590 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(23660 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(23730 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(23800 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(23870 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(23940 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(24010 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(24080 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(24150 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(24220 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(24290 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(24360 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(24430 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(24500 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(24570 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(24640 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(24710 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(24780 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(24850 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(24920 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(24990 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(25060 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(25130 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(25200 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(25270 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(25340 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(25410 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(25480 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(25550 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(25620 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(25690 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(25760 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(25830 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(25900 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(25970 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(26040 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(26110 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(26180 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(26250 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(26320 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(26390 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(26460 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(26530 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(26600 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(26670 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(26740 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(26810 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(26880 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(26950 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(27020 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(27090 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(27160 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(27230 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(27300 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(27370 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(27440 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(27510 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(27580 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(27650 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(27720 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(27790 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(27860 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(27930 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(28000 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(28070 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(28140 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(28210 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(28280 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(28350 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(28420 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(28490 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(28560 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(28630 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(28700 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(28770 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(28840 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(28910 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(28980 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(29050 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(29120 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(29190 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(29260 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(29330 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(29400 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(29470 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(29540 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(29610 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(29680 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(29750 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(29820 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(29890 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(29960 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(30030 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(30100 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(30170 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(30240 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(30310 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(30380 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(30450 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(30520 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(30590 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(30660 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(30730 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(30800 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(30870 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(30940 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(31010 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(31080 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(31150 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(31220 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(31290 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(31360 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(31430 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(31500 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(31570 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(31640 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(31710 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(31780 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(31850 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(31920 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(31990 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(32060 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(32130 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(32200 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(32270 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(32340 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(32410 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(32480 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(32550 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(32620 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(32690 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(32760 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(32830 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(32900 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(32970 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(33040 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(33110 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(33180 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(33250 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(33320 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(33390 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(33460 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(33530 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(33600 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(33670 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(33740 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(33810 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(33880 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(33950 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(34020 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(34090 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(34160 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(34230 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(34300 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(34370 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(34440 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(34510 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(34580 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(34650 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(34720 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(34790 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(34860 500 500)" width="10" x="245" y="495"/>
-<rect fill="none" height="10" stroke="#000000" stroke-width="1" transform="rotate(34930 500 500)" width="10" x="245" y="495"/>
+<circle cx="250" cy="500" fill="none" r="20" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="510" cy="250" fill="none" r="22" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="260" cy="510" fill="none" r="24.2" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="520" cy="260" fill="none" r="26.62" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="270" cy="520" fill="none" r="29.282001" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="530" cy="270" fill="none" r="32.2102" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="280" cy="530" fill="none" r="35.43122" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="540" cy="280" fill="none" r="38.974342" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="290" cy="540" fill="none" r="42.871777" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="550" cy="290" fill="none" r="47.158955" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="300" cy="550" fill="none" r="51.87485" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="560" cy="300" fill="none" r="57.062336" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="310" cy="560" fill="none" r="62.76857" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="570" cy="310" fill="none" r="69.045425" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="320" cy="570" fill="none" r="75.94997" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="580" cy="320" fill="none" r="83.54497" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="330" cy="580" fill="none" r="91.89947" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="590" cy="330" fill="none" r="101.08942" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="340" cy="590" fill="none" r="111.198364" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="600" cy="340" fill="none" r="122.31821" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="350" cy="600" fill="none" r="134.55003" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="610" cy="350" fill="none" r="148.00504" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="360" cy="610" fill="none" r="162.80554" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="620" cy="360" fill="none" r="179.0861" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="370" cy="620" fill="none" r="196.99472" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="630" cy="370" fill="none" r="216.6942" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="380" cy="630" fill="none" r="238.36362" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="640" cy="380" fill="none" r="262.19998" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="390" cy="640" fill="none" r="288.41998" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="650" cy="390" fill="none" r="317.262" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="400" cy="650" fill="none" r="348.9882" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="660" cy="400" fill="none" r="383.88702" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="410" cy="660" fill="none" r="422.27573" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="670" cy="410" fill="none" r="464.5033" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="420" cy="670" fill="none" r="510.95364" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="680" cy="420" fill="none" r="562.049" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="430" cy="680" fill="none" r="618.2539" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="690" cy="430" fill="none" r="680.0793" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="440" cy="690" fill="none" r="748.0872" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="700" cy="440" fill="none" r="822.89594" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="450" cy="700" fill="none" r="905.18555" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="710" cy="450" fill="none" r="995.7041" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="460" cy="710" fill="none" r="1095.2745" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="720" cy="460" fill="none" r="1204.802" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="470" cy="720" fill="none" r="1325.2822" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="730" cy="470" fill="none" r="1457.8104" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="480" cy="730" fill="none" r="1603.5916" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="740" cy="480" fill="none" r="1763.9508" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="490" cy="740" fill="none" r="1940.346" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="750" cy="490" fill="none" r="2134.3806" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="500" cy="750" fill="none" r="2347.8188" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="760" cy="500" fill="none" r="2582.6008" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="510" cy="760" fill="none" r="2840.861" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="770" cy="510" fill="none" r="3124.9473" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="520" cy="770" fill="none" r="3437.4421" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="780" cy="520" fill="none" r="3781.1865" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="530" cy="780" fill="none" r="4159.305" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="790" cy="530" fill="none" r="4575.236" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="540" cy="790" fill="none" r="5032.76" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="800" cy="540" fill="none" r="5536.0356" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="550" cy="800" fill="none" r="6089.639" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="810" cy="550" fill="none" r="6698.603" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="560" cy="810" fill="none" r="7368.4634" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="820" cy="560" fill="none" r="8105.31" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="570" cy="820" fill="none" r="8915.841" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="830" cy="570" fill="none" r="9807.425" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="580" cy="830" fill="none" r="10788.168" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="840" cy="580" fill="none" r="11866.985" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="590" cy="840" fill="none" r="13053.685" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="850" cy="590" fill="none" r="14359.054" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="600" cy="850" fill="none" r="15794.959" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="860" cy="600" fill="none" r="17374.455" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="610" cy="860" fill="none" r="19111.9" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="870" cy="610" fill="none" r="21023.092" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="620" cy="870" fill="none" r="23125.402" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="880" cy="620" fill="none" r="25437.943" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="630" cy="880" fill="none" r="27981.738" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="890" cy="630" fill="none" r="30779.912" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="640" cy="890" fill="none" r="33857.902" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="900" cy="640" fill="none" r="37243.695" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="650" cy="900" fill="none" r="40968.066" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="910" cy="650" fill="none" r="45064.875" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="660" cy="910" fill="none" r="49571.363" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="920" cy="660" fill="none" r="54528.5" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="670" cy="920" fill="none" r="59981.35" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="930" cy="670" fill="none" r="65979.484" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="680" cy="930" fill="none" r="72577.44" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="940" cy="680" fill="none" r="79835.18" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="690" cy="940" fill="none" r="87818.7" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="950" cy="690" fill="none" r="96600.58" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="700" cy="950" fill="none" r="106260.64" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="960" cy="700" fill="none" r="116886.71" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="710" cy="960" fill="none" r="128575.38" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="970" cy="710" fill="none" r="141432.92" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="720" cy="970" fill="none" r="155576.22" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="980" cy="720" fill="none" r="171133.84" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="730" cy="980" fill="none" r="188247.23" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="990" cy="730" fill="none" r="207071.97" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="740" cy="990" fill="none" r="227779.17" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
+<circle cx="1000" cy="740" fill="none" r="250557.1" stroke="#000000" stroke-width="1" transform="rotate(0 0 0)"/>
 </svg>

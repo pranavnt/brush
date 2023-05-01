@@ -122,13 +122,22 @@ impl Drawable for Shape {
     }
     
     fn reflect(&mut self, p1x: f32, p1y: f32, p2x: f32, p2y: f32) {
-        // get line properties
         let slope = (p2y - p1y) / (p2x - p1x);
-        let intercept = p1y - slope * p1x;
-        // reflect the center
-        self.center.0 = self.center.0 - (2.0 * (slope * self.center.1 - self.center.0 + intercept)) / (slope.powi(2) + 1.0);
-        self.center.1 = self.center.1 + slope * ((2.0 * (slope * self.center.1 - self.center.0 + intercept)) / (slope.powi(2) + 1.0))- 2.0 * intercept;
 
+        let y_intercept = p1y - slope * p1x;
+
+        let perp_slope = -1.0 / slope;
+
+        let perp_y_intercept = self.center.1 - perp_slope * self.center.0;
+
+        let x_intersect = (perp_y_intercept - y_intercept) / (slope - perp_slope);
+        let y_intersect = slope * x_intersect + y_intercept;
+
+        let reflected_x = 2.0 * x_intersect - self.center.0;
+        let reflected_y = 2.0 * y_intersect - self.center.1;
+
+        self.center.0 = reflected_x;
+        self.center.1 = reflected_y;
     }
 
     fn warp(&mut self, function: String, freq: f32, ampl: f32) {
@@ -196,6 +205,8 @@ impl Drawable for Shape {
     fn update(&mut self) {
         let o_color = format!("#{:02x?}{:02x?}{:02x?}", self.outline_color.0, self.outline_color.1, self.outline_color.2);
         let rotate = format!("rotate({} {} {})", self.rotation, self.point_of_rotation.0, self.point_of_rotation.1);
+        
+        
         self.svg = Some(Path::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
