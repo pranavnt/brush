@@ -123,7 +123,8 @@ impl Drawable for Shape {
     
     fn reflect(&mut self, p1x: f32, p1y: f32, p2x: f32, p2y: f32) {
         if p1x == p2x {
-            self.center.0 = p1x - ((self.center.0 - p1x).abs());
+            let distance = (self.center.0 - p1x);
+            self.center.0 = p1x - distance;
         } else if p1y == p2y {
             self.center.1 = 2.0 * p1y - self.center.1;
         } else {
