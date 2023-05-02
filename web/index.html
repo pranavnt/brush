@@ -89,12 +89,13 @@ textarea {
     <div class="editor">
       <div class="line-numbers"></div>
       <textarea id="text" name="text" rows="40" cols="60"></textarea>
+
     </div>
     <img id="img" />
   </div>
   <br>
   <button onclick="window.processText()">Generate Image</button>
-
+  
   <script type="module" defer>
     import init, { process_file, greet } from "../pkg/brush.js";
     init().then(() => {
@@ -104,6 +105,7 @@ textarea {
     function processText() {
         console.log("got to function");
         const text = document.getElementById("text").value;
+        localStorage.setItem("textareaValue", text);
         console.log(text);
         const svgString = process_file(text); // call the Rust function to generate the SVG string
         console.log(svgString);
@@ -117,14 +119,62 @@ textarea {
     const textarea = document.getElementById("text");
 const lineNumbers = document.querySelector(".line-numbers");
 
-textarea.addEventListener("input", () => {
+  const savedValue = localStorage.getItem("textareaValue");
+  if (savedValue) {
+    textarea.value = savedValue;
+  }
+  textarea.addEventListener("keydown", function(e) {
+    if (e.key === "(") {
+      const start = this.selectionStart;
+      const end = this.selectionEnd;
+      const value = this.value;
+      this.value = value.substring(0, start) + "(" + value.substring(end);
+      this.selectionStart = this.selectionEnd = start;
+      this.value += ")";
+      e.preventDefault();
+    }
+    const lines = textarea.value.split("\n").length;
+  lineNumbers.innerHTML = "";
+  for (let i = 1; i <= lines; i++) {
+    lineNumbers.innerHTML += `<span></span>`;
+  }
+  });
+  textarea.addEventListener("keydown", function(e) {
+    if (e.key === "{") {
+      const start = this.selectionStart;
+      const end = this.selectionEnd;
+      this.value = this.value.substring(0, start) + "{" + this.value.substring(end);
+      this.selectionStart = this.selectionEnd = start + 1;
+      this.value += "}";
+      e.preventDefault();
+    }
+    const lines = textarea.value.split("\n").length;
+  lineNumbers.innerHTML = "";
+  for (let i = 1; i <= lines; i++) {
+    lineNumbers.innerHTML += `<span></span>`;
+  }
+  });
+  textarea.addEventListener("input", () => {
   const lines = textarea.value.split("\n").length;
   lineNumbers.innerHTML = "";
   for (let i = 1; i <= lines; i++) {
     lineNumbers.innerHTML += `<span></span>`;
   }
 });
-
+textarea.addEventListener("keydown", function(e) {
+    if (e.key === "Tab") {
+      e.preventDefault(); // prevent the default tab behavior
+      const start = this.selectionStart;
+      const end = this.selectionEnd;
+      this.value = this.value.substring(0, start) + "\t" + this.value.substring(end);
+      this.selectionStart = this.selectionEnd = start + 1;
+    }
+    const lines = textarea.value.split("\n").length;
+  lineNumbers.innerHTML = "";
+  for (let i = 1; i <= lines; i++) {
+    lineNumbers.innerHTML += `<span></span>`;
+  }
+  });
   </script>
   
 </body>
