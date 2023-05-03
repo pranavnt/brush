@@ -26,7 +26,8 @@ impl BRectangle {
                     .set("height", height)
                     .set("x", x)
                     .set("y", y)
-                    .set("transform", "rotate")
+                    .set("rotate", "rotate")
+                    .set("warp", "warp")
                 ),
 
                 center: (x, y),
@@ -36,7 +37,9 @@ impl BRectangle {
                 outline_width: 1.0,
                 rotation: 0.0,
                 point_of_rotation: (0.0, 0.0),
+                warp_vals: (0.0, 0.0),
                 stretch: (1.0, 1.0),
+                
                 
             },
 
@@ -82,8 +85,8 @@ impl Drawable for BRectangle {
         self.shape.reflect(p1x, p1y, p2x, p2y);
     }
 
-    fn warp(&mut self, function: String, freq: f32, ampl: f32) {
-        self.shape.warp(function, freq, ampl);
+    fn warp(&mut self, freq: f32, ampl: f32) {
+        self.shape.warp(freq, ampl);
     }
     fn hue_shift(&mut self, amount: f32) {
         self.shape.hue_shift(amount);
@@ -92,6 +95,7 @@ impl Drawable for BRectangle {
     fn update(&mut self) {
         let o_color = format!("#{:02x?}{:02x?}{:02x?}", self.shape.outline_color.0, self.shape.outline_color.1, self.shape.outline_color.2);
         let rotate = format!("rotate({} {} {})", self.shape.rotation, self.shape.point_of_rotation.0, self.shape.point_of_rotation.1);
+        let warp_attr = format!("center:{},{} frequency:{} amplitude:{}", self.shape.center.0, self.shape.center.1, self.shape.warp_vals.0, self.shape.warp_vals.1);
         self.shape.rect = Some(Rectangle::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
@@ -100,7 +104,8 @@ impl Drawable for BRectangle {
                     .set("y", self.shape.center.1 - self.height / 2.0)
                     .set("width", self.width)
                     .set("height", self.height)
-                    .set("transform", rotate)
+                    .set("rotate", rotate)
+                    .set("warp", warp_attr)
                 );
                 
     }

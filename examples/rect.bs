@@ -1,6 +1,5 @@
 let test = rectangle {
-    rotate(60)
-    rotate_about(10, 500, 500)
+    warp(0.5, 0.2)
 }
 
 test(

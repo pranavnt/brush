@@ -273,9 +273,6 @@ impl Parser {
                 self.advance_past(TokenType::WARP_KEYWORD);
 
                 self.advance_past(TokenType::L_PAREN);
-                let function = self.parse_expression(self.get_next(TokenType::COMMA));
-
-                self.advance_past(TokenType::COMMA);
                 let freq = self.parse_expression(self.get_next(TokenType::COMMA));
 
                 self.advance_past(TokenType::COMMA);
@@ -284,7 +281,7 @@ impl Parser {
                 self.advance_past(TokenType::ENDLINE);
 
                 return Node::Statement(StatementNode { 
-                    kind: StatementKind::Warp(Box::new(function), Box::new(freq), Box::new(ampl)) 
+                    kind: StatementKind::Warp(Box::new(freq), Box::new(ampl)) 
                 });
             }
             TokenType::KEYWORD => {

@@ -147,10 +147,8 @@ impl Drawable for Shape {
         }  
     }
 
-    fn warp(&mut self, function: String, freq: f32, ampl: f32) {
-        if(function == "ripple") {
-
-        }
+    fn warp(&mut self, freq: f32, ampl: f32) {
+        self.warp_vals = (freq, ampl);
     }
         
     fn hue_shift(&mut self, amount: f32) {
@@ -212,13 +210,14 @@ impl Drawable for Shape {
     fn update(&mut self) {
         let o_color = format!("#{:02x?}{:02x?}{:02x?}", self.outline_color.0, self.outline_color.1, self.outline_color.2);
         let rotate = format!("rotate({} {} {})", self.rotation, self.point_of_rotation.0, self.point_of_rotation.1);
-        
+        let warp_attr = format!("center:{},{} frequency:{} amplitude:{}", self.center.0, self.center.1, self.warp_vals.0, self.warp_vals.1);
         
         self.svg = Some(Path::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
                     .set("stroke-width", 1)
                     .set("transform", rotate)
+                    .set("warp", warp_attr)
                     .set("d", self.path.clone().unwrap()));
                     
     }
