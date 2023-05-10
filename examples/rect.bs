@@ -1,9 +1,9 @@
 let test = rectangle {
-    warp(0.5, 0.2)
+    rotate_about(60, 500, 500)
 }
 
 test(
     position = (250, 500)
-    size = (10, 10)
+    size = (50, 50)
     generations = 500
 )
