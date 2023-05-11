@@ -35,7 +35,11 @@ impl BRectangle {
                 outline_color: outline_color.unwrap_or((0, 0, 0)),
                 outline_width: 1.0,
                 rotation: 0.0,
+                point_of_rotation: (0.0, 0.0),
+                rotation_about: 0.0,
+                warp_vals: (0.0, 0.0),
                 stretch: (1.0, 1.0),
+                
                 
             },
 
@@ -53,6 +57,10 @@ impl Drawable for BRectangle {
         
     fn rotate_to(&mut self, angle: f32) {
         self.shape.rotate_to(angle);
+    }
+
+    fn rotate_about(&mut self, angle: f32, x: f32, y: f32) {
+        self.shape.rotate_about(angle, x, y);
     }
 
     fn shift(&mut self, x: f32, y: f32) {
@@ -73,13 +81,12 @@ impl Drawable for BRectangle {
         self.height = y;
     }
 
-    fn reflect(&mut self, p1: (f32, f32), p2: (f32, f32)) {
-        // get line properties
-        let slope = (p2.1 - p1.1) / (p2.0 - p1.0);
-        let intercept = p1.1 - slope * p1.0;
-        // reflect the center
-        self.shape.center.0 = self.shape.center.0 - (2.0 * (slope * self.shape.center.1 - self.shape.center.0 + intercept)) / (slope.powi(2) + 1.0);
-        self.shape.center.1 = self.shape.center.1 + slope * ((2.0 * (slope * self.shape.center.1 - self.shape.center.0 + intercept)) / (slope.powi(2) + 1.0))- 2.0 * intercept;
+    fn reflect(&mut self, p1x: f32, p1y: f32, p2x: f32, p2y: f32) {
+        self.shape.reflect(p1x, p1y, p2x, p2y);
+    }
+
+    fn warp(&mut self, freq: f32, ampl: f32) {
+        self.shape.warp(freq, ampl);
     }
     fn hue_shift(&mut self, amount: f32) {
         self.shape.hue_shift(amount);
@@ -88,6 +95,9 @@ impl Drawable for BRectangle {
     fn update(&mut self) {
         let o_color = format!("#{:02x?}{:02x?}{:02x?}", self.shape.outline_color.0, self.shape.outline_color.1, self.shape.outline_color.2);
         let rotate = format!("rotate({} {} {})", self.shape.rotation, self.shape.center.0, self.shape.center.1);
+        let rotate_about = format!("rotate({} {} {})", self.shape.rotation_about, self.shape.point_of_rotation.0, self.shape.point_of_rotation.1);
+
+        let all_rotate = format!("{} {}", rotate, rotate_about);
         self.shape.rect = Some(Rectangle::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
@@ -96,7 +106,8 @@ impl Drawable for BRectangle {
                     .set("y", self.shape.center.1 - self.height / 2.0)
                     .set("width", self.width)
                     .set("height", self.height)
-                    .set("transform", rotate)
+                    .set("transform", all_rotate)
+                    
                 );
                 
     }

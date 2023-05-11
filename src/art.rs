@@ -17,11 +17,13 @@ use svg::Document;
 pub trait Drawable {
     fn rotate(&mut self, angle: f32);
     fn rotate_to(&mut self, angle: f32);
+    fn rotate_about(&mut self, angle: f32, x: f32, y: f32);
     fn shift(&mut self, x: f32, y: f32);
     fn shift_to(&mut self, x: f32, y: f32);
     fn stretch(&mut self, x: f32, y: f32);
     fn stretch_to(&mut self, x: f32, y: f32);
-    fn reflect(&mut self, p1: (f32, f32), p2: (f32, f32));
+    fn reflect(&mut self, p1x: f32, p1y: f32, p2x: f32, p2y: f32);
+    fn warp(&mut self, freq: f32, ampl: f32);
     fn hue_shift(&mut self, amount: f32);
     fn update(&mut self);
 }
@@ -42,6 +44,9 @@ pub struct Shape {
     pub outline_color: (u8, u8, u8),
     pub outline_width: f32,
     pub rotation: f32,
+    pub point_of_rotation: (f32, f32),
+    pub rotation_about: f32,
+    pub warp_vals: (f32, f32),
     pub stretch: (f32, f32),
 }
 
