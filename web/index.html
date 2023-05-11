@@ -10,13 +10,19 @@
       }
       
       h1 {
-        font-size: 28px;
+        font-size: 30px;
         margin-bottom: 20px;
+        margin-left: 350px;
+        font-family: 'Courier New', Courier, monospace;
       }
       
       button {
-        font-size: 15px;
+        font-size: 30px;
         margin-top: 20px;
+        color: #282a3a;
+        margin-left: 40px;
+        background-color: #ddd;
+        font-family: 'Courier New', Courier, monospace;
       }
       
     #container {
@@ -84,7 +90,7 @@ textarea {
 
 <body>
   <a href="API.html" id="API-link">API</a>
-  <h3>Enter code here:</h3>
+  <h1>Enter code here:</h1>
   <div id="container">
     <div class="editor">
       <div class="line-numbers"></div>
@@ -94,7 +100,7 @@ textarea {
     <img id="img" />
   </div>
   <br>
-  <button onclick="window.processText()">Generate Image</button>
+  <button onclick="window.processText()">Run</button>
   
   <script type="module" defer>
     import init, { process_file, greet } from "../pkg/brush.js";
@@ -107,11 +113,10 @@ textarea {
         const text = document.getElementById("text").value;
         localStorage.setItem("textareaValue", text);
         console.log(text);
-        const svgString = process_file(text); // call the Rust function to generate the SVG string
+        const svgString = process_file(text); 
         console.log(svgString);
         const img = document.getElementById("img");
-        img.src = "data:image/svg+xml;base64," + btoa(svgString); // convert the SVG string to a data URL
-       // document.body.appendChild(img); // add the image to the HTML form
+        img.src = "data:image/svg+xml;base64," + btoa(svgString); 
       }
       window.processText = processText
   </script>
@@ -129,7 +134,7 @@ const lineNumbers = document.querySelector(".line-numbers");
       const end = this.selectionEnd;
       const value = this.value;
       this.value = value.substring(0, start) + "(" + value.substring(end);
-      this.selectionStart = this.selectionEnd = start;
+      this.selectionStart = this.selectionEnd = start+1;
       this.value += ")";
       e.preventDefault();
     }
@@ -144,8 +149,22 @@ const lineNumbers = document.querySelector(".line-numbers");
       const start = this.selectionStart;
       const end = this.selectionEnd;
       this.value = this.value.substring(0, start) + "{" + this.value.substring(end);
-      this.selectionStart = this.selectionEnd = start + 1;
+      this.selectionStart = this.selectionEnd = start+1;
       this.value += "}";
+      e.preventDefault();
+    }
+    const lines = textarea.value.split("\n").length;
+  lineNumbers.innerHTML = "";
+  for (let i = 1; i <= lines; i++) {
+    lineNumbers.innerHTML += `<span></span>`;
+  }
+  });
+  textarea.addEventListener("keydown", function(e) {
+    if (e.key === "Tab") { 
+      const start = this.selectionStart;
+      const end = this.selectionEnd;
+      this.value = this.value.substring(0, start) + "\t" + this.value.substring(end);
+      this.selectionStart = this.selectionEnd = start;
       e.preventDefault();
     }
     const lines = textarea.value.split("\n").length;
@@ -161,20 +180,6 @@ const lineNumbers = document.querySelector(".line-numbers");
     lineNumbers.innerHTML += `<span></span>`;
   }
 });
-textarea.addEventListener("keydown", function(e) {
-    if (e.key === "Tab") {
-      e.preventDefault(); // prevent the default tab behavior
-      const start = this.selectionStart;
-      const end = this.selectionEnd;
-      this.value = this.value.substring(0, start) + "\t" + this.value.substring(end);
-      this.selectionStart = this.selectionEnd = start + 1;
-    }
-    const lines = textarea.value.split("\n").length;
-  lineNumbers.innerHTML = "";
-  for (let i = 1; i <= lines; i++) {
-    lineNumbers.innerHTML += `<span></span>`;
-  }
-  });
   </script>
   
 </body>
