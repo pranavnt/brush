@@ -2,5 +2,5 @@ let test_poly = polygon{}
 
 test_poly(
     color = (255, 255, 255)
-    points = ((50, 50), (300, 100), (150, 400))
+    points = [(50, 50), (300, 100), (150, 400)]
 )

@@ -30,6 +30,8 @@ impl Lexer {
                     '}' => all_tokens.push(Token::new(TokenType::R_CURLY, cc.to_string())),
                     '(' => all_tokens.push(Token::new(TokenType::L_PAREN, cc.to_string())),
                     ')' => all_tokens.push(Token::new(TokenType::R_PAREN, cc.to_string())),
+                    '[' => all_tokens.push(Token::new(TokenType::L_BRACKET, cc.to_string())),
+                    ']' => all_tokens.push(Token::new(TokenType::R_BRACKET, cc.to_string())),
     
                     '+' | '-' | '*' | '/' | '=' => all_tokens.push(Token::new(TokenType::OPERATOR,cc.to_string())),
                     
