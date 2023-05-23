@@ -1,6 +1,12 @@
-let test_poly = polygon{}
+let my_shape = circle {
+    stretch(0.97, 0.97)
+    shift(5, 5)
+    hue_shift(1);
+}
 
-test_poly(
-    color = (255, 255, 255)
-    points = ((50, 50), (300, 100), (150, 400))
+my_shape(
+    radius = 250
+    center = (250, 250)
+    generations = 100
+    color = (255, 0, 0)
 )

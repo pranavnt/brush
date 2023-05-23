@@ -60,8 +60,8 @@ pub struct BRectangle {
 
 #[derive(Debug, Clone)]
 pub struct BPolygon {
-    pub shape: Shape,
-    pub points: Vec<(f32, f32)>,
+    shape: Shape,
+    points: Vec<(f32, f32)>,
 }
 
 #[derive(Debug, Clone)]
