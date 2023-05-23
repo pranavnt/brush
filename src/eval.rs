@@ -216,12 +216,23 @@ impl Interpreter {
                         }
                     };
 
-                    let mut circle_config = (0.0, (0.0, 0.0), (u8::from(0), u8::from(0), u8::from(0)));
+                    let mut circle_config = (0.0, (0.0, 0.0), (u8::from(0), u8::from(0), u8::from(0)), 0.0);
                     let mut generations = 1;
 
                     // parse properties
                     for property in properties {
-                        if property.name == "radius" {
+                        if property.name=="thickness"{
+                            circle_config.3 = match *property.value{
+                                Node::NumberLiteral(num) =>{
+                                    num.value
+                                },
+                                _=>{
+                                    panic!("wrong type");
+                                }
+                            }
+
+                        }
+                        else if property.name == "radius" {
                             circle_config.0 = match *property.value {
                                 Node::NumberLiteral(num) => {
                                     num.value
@@ -312,12 +323,13 @@ impl Interpreter {
                         }
                     }
 
-                    // create boilerplate circle with radius and center
+                    // create boilerplate circle with radius and center and thickness 
                     let mut circle = BCircle::new(
                         circle_config.1.0,
                         circle_config.1.1,
                         circle_config.0,
-                        Some(circle_config.2)
+                        Some(circle_config.2), 
+                        circle_config.3
                     );
 
                     for i in 0..generations {

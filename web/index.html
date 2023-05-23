@@ -3,38 +3,45 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Brush</title>
+  <title>
+    Brush
+  </title>
   <style>
     body {
         background-color: #f5f5f5;
       }
       
-      h1 {
-        font-size: 30px;
+      h3 {
+        font-size: 20px;
         margin-bottom: 20px;
-        margin-left: 350px;
-        font-family: 'Courier New', Courier, monospace;
+        margin-left: 400px;
+        
       }
-      
+      h1{
+        font-size:40px;
+      }
       button {
-        font-size: 30px;
-        margin-top: 20px;
-        color: #282a3a;
-        margin-left: 40px;
-        background-color: #ddd;
-        font-family: 'Courier New', Courier, monospace;
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #e7e7e7;
+      color: #333;
+      text-decoration: none;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
       }
       
     #container {
+    align-items: center;
       padding: 20px;
         border: 1px solid #ddd;
         border-radius: 0px;
       display: flex;
       flex-direction: row;
-      align-items: center;
     }
     #img {
-      margin-left: 350px;
+      margin-left: 0px;
       padding: 10px;
         border-radius: 5px;
         max-width: 600px;
@@ -62,6 +69,9 @@
 .line-numbers {
   width: 40px;
   text-align: right;
+  font-size: 15px;
+  line-height: 25px;
+ 
 }
 
 .line-numbers span {
@@ -73,9 +83,11 @@
   display: block;
   color: #506882;
 }
-
+.blue-text {
+    color: blue;
+  }
 textarea {
-  line-height: 15px;
+  line-height: 25px;
   overflow-y: hidden;
   padding: 0;
   border: 0;
@@ -84,24 +96,89 @@ textarea {
   min-width: 800px;
   outline: none;
   resize: none;
+  font-size: 15px;
+  font: monospace;
 }
+.button {
+  position: absolute;
+  top: 50px;
+  right: 50px;    
+  display: inline-block;
+      padding: 10px 20px;
+      background-color: #e7e7e7;
+      color: #333;
+      text-decoration: none;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .image-container {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .image-container img {
+      float: left;
+      margin-right: 10px;
+    }
+
+    .text {
+      display: inline-block;
+      vertical-align: middle;
+    }
   </style>
 </head>
 
 <body>
-  <a href="API.html" id="API-link">API</a>
-  <h1>Enter code here:</h1>
+  <div class="image-container">
+    <img src="https://i.imgur.com/VxoTQ7D.png" width="100px">
+  </div>
+  <div class="text">
+    <h1>Brush</h1>
+  </div>
+  <a href="API.html" class="button">API</a>
+  <script>
+    function handleInput() {
+      console.log("oninput");
+      var textarea = document.getElementById("text");
+      var div = document.getElementById("formatted-text");
+      var keywords = ["apple", "banana", "orange"]; 
+      
+      var content = '<span style = "color:blue">'+textarea.value+'</span>';
+      textarea.innerHTML = content;
+      console.log(textarea.value);
+      keywords.forEach(function(keyword) {
+        //var regex = new RegExp('\\b' + keyword + '\\b', 'gi');
+        //var formattedContent = content.replace(regex, '<span class="blue-text">' + keyword + '</span>');
+        //content = content.replace(regex, '<span style="color:blue">' + keyword + '</span>');
+      //  console.log(content);
+       // textarea.innerHTML = div.innerHTML;
+      });
+     //div.innerHTML = '';
+     // div.innerHTML = content;
+    //console.log(textarea.innerHTML);
+    }
+    window.handleInput = handleInput
+  </script>
   <div id="container">
     <div class="editor">
       <div class="line-numbers"></div>
-      <textarea id="text" name="text" rows="40" cols="60"></textarea>
-
+      <div id="formatted-text"></div>
+      <textarea id="text" name="text" rows="22" cols="60" oninput="window.handleInput()" placeholder="Enter your code here...">//sample code
+let my_shape = circle {
+    stretch(0.5, 0.5)
+}
+      
+my_shape(
+    radius = 100
+    center = (100, 100)
+    generations = 8
+)</textarea>
     </div>
-    <img id="img" />
-  </div>
+    <img id="img" /></div>
   <br>
   <button onclick="window.processText()">Run</button>
-  
   <script type="module" defer>
     import init, { process_file, greet } from "../pkg/brush.js";
     init().then(() => {
@@ -132,12 +209,21 @@ const lineNumbers = document.querySelector(".line-numbers");
     if (e.key === "(") {
       const start = this.selectionStart;
       const end = this.selectionEnd;
-      const value = this.value;
-      this.value = value.substring(0, start) + "(" + value.substring(end);
-      this.selectionStart = this.selectionEnd = start+1;
-      this.value += ")";
+      const indent = "\t"; // Change this to adjust the indentation type and size
+
+      this.value =
+        this.value.substring(0, start) +
+        "(\n\t\n)"+ this.value.substring(end);
+      this.selectionStart = this.selectionEnd = start+1 + indent.length +indent.length;
       e.preventDefault();
     }
+    /*if (e.key === "(") {
+      const start = this.selectionStart;
+      const end = this.selectionEnd;
+      this.value = this.value.substring(0, start) + "()" + this.value.substring(end);
+      this.selectionStart = this.selectionEnd = start+1;
+      e.preventDefault();
+    }*/
     const lines = textarea.value.split("\n").length;
   lineNumbers.innerHTML = "";
   for (let i = 1; i <= lines; i++) {
@@ -148,11 +234,21 @@ const lineNumbers = document.querySelector(".line-numbers");
     if (e.key === "{") {
       const start = this.selectionStart;
       const end = this.selectionEnd;
-      this.value = this.value.substring(0, start) + "{" + this.value.substring(end);
-      this.selectionStart = this.selectionEnd = start+1;
-      this.value += "}";
+      const indent = "\t"; // Change this to adjust the indentation type and size
+
+      this.value =
+        this.value.substring(0, start) +
+        "{\n\t\n}"+ this.value.substring(end);
+      this.selectionStart = this.selectionEnd = start+1 + indent.length +indent.length;
       e.preventDefault();
     }
+    /*if (e.key === "{") {
+      const start = this.selectionStart;
+      const end = this.selectionEnd;
+      this.value = this.value.substring(0, start) + "{\t}" + this.value.substring(end);
+      this.selectionStart = this.selectionEnd = start+1;
+      e.preventDefault();
+    }*/
     const lines = textarea.value.split("\n").length;
   lineNumbers.innerHTML = "";
   for (let i = 1; i <= lines; i++) {
@@ -164,7 +260,7 @@ const lineNumbers = document.querySelector(".line-numbers");
       const start = this.selectionStart;
       const end = this.selectionEnd;
       this.value = this.value.substring(0, start) + "\t" + this.value.substring(end);
-      this.selectionStart = this.selectionEnd = start;
+      this.selectionStart = this.selectionEnd = start+1;
       e.preventDefault();
     }
     const lines = textarea.value.split("\n").length;
