@@ -209,21 +209,10 @@ const lineNumbers = document.querySelector(".line-numbers");
     if (e.key === "(") {
       const start = this.selectionStart;
       const end = this.selectionEnd;
-      const indent = "\t"; // Change this to adjust the indentation type and size
-
-      this.value =
-        this.value.substring(0, start) +
-        "(\n\t\n)"+ this.value.substring(end);
-      this.selectionStart = this.selectionEnd = start+1 + indent.length +indent.length;
-      e.preventDefault();
-    }
-    /*if (e.key === "(") {
-      const start = this.selectionStart;
-      const end = this.selectionEnd;
       this.value = this.value.substring(0, start) + "()" + this.value.substring(end);
       this.selectionStart = this.selectionEnd = start+1;
       e.preventDefault();
-    }*/
+    }
     const lines = textarea.value.split("\n").length;
   lineNumbers.innerHTML = "";
   for (let i = 1; i <= lines; i++) {
