@@ -1,6 +1,5 @@
 mod circle;
 mod rectangle;
-mod polygon;
 mod shape;
 
 use std::ops::DerefMut;
@@ -59,7 +58,7 @@ pub struct BRectangle {
 }
 
 #[derive(Debug, Clone)]
-pub struct BPolygon {
+pub struct Polygon {
     shape: Shape,
     points: Vec<(f32, f32)>,
 }
