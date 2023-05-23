@@ -1,7 +1,6 @@
 use crate::art::{draw, Drawable, BCircle, BRectangle, BPolygon, Shape, SVG};
 use crate::ast::*;
 use crate::tokens::{Token, TokenType};
-use core::num::dec2flt::number::Number;
 use std::collections::*;
 
 pub struct Interpreter {
@@ -47,17 +46,6 @@ impl Interpreter {
         }
     }
 
-    fn evalNum(node: Box<Node>) -> f32 {
-        match *node {
-            Node::NumberLiteral(num) => {
-                num.value
-            }
-            _ => {
-                panic!("Expected number found {:?}", node);
-            }
-        }
-    }
-
     pub fn eval(&mut self, node: Node) -> Option<Value> {
         match node {
             Node::Program(program) => {
@@ -78,20 +66,57 @@ impl Interpreter {
                                             match statement.kind {
                                                 StatementKind::Shift(x, y) => {
                                                     // shift by x, y
-                                                    let x = Self::evalNum(x);
-                                                    let y = Self::evalNum(y);
+                                                    let x = match *x {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+                                                    let y = match *y {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
                                                     ev_shape.shift(x, y);
                                                 }
 
                                                 StatementKind::Stretch(x, y) => {
                                                     // stretch by x, y (will be same value for both lol)
-                                                    let x = Self::evalNum(x);
-                                                    let y = Self::evalNum(y);
+                                                    let x = match *x {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+                                                    let y = match *y {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
                                                     ev_shape.stretch(x, y);
                                                 }
 
                                                 StatementKind::HueShift(amount) => {
-                                                    let hue_offset = Self::evalNum(amount);
+                                                    let hue_offset = match *amount {
+                                                        Node::NumberLiteral(num) => {
+                                                            // mod by 360 degrees protects shift amount
+                                                            num.value % 360.0
+                                                        }
+
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
 
                                                     ev_shape.hue_shift(hue_offset);
                                                 }
@@ -209,9 +234,6 @@ impl Interpreter {
                                             for curpt in &tuple.values {
                                                 let xy = match curpt {
                                                     Node::TupleLiteral(tup) => {
-                                                        let x = Self::evalNum(tup.values[0]);
-                                                        let y = Self::evalNum(y);
-
                                                         let x = match &tup.values[0] {
                                                             Node::NumberLiteral(num) => num.value,
                                                             _ => {
