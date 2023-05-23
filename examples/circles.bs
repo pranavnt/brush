@@ -1,9 +1,0 @@
-let my_shape = circle {
-  stretch(0.5, 0.5)
-}
-
-my_shape(
-    radius = 100
-    center = (100, 100)
-    generations = 8
-)

@@ -24,6 +24,7 @@ impl BCircle {
                     .set("r", radius)
                     .set("cx", x)
                     .set("cy", y)
+                    .set("transform", "rotate")
                 ),
                 rect: None,
 
@@ -33,6 +34,9 @@ impl BCircle {
                 outline_color: outline_color.unwrap_or((0, 0, 0)),
                 outline_width: 1.0,
                 rotation: 0.0,
+                point_of_rotation: (0.0, 0.0),
+                rotation_about: 0.0,
+                warp_vals: (0.0, 0.0),
                 stretch: (1.0, 1.0),
             },
 
@@ -43,11 +47,15 @@ impl BCircle {
 
 impl Drawable for BCircle {
     fn rotate(&mut self, angle: f32) {
-        unimplemented!();
+        self.shape.rotate(angle);
     }
 
     fn rotate_to(&mut self, angle: f32) {
-        unimplemented!();
+        self.shape.rotate_to(angle);
+    }
+
+    fn rotate_about(&mut self, angle: f32, x: f32, y: f32) {
+        self.shape.rotate_about(angle, x, y);
     }
 
     fn shift(&mut self, x: f32, y: f32) {
@@ -70,19 +78,39 @@ impl Drawable for BCircle {
         }
     }
 
+    fn reflect(&mut self, p1x: f32, p1y: f32, p2x: f32, p2y: f32) {
+        self.shape.reflect(p1x, p1y, p2x, p2y);
+    }
+
+    fn warp(&mut self, freq: f32, ampl: f32) {
+        self.shape.warp(freq, ampl);
+    }
     fn hue_shift(&mut self, amount: f32) {
         self.shape.hue_shift(amount);
     }
 
     fn update(&mut self) {
         let o_color = format!("#{:02x?}{:02x?}{:02x?}", self.shape.outline_color.0, self.shape.outline_color.1, self.shape.outline_color.2);
-
+        let rotate = format!("rotate({} {} {})", self.shape.rotation, self.shape.center.0, self.shape.center.1);
+        let rotate_about = format!("rotate({} {} {})", self.shape.rotation_about, self.shape.point_of_rotation.0, self.shape.point_of_rotation.1);
+        
+        let all_rotate = format!("{} {}", rotate, rotate_about);
         self.shape.circ = Some(Circle::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
                     .set("stroke-width", 1)
                     .set("r", self.radius)
                     .set("cx", self.shape.center.0)
-                    .set("cy", self.shape.center.1));
+                    .set("cy", self.shape.center.1)
+                    .set("transform", all_rotate)
+                    
+                );
+                    
+                    
+                    
+                    
+                    
     }
+
+    
 }

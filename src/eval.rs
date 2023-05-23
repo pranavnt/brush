@@ -1,5 +1,5 @@
-use crate::art::{draw, BCircle, BRectangle, Drawable, Polygon, Shape, SVG};
 use crate::ast::*;
+use crate::art::{Shape, BCircle, BRectangle, Polygon, SVG, Drawable, draw};
 use crate::tokens::{Token, TokenType};
 use std::collections::*;
 
@@ -121,6 +121,127 @@ impl Interpreter {
                                                     ev_shape.hue_shift(hue_offset);
                                                 }
 
+                                                StatementKind::Rotate(angle) => {
+                                                    let angle = match *angle {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    ev_shape.rotate(angle);
+                                                }
+
+                                                StatementKind::RotateTo(angle) => {
+                                                    let angle = match *angle {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    ev_shape.rotate(angle);
+                                                }
+
+                                                StatementKind::RotateAbout(angle, x, y) => {
+                                                    let angle = match *angle {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    let x = match *x {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    let y = match *y {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    ev_shape.rotate_about(angle, x, y);
+                                                }
+
+                                                StatementKind::Reflect(p1x, p1y, p2x, p2y) => {
+                                                    let p1x = match *p1x {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    let p1y = match *p1y {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    let p2x = match *p2x {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    let p2y = match *p2y {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    ev_shape.reflect(p1x, p1y, p2x, p2y);
+                                                }
+
+                                                StatementKind::Warp(freq, ampl) => {
+                                                    let freq = match *freq {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+
+                                                    let ampl = match *ampl {
+                                                        Node::NumberLiteral(num) => {
+                                                            num.value
+                                                        }
+
+                                                        _ => {
+                                                            panic!("wrong type somewhere");
+                                                        }
+                                                    };
+                                                    ev_shape.warp(freq, ampl);
+                                                }
                                                 _ => {  unimplemented!() }
                                             }
                                         }
@@ -338,7 +459,7 @@ impl Interpreter {
                                 rect = rect.clone();
                                 evolve_fn(&mut rect, statements.clone());
                             }
-                        }
+                        } 
 
                         ShapeKind::Circle => {
                             // (radius, center, color)
@@ -440,6 +561,7 @@ impl Interpreter {
                                 circle = circle.clone();
                                 evolve_fn(&mut circle, statements.clone());
                             }
+
                         }
 
                         _ => {

@@ -17,10 +17,13 @@ use svg::Document;
 pub trait Drawable {
     fn rotate(&mut self, angle: f32);
     fn rotate_to(&mut self, angle: f32);
+    fn rotate_about(&mut self, angle: f32, x: f32, y: f32);
     fn shift(&mut self, x: f32, y: f32);
     fn shift_to(&mut self, x: f32, y: f32);
     fn stretch(&mut self, x: f32, y: f32);
     fn stretch_to(&mut self, x: f32, y: f32);
+    fn reflect(&mut self, p1x: f32, p1y: f32, p2x: f32, p2y: f32);
+    fn warp(&mut self, freq: f32, ampl: f32);
     fn hue_shift(&mut self, amount: f32);
     fn update(&mut self);
 }
@@ -41,6 +44,9 @@ pub struct Shape {
     pub outline_color: (u8, u8, u8),
     pub outline_width: f32,
     pub rotation: f32,
+    pub point_of_rotation: (f32, f32),
+    pub rotation_about: f32,
+    pub warp_vals: (f32, f32),
     pub stretch: (f32, f32),
 }
 
@@ -55,6 +61,7 @@ pub struct BRectangle {
     pub shape: Shape,
     pub width: f32,
     pub height: f32,
+
 }
 
 #[derive(Debug, Clone)]
@@ -68,8 +75,9 @@ pub struct SVG {
     shape: Shape,
     dimensions: (f32, f32),
 }
+static mut SVG_STRING: Option<String> = None;
 
-pub fn draw(shapes: Vec<Shape>) -> Result<(), Error> {
+pub fn draw(shapes: Vec<Shape>) -> Result<String, Error> {
     let mut canvas: Document = Document::new()
         .set("viewBox", (0, 0, 1000, 1000))
         .set("width", "100%")
@@ -87,8 +95,18 @@ pub fn draw(shapes: Vec<Shape>) -> Result<(), Error> {
             canvas = canvas.add(shape.svg.unwrap());
         }
     }
+    unsafe {
+        SVG_STRING = Some(canvas.to_string());
+    }
+    Ok(canvas.to_string())
 
-    svg::save("art.svg", &canvas).unwrap();
+}   
 
-    Ok(())
+pub fn name() -> String {
+    unsafe {
+        match &SVG_STRING {
+            Some(s) => String::from(s.clone()),
+            None => String::new(),
+        }
+    }
 }
