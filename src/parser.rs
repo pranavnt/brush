@@ -6,6 +6,7 @@ pub struct Parser {
     pub tokens: Vec<Token>,
     current: i64,
     shapes: HashSet<String>,
+
 }
 
 impl Parser {

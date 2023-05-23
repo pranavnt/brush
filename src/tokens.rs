@@ -21,8 +21,6 @@ pub enum TokenType {
     R_CURLY,
     L_PAREN,
     R_PAREN,
-    L_BRACKET,
-    R_BRACKET,
     IDENTIFIER,
     NUMBER,
     STRING,
