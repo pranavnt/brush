@@ -324,12 +324,16 @@ impl Interpreter {
                     }
 
                     // create boilerplate circle with radius and center and thickness 
+                    let mut th = circle_config.3;
+                    if (circle_config.3==0.0){
+                        th = 1.0;
+                    }
                     let mut circle = BCircle::new(
                         circle_config.1.0,
                         circle_config.1.1,
                         circle_config.0,
                         Some(circle_config.2), 
-                        circle_config.3
+                        th
                     );
 
                     for i in 0..generations {
