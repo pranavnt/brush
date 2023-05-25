@@ -463,8 +463,7 @@ impl Interpreter {
 
                         ShapeKind::Circle => {
                             // (radius, center, color)
-                            let mut circle_config =
-                                (0.0, (0.0, 0.0), (u8::from(0), u8::from(0), u8::from(0)));
+                            let mut circle_config = (0.0, (0.0, 0.0), (u8::from(0), u8::from(0), u8::from(0)), 0.0);
                             let mut generations = 1;
 
                             // parse properties
@@ -540,27 +539,45 @@ impl Interpreter {
                                             panic!("wrong type somewhere");
                                         }
                                     }
+                                } else if property.name=="thickness"{
+                                    circle_config.3 = match *property.value{
+                                        Node::NumberLiteral(num) =>{
+                                            num.value
+                                        },
+                                        _=>{
+                                            panic!("wrong type");
+                                        }
+                                    }
+        
                                 } else {
                                     panic!("unknown property");
                                 }
                             }
 
-                            // create boilerplate circle with radius and center
-                            let mut circle = BCircle::new(
-                                circle_config.1 .0,
-                                circle_config.1 .1,
-                                circle_config.0,
-                                Some(circle_config.2),
-                            );
+                            // create boilerplate circle with radius and center and thickness 
+                            
+                            let mut th = circle_config.3;
+                            if (circle_config.3==0.0){
+                                th = 1.0;
+                        }
 
-                            for i in 0..generations {
-                                // push to shapes
-                                circle.update();
-                                self.shapes.push(circle.clone().shape);
+                        let mut circle = BCircle::new(
+                            circle_config.1.0,
+                            circle_config.1.1,
+                            circle_config.0,
+                            Some(circle_config.2), 
+                            th
+                        );
 
-                                circle = circle.clone();
-                                evolve_fn(&mut circle, statements.clone());
-                            }
+                        for i in 0..generations {
+                            // push to shapes
+                            circle.update();
+                            self.shapes.push(circle.clone().shape);
+
+                            circle = circle.clone();
+                            // circle.hue_shift(5.0);
+                            evolve_fn(&mut circle, statements.clone());
+                        }
 
                         }
 

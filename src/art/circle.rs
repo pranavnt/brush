@@ -11,7 +11,7 @@ use svg::Document;
 use crate::art::{Drawable, Shape, BCircle};
 
 impl BCircle {
-    pub fn new(x: f32, y: f32, radius: f32, outline_color: Option<(u8, u8, u8)>) -> BCircle {
+    pub fn new(x: f32, y: f32, radius: f32, outline_color: Option<(u8, u8, u8)>, thickness: f32) -> BCircle {
         BCircle {
             shape: Shape {
                 svg: None,
@@ -20,7 +20,7 @@ impl BCircle {
                 circ: Some(Circle::new()
                     .set("fill", "none")
                     .set("stroke", "#000000")
-                    .set("stroke-width", 1)
+                    .set("stroke-width", thickness)
                     .set("r", radius)
                     .set("cx", x)
                     .set("cy", y)
@@ -32,7 +32,7 @@ impl BCircle {
                 dimensions: (0.0, 0.0),
                 fill: (0, 0, 0),
                 outline_color: outline_color.unwrap_or((0, 0, 0)),
-                outline_width: 1.0,
+                outline_width: thickness,
                 rotation: 0.0,
                 point_of_rotation: (0.0, 0.0),
                 rotation_about: 0.0,
@@ -98,7 +98,7 @@ impl Drawable for BCircle {
         self.shape.circ = Some(Circle::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
-                    .set("stroke-width", 1)
+                    .set("stroke-width", self.shape.outline_width)
                     .set("r", self.radius)
                     .set("cx", self.shape.center.0)
                     .set("cy", self.shape.center.1)
