@@ -4,8 +4,11 @@
 <head>
   <meta charset="utf-8" />
   <title>
-    Brush
+    Brush Playground
   </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
         background-color: #f5f5f5;
@@ -64,6 +67,9 @@
   background: #282a3a;
   border-radius: 20px;
   padding: 20px 10px;
+  color: #ddd;
+  line-height: 25px;
+  font-size: 15px;
 }
 
 .line-numbers {
@@ -127,45 +133,47 @@ textarea {
       display: inline-block;
       vertical-align: middle;
     }
+    .runbut{
+      display: flex;
+      padding: 10px 20px;
+      background-color: #e7e7e7;
+      color: #333;
+      text-decoration: none;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      justify-content: center;
+      align-items: center;
+    }
   </style>
 </head>
 
 <body>
-  <div class="image-container">
-    <img src="https://i.imgur.com/VxoTQ7D.png" width="100px">
-  </div>
-  <div class="text">
-    <h1>Brush</h1>
-  </div>
-  <a href="API.html" class="button">API</a>
-  <script>
-    function handleInput() {
-      console.log("oninput");
-      var textarea = document.getElementById("text");
-      var div = document.getElementById("formatted-text");
-      var keywords = ["apple", "banana", "orange"]; 
-      
-      var content = '<span style = "color:blue">'+textarea.value+'</span>';
-      textarea.innerHTML = content;
-      console.log(textarea.value);
-      keywords.forEach(function(keyword) {
-        //var regex = new RegExp('\\b' + keyword + '\\b', 'gi');
-        //var formattedContent = content.replace(regex, '<span class="blue-text">' + keyword + '</span>');
-        //content = content.replace(regex, '<span style="color:blue">' + keyword + '</span>');
-      //  console.log(content);
-       // textarea.innerHTML = div.innerHTML;
-      });
-     //div.innerHTML = '';
-     // div.innerHTML = content;
-    //console.log(textarea.innerHTML);
-    }
-    window.handleInput = handleInput
-  </script>
+  <nav class="bg-gray-800">
+    <div class="max-w-9xl mx-auto px-5 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-24">
+          <div class="image-container">
+            <img src="https://i.imgur.com/VxoTQ7D.png" width="100px">
+          </div>
+          <div class="text">
+            <a href="#" class="text-white font-medium text-3xl ml-2">Brush</a>
+          </div>
+        <div class="hidden md:block ml-auto">
+          <div class="ml-10 flex items-baseline space-x-4">
+            <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-l font-medium">Playground</a>
+            <a href="API.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-l font-medium">API</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
   <div id="container">
     <div class="editor">
       <div class="line-numbers"></div>
       <div id="formatted-text"></div>
-      <textarea id="text" name="text" rows="22" cols="60" oninput="window.handleInput()" placeholder="Enter your code here...">//sample code
+      <textarea id="text" name="text" rows="22" cols="60" placeholder="Enter your code here...">//sample code
 let my_shape = circle {
     stretch(0.5, 0.5)
 }
@@ -178,7 +186,9 @@ my_shape(
     </div>
     <img id="img" /></div>
   <br>
-  <button onclick="window.processText()">Run</button>
+  <div class="flex flex-col items-center justify-start bg-gray-100">
+    <button onclick="window.processText()" class="px-4 py-2 bg-gray-200 text-black rounded hover:bg-gray-300">Run</button>
+  </div>
   <script type="module" defer>
     import init, { process_file, greet } from "../pkg/brush.js";
     init().then(() => {
@@ -223,8 +233,7 @@ const lineNumbers = document.querySelector(".line-numbers");
     if (e.key === "{") {
       const start = this.selectionStart;
       const end = this.selectionEnd;
-      const indent = "\t"; // Change this to adjust the indentation type and size
-
+      const indent = "\t";
       this.value =
         this.value.substring(0, start) +
         "{\n\t\n}"+ this.value.substring(end);
