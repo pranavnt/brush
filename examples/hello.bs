@@ -1,0 +1,12 @@
+let some_shape = circle {
+    stretch(0.97, 0.97)
+    shift(5, 5)
+    hue_shift(2)
+}
+
+some_shape(
+    radius = 300
+    center = (400, 400)
+    color = (0, 255, 255)
+    generations = 100
+)

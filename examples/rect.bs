@@ -1,0 +1,9 @@
+let test = rectangle {
+    rotate_about(60, 500, 500)
+}
+
+test(
+    position = (250, 500)
+    size = (50, 50)
+    generations = 500
+)

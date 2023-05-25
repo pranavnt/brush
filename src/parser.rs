@@ -115,7 +115,7 @@ impl Parser {
             name: name.clone(),
             kind: match shape_kind.as_str() {
                 "circle" => ShapeKind::Circle,
-                "square" => ShapeKind::Rectangle,
+                "rectangle" => ShapeKind::Rectangle,
                 "svg" => ShapeKind::SVG,
                 "polygon" => ShapeKind::Polygon,
                 _ => {
@@ -188,6 +188,37 @@ impl Parser {
                     kind: StatementKind::Rotate(Box::new(angle)),
                 });
             },
+            TokenType::ROTATETO_KEYWORD => {
+                self.advance_past(TokenType::ROTATETO_KEYWORD);
+
+                self.advance_past(TokenType::L_PAREN);
+                let angle = self.parse_expression(self.get_next(TokenType::R_PAREN));
+
+                self.advance_past(TokenType::ENDLINE);
+
+                return Node::Statement(StatementNode {
+                    kind: StatementKind::RotateTo(Box::new(angle)),
+                });
+            }
+
+            TokenType::ROTATEABOUT_KEYWORD => {
+                self.advance_past(TokenType::ROTATEABOUT_KEYWORD);
+
+                self.advance_past(TokenType::L_PAREN);
+                let angle = self.parse_expression(self.get_next(TokenType::COMMA));
+
+                self.advance_past(TokenType::COMMA);
+                let x = self.parse_expression(self.get_next(TokenType::COMMA));
+
+                self.advance_past(TokenType::COMMA);
+                let y = self.parse_expression(self.get_next(TokenType::R_PAREN));
+
+                self.advance_past(TokenType::ENDLINE);
+
+                return Node::Statement(StatementNode {
+                    kind: StatementKind::RotateAbout(Box::new(angle), Box::new(x), Box::new(y)),
+                });
+            }
             TokenType::STRETCH_KEYWORD => {
                 self.advance_past(TokenType::STRETCH_KEYWORD);
 
@@ -215,6 +246,44 @@ impl Parser {
                     kind: StatementKind::HueShift(Box::new(amount)),
                 });
             },
+            
+            TokenType::REFLECT_KEYWORD => {
+                self.advance_past(TokenType::REFLECT_KEYWORD);
+
+                self.advance_past(TokenType::L_PAREN);
+                let p1x = self.parse_expression(self.get_next(TokenType::COMMA));
+
+                self.advance_past(TokenType::COMMA);
+                let p1y = self.parse_expression(self.get_next(TokenType::COMMA));
+
+                self.advance_past(TokenType::COMMA);
+                let p2x = self.parse_expression(self.get_next(TokenType::COMMA));
+
+                self.advance_past(TokenType::COMMA);
+                let p2y = self.parse_expression(self.get_next(TokenType::R_PAREN));
+
+                self.advance_past(TokenType::ENDLINE);
+
+                return Node::Statement(StatementNode {
+                    kind: StatementKind::Reflect(Box::new(p1x), Box::new(p1y), Box::new(p2x), Box::new(p2y))
+                });
+            } 
+
+            TokenType::WARP_KEYWORD => {
+                self.advance_past(TokenType::WARP_KEYWORD);
+
+                self.advance_past(TokenType::L_PAREN);
+                let freq = self.parse_expression(self.get_next(TokenType::COMMA));
+
+                self.advance_past(TokenType::COMMA);
+                let ampl = self.parse_expression(self.get_next(TokenType::R_PAREN));
+
+                self.advance_past(TokenType::ENDLINE);
+
+                return Node::Statement(StatementNode { 
+                    kind: StatementKind::Warp(Box::new(freq), Box::new(ampl)) 
+                });
+            }
             TokenType::KEYWORD => {
                 let keyword = self.tokens[self.current as usize].value.clone();
 

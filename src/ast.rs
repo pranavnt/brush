@@ -38,7 +38,10 @@ pub enum StatementKind {
     HueShift(Box<Node>),
     Stretch(Box<Node>, Box<Node>),
     Rotate(Box<Node>),
-    // Warp(String, Box<Node>, Box<Node>),
+    RotateTo(Box<Node>),
+    RotateAbout(Box<Node>, Box<Node>, Box<Node>),
+    Reflect(Box<Node>, Box<Node>, Box<Node>, Box<Node>),
+    Warp(Box<Node>, Box<Node>),
 }
 
 #[derive(Debug, Clone)]

@@ -89,13 +89,20 @@ impl Lexer {
     
                         match keyw.as_str() {
                             "let" => all_tokens.push(Token::new(TokenType::LET, keyw)),
+
                             "circle" => all_tokens.push(Token::new(TokenType::SHAPE_KEYWORD, keyw)),
                             "triangle" => all_tokens.push(Token::new(TokenType::SHAPE_KEYWORD, keyw)),
+                            "rectangle" => all_tokens.push(Token::new(TokenType::SHAPE_KEYWORD, keyw)),
+
                             "shift" => all_tokens.push(Token::new(TokenType::SHIFT_KEYWORD, keyw)),
                             "hue_shift" => all_tokens.push(Token::new(TokenType::HUE_SHIFT_KEYWORD, keyw)),
                             "stretch" => all_tokens.push(Token::new(TokenType::STRETCH_KEYWORD, keyw)),
                             "rotate" => all_tokens.push(Token::new(TokenType::ROTATE_KEYWORD, keyw)),
+                            "rotate_to" => all_tokens.push(Token::new(TokenType::ROTATETO_KEYWORD, keyw)),
+                            "rotate_about" => all_tokens.push(Token::new(TokenType::ROTATEABOUT_KEYWORD, keyw)),
+                            "warp" => all_tokens.push(Token::new(TokenType::WARP_KEYWORD, keyw)),
                             "evolve" => all_tokens.push(Token::new(TokenType::EVOLVE_KEYWORD, keyw)),
+                            "reflect" => all_tokens.push(Token::new(TokenType::REFLECT_KEYWORD, keyw)),
 
                             "true" => all_tokens.push(Token::new(TokenType::BOOLEAN, keyw)),
                             "false" => all_tokens.push(Token::new(TokenType::BOOLEAN, keyw)),

@@ -11,14 +11,21 @@ use svg::Document;
 use crate::art::{Drawable, Shape};
 
 impl Drawable for Shape {
+    
     fn rotate(&mut self, angle: f32) {
-        unimplemented!();
+        self.rotation += angle;
+        
     }
 
     fn rotate_to(&mut self, angle: f32) {
-        unimplemented!();
+        self.rotation = angle;
     }
 
+    fn rotate_about(&mut self, angle: f32, x: f32, y: f32) {
+        self.rotation_about += angle;
+        self.point_of_rotation = (x, y);
+    }
+    
     fn shift(&mut self, x: f32, y: f32) {
         self.center.0 += x;
         self.center.1 += y;
@@ -49,7 +56,32 @@ impl Drawable for Shape {
     }
 
     fn shift_to(&mut self, x: f32, y: f32) {
-        unimplemented!();
+        self.center.0 = x;
+        self.center.1 = y;
+
+        // iterate through the path and shift each point
+        let mut cdata = self.path.clone().unwrap();
+        let mut newData = Data::new();
+
+        // bruh we have to handle each type of command
+        for cmd in cdata.iter() {
+            // derefererence error here
+            match cmd {
+                Command::Move(_pos, para) => {
+                    newData = newData.move_to((para.get(0).unwrap() + x, para.get(1).unwrap() + y));
+                }
+
+                Command::Line(_pos, para) => {
+                    newData = newData.line_to((para.get(0).unwrap() + x, para.get(1).unwrap() + y));
+                }
+
+                Command::Close => {}
+
+                _ => {  unimplemented!() }
+            }
+        }
+
+        self.path = Some(newData.close());
     }
 
     fn stretch(&mut self, x: f32, y: f32) {
@@ -86,7 +118,37 @@ impl Drawable for Shape {
     fn stretch_to(&mut self, x: f32, y: f32) {
         unimplemented!();
     }
+    
+    fn reflect(&mut self, p1x: f32, p1y: f32, p2x: f32, p2y: f32) {
+        if p1x == p2x {
+            let distance = (self.center.0 - p1x);
+            self.center.0 = p1x - distance;
+        } else if p1y == p2y {
+            self.center.1 = 2.0 * p1y - self.center.1;
+        } else {
+            let slope = (p2y - p1y) / (p2x - p1x);
 
+            let y_intercept = p1y - slope * p1x;
+    
+            let perp_slope = -1.0 / slope;
+    
+            let perp_y_intercept = self.center.1 - perp_slope * self.center.0;
+    
+            let x_intersect = (perp_y_intercept - y_intercept) / (slope - perp_slope);
+            let y_intersect = slope * x_intersect + y_intercept;
+    
+            let reflected_x = 2.0 * x_intersect - self.center.0;
+            let reflected_y = 2.0 * y_intersect - self.center.1;
+    
+            self.center.0 = reflected_x;
+            self.center.1 = reflected_y;
+        }  
+    }
+
+    fn warp(&mut self, freq: f32, ampl: f32) {
+        self.warp_vals = (freq, ampl);
+    }
+        
     fn hue_shift(&mut self, amount: f32) {
         // Convert RGB to HSL
         let r = self.outline_color.0 as f32 / 255.0;
@@ -145,11 +207,17 @@ impl Drawable for Shape {
 
     fn update(&mut self) {
         let o_color = format!("#{:02x?}{:02x?}{:02x?}", self.outline_color.0, self.outline_color.1, self.outline_color.2);
+        let rotate = format!("rotate({} {} {})", self.rotation, self.center.0, self.center.1);
+        let rotate_about = format!("rotate({} {} {})", self.rotation_about, self.point_of_rotation.0, self.point_of_rotation.1);
+        
+        let all_rotate = format!("{} {}", rotate, rotate_about);
 
         self.svg = Some(Path::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
                     .set("stroke-width", 1)
+                    .set("transform", all_rotate)
                     .set("d", self.path.clone().unwrap()));
+                    
     }
 }
