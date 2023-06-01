@@ -13,17 +13,33 @@ use crate::art::{Drawable, Shape};
 impl Drawable for Shape {
     
     fn rotate(&mut self, angle: f32) {
-        self.rotation += angle;
+        // self.rotation += angle;
+        self.transformation_stack += &format!(" rotate({} {} {})", angle, self.center.0, self.center.1);
         
     }
 
-    fn rotate_to(&mut self, angle: f32) {
-        self.rotation = angle;
-    }
+    // fn rotate_to(&mut self, angle: f32) {
+    //     let rotate = format!("rotate({} {} {})", self.rotation, self.center.0, self.center.1);
+    //     let rotate_about = format!("rotate({} {} {})", self.rotation_about, self.point_of_rotation.0, self.point_of_rotation.1);
+
+    //     self.rotation = angle;
+    // }
 
     fn rotate_about(&mut self, angle: f32, x: f32, y: f32) {
-        self.rotation_about += angle;
-        self.point_of_rotation = (x, y);
+        self.transformation_stack += &format!(" rotate({} {} {})", angle, x, y);
+        let ang_rad = angle.to_radians();
+        let cos = ang_rad.cos();
+        let sin = ang_rad.sin();
+
+        let cx = x - self.center.0;
+        let cy = y - self.center.1;
+
+        self.center.0 += cx * cos - cy * sin;
+        self.center.1 += cx * sin + cy * cos;
+    }
+
+    fn rotate_to(&mut self, angle: f32) {
+        unimplemented!();
     }
     
     fn shift(&mut self, x: f32, y: f32) {
@@ -207,16 +223,12 @@ impl Drawable for Shape {
 
     fn update(&mut self) {
         let o_color = format!("#{:02x?}{:02x?}{:02x?}", self.outline_color.0, self.outline_color.1, self.outline_color.2);
-        let rotate = format!("rotate({} {} {})", self.rotation, self.center.0, self.center.1);
-        let rotate_about = format!("rotate({} {} {})", self.rotation_about, self.point_of_rotation.0, self.point_of_rotation.1);
         
-        let all_rotate = format!("{} {}", rotate, rotate_about);
-
         self.svg = Some(Path::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
                     .set("stroke-width", 1)
-                    .set("transform", all_rotate)
+                    .set("transform", self.transformation_stack.clone())
                     .set("d", self.path.clone().unwrap()));
                     
     }

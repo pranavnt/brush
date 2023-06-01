@@ -33,10 +33,6 @@ impl Lexer {
     
                     '/' => {
                         if let Some('/') = chars.peek() {
-                            // Comment until the end of the line
-                            chars.next(); // Consume the second '/'
-                            let comment: String = chars.collect();
-                            // all_tokens.push(Token::new(TokenType::COMMENT, comment));
                             break; // Skip processing the rest of the line
                         } else {
                             all_tokens.push(Token::new(TokenType::OPERATOR, cc.to_string()));

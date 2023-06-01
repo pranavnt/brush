@@ -44,8 +44,7 @@ pub struct Shape {
     pub outline_color: (u8, u8, u8),
     pub outline_width: f32,
     pub rotation: f32,
-    pub point_of_rotation: (f32, f32),
-    pub rotation_about: f32,
+    pub transformation_stack: String,
     pub warp_vals: (f32, f32),
     pub stretch: (f32, f32),
 }
