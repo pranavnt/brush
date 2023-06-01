@@ -212,7 +212,7 @@ impl Drawable for Shape {
         self.svg = Some(Path::new()
                     .set("fill", "none")
                     .set("stroke", o_color)
-                    .set("stroke-width", 1)
+                    .set("stroke-width", self.outline_width)
                     .set("transform", self.transformation_stack.clone())
                     .set("d", self.path.clone().unwrap()));
                     
