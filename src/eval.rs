@@ -1,5 +1,5 @@
+use crate::art::{draw, BCircle, BRectangle, Drawable, Polygon, Shape, SVG};
 use crate::ast::*;
-use crate::art::{Shape, BCircle, BRectangle, Polygon, SVG, Drawable, draw};
 use crate::tokens::{Token, TokenType};
 use std::collections::*;
 
@@ -46,6 +46,13 @@ impl Interpreter {
         }
     }
 
+    fn extract_numnode(node: &Node) -> f32 {
+        match &*node {
+            Node::NumberLiteral(num) => num.value,
+            _ => panic!("wrong type somewhere"),
+        }
+    }
+
     pub fn eval(&mut self, node: Node) -> Option<Value> {
         match node {
             Node::Program(program) => {
@@ -66,183 +73,63 @@ impl Interpreter {
                                             match statement.kind {
                                                 StatementKind::Shift(x, y) => {
                                                     // shift by x, y
-                                                    let x = match *x {
-                                                        Node::NumberLiteral(num) => {
-                                                            num.value
-                                                        }
-                                                        _ => {
-                                                            panic!("wrong type somewhere");
-                                                        }
-                                                    };
-                                                    let y = match *y {
-                                                        Node::NumberLiteral(num) => {
-                                                            num.value
-                                                        }
-                                                        _ => {
-                                                            panic!("wrong type somewhere");
-                                                        }
-                                                    };
+                                                    let x = Self::extract_numnode(&*x);
+                                                    let y = Self::extract_numnode(&*y);
                                                     ev_shape.shift(x, y);
                                                 }
 
                                                 StatementKind::Stretch(x, y) => {
                                                     // stretch by x, y (will be same value for both lol)
-                                                    let x = match *x {
-                                                        Node::NumberLiteral(num) => {
-                                                            num.value
-                                                        }
-                                                        _ => {
-                                                            panic!("wrong type somewhere");
-                                                        }
-                                                    };
-                                                    let y = match *y {
-                                                        Node::NumberLiteral(num) => {
-                                                            num.value
-                                                        }
-                                                        _ => {
-                                                            panic!("wrong type somewhere");
-                                                        }
-                                                    };
+                                                    let x = Self::extract_numnode(&*x);
+                                                    let y = Self::extract_numnode(&*y);
                                                     ev_shape.stretch(x, y);
                                                 }
 
                                                 StatementKind::HueShift(amount) => {
-                                                    let hue_offset = match *amount {
-                                                        Node::NumberLiteral(num) => {
-                                                            // mod by 360 degrees protects shift amount
-                                                            num.value % 360.0
-                                                        }
-
-                                                        _ => {
-                                                            panic!("wrong type somewhere");
-                                                        }
-                                                    };
+                                                    let hue_offset =
+                                                        Self::extract_numnode(&*amount) % 360.0;
 
                                                     ev_shape.hue_shift(hue_offset);
                                                 }
 
                                                 StatementKind::Rotate(angle) => {
-                                                    let angle = match *angle {
-                                                        Node::NumberLiteral(num) => {
-                                                            num.value
-                                                        }
-                                                        _ => {
-                                                            panic!("wrong type somewhere");
-                                                        }
-                                                    };
+                                                    let angle = Self::extract_numnode(&*angle);
 
                                                     ev_shape.rotate(angle);
                                                 }
 
                                                 StatementKind::RotateTo(angle) => {
-                                                    let angle = match *angle {
-                                                        Node::NumberLiteral(num) => {
-                                                            num.value
-                                                        }
-                                                        _ => {
-                                                            panic!("wrong type somewhere");
-                                                        }
-                                                    };
+                                                    let angle = Self::extract_numnode(&angle);
 
-                                                    ev_shape.rotate(angle);
+                                                    ev_shape.rotate_to(angle);
                                                 }
 
                                                 StatementKind::RotateAbout(angle, x, y) => {
-                                                    let angle = match *angle {
-                                                        Node::NumberLiteral(num) => {
-                                                            num.value
-                                                        }
-                                                        _ => {
-                                                            panic!("wrong type somewhere");
-                                                        }
-                                                    };
-
-                                                    let x = match *x {
-                                                        Node::NumberLiteral(num) => {
-                                                            num.value
-                                                        }
-                                                        _ => {
-                                                            panic!("wrong type somewhere");
-                                                        }
-                                                    };
-
-                                                    let y = match *y {
-                                                        Node::NumberLiteral(num) => {
-                                                            num.value
-                                                        }
-
-                                                        _ => {
-                                                            panic!("wrong type somewhere");
-                                                        }
-                                                    };
+                                                    let angle = Self::extract_numnode(&angle);
+                                                    let x = Self::extract_numnode(&x);
+                                                    let y = Self::extract_numnode(&y);
 
                                                     ev_shape.rotate_about(angle, x, y);
                                                 }
 
                                                 StatementKind::Reflect(p1x, p1y, p2x, p2y) => {
-                                                    let p1x = match *p1x {
-                                                        Node::NumberLiteral(num) => {
-                                                            num.value
-                                                        }
-                                                        _ => {
-                                                            panic!("wrong type somewhere");
-                                                        }
-                                                    };
-
-                                                    let p1y = match *p1y {
-                                                        Node::NumberLiteral(num) => {
-                                                            num.value
-                                                        }
-                                                        _ => {
-                                                            panic!("wrong type somewhere");
-                                                        }
-                                                    };
-
-                                                    let p2x = match *p2x {
-                                                        Node::NumberLiteral(num) => {
-                                                            num.value
-                                                        }
-                                                        _ => {
-                                                            panic!("wrong type somewhere");
-                                                        }
-                                                    };
-
-                                                    let p2y = match *p2y {
-                                                        Node::NumberLiteral(num) => {
-                                                            num.value
-                                                        }
-
-                                                        _ => {
-                                                            panic!("wrong type somewhere");
-                                                        }
-                                                    };
+                                                    let p1x = Self::extract_numnode(&p1x);
+                                                    let p1y = Self::extract_numnode(&*p1y);
+                                                    let p2x = Self::extract_numnode(&*p2x);
+                                                    let p2y = Self::extract_numnode(&*p2y);
 
                                                     ev_shape.reflect(p1x, p1y, p2x, p2y);
                                                 }
 
                                                 StatementKind::Warp(freq, ampl) => {
-                                                    let freq = match *freq {
-                                                        Node::NumberLiteral(num) => {
-                                                            num.value
-                                                        }
+                                                    let freq = Self::extract_numnode(&*freq);
+                                                    let ampl = Self::extract_numnode(&*ampl);
 
-                                                        _ => {
-                                                            panic!("wrong type somewhere");
-                                                        }
-                                                    };
-
-                                                    let ampl = match *ampl {
-                                                        Node::NumberLiteral(num) => {
-                                                            num.value
-                                                        }
-
-                                                        _ => {
-                                                            panic!("wrong type somewhere");
-                                                        }
-                                                    };
                                                     ev_shape.warp(freq, ampl);
                                                 }
-                                                _ => {  unimplemented!() }
+                                                _ => {
+                                                    unimplemented!()
+                                                }
                                             }
                                         }
 
@@ -353,21 +240,8 @@ impl Interpreter {
                                 if property.name == "position" {
                                     rect_config.0 = match *property.value {
                                         Node::TupleLiteral(tuple) => {
-                                            // idk fix this by adding more nested matches
-                                            // and whatever is below
-                                            let x = match &tuple.values[0] {
-                                                Node::NumberLiteral(num) => num.value,
-                                                _ => {
-                                                    panic!("wrong type somewhere");
-                                                }
-                                            };
-
-                                            let y = match &tuple.values[1] {
-                                                Node::NumberLiteral(num) => num.value,
-                                                _ => {
-                                                    panic!("wrong type somewhere");
-                                                }
-                                            };
+                                            let x = Self::extract_numnode(&*&tuple.values[0]);
+                                            let y = Self::extract_numnode(&*&tuple.values[1]);
 
                                             (x, y)
                                         }
@@ -378,21 +252,8 @@ impl Interpreter {
                                 } else if property.name == "size" {
                                     rect_config.1 = match *property.value {
                                         Node::TupleLiteral(tuple) => {
-                                            // idk fix this by adding more nested matches
-                                            // and whatever is below
-                                            let w = match &tuple.values[0] {
-                                                Node::NumberLiteral(num) => num.value,
-                                                _ => {
-                                                    panic!("wrong type somewhere");
-                                                }
-                                            };
-
-                                            let h = match &tuple.values[1] {
-                                                Node::NumberLiteral(num) => num.value,
-                                                _ => {
-                                                    panic!("wrong type somewhere");
-                                                }
-                                            };
+                                            let w = Self::extract_numnode(&*&tuple.values[0]);
+                                            let h = Self::extract_numnode(&*&tuple.values[1]);
 
                                             (w, h)
                                         }
@@ -401,37 +262,13 @@ impl Interpreter {
                                         }
                                     }
                                 } else if property.name == "generations" {
-                                    generations = match *property.value {
-                                        Node::NumberLiteral(num) => num.value as i32,
-                                        _ => {
-                                            panic!("wrong type somewhere");
-                                        }
-                                    }
+                                    generations = Self::extract_numnode(&*property.value) as i32;
                                 } else if property.name == "color" {
                                     rect_config.2 = match *property.value {
                                         Node::TupleLiteral(tuple) => {
-                                            // idk fix this by adding more nested matches
-                                            // and whatever is below
-                                            let r = match &tuple.values[0] {
-                                                Node::NumberLiteral(num) => num.value,
-                                                _ => {
-                                                    panic!("wrong type somewhere");
-                                                }
-                                            };
-
-                                            let g = match &tuple.values[1] {
-                                                Node::NumberLiteral(num) => num.value,
-                                                _ => {
-                                                    panic!("wrong type somewhere");
-                                                }
-                                            };
-
-                                            let b = match &tuple.values[2] {
-                                                Node::NumberLiteral(num) => num.value,
-                                                _ => {
-                                                    panic!("wrong type somewhere");
-                                                }
-                                            };
+                                            let r = Self::extract_numnode(&*&tuple.values[0]);
+                                            let g = Self::extract_numnode(&*&tuple.values[1]);
+                                            let b = Self::extract_numnode(&*&tuple.values[2]);
 
                                             (r as u8, g as u8, b as u8)
                                         }
@@ -459,11 +296,16 @@ impl Interpreter {
                                 rect = rect.clone();
                                 evolve_fn(&mut rect, statements.clone());
                             }
-                        } 
+                        }
 
                         ShapeKind::Circle => {
                             // (radius, center, color)
-                            let mut circle_config = (0.0, (0.0, 0.0), (u8::from(0), u8::from(0), u8::from(0)), 0.0);
+                            let mut circle_config = (
+                                0.0,
+                                (0.0, 0.0),
+                                (u8::from(0), u8::from(0), u8::from(0)),
+                                0.0,
+                            );
                             let mut generations = 1;
 
                             // parse properties
@@ -539,46 +381,42 @@ impl Interpreter {
                                             panic!("wrong type somewhere");
                                         }
                                     }
-                                } else if property.name=="thickness"{
-                                    circle_config.3 = match *property.value{
-                                        Node::NumberLiteral(num) =>{
-                                            num.value
-                                        },
-                                        _=>{
+                                } else if property.name == "thickness" {
+                                    circle_config.3 = match *property.value {
+                                        Node::NumberLiteral(num) => num.value,
+                                        _ => {
                                             panic!("wrong type");
                                         }
                                     }
-        
                                 } else {
                                     panic!("unknown property");
                                 }
                             }
 
-                            // create boilerplate circle with radius and center and thickness 
-                            
+                            // create boilerplate circle with radius and center and thickness
+
                             let mut th = circle_config.3;
-                            if (circle_config.3==0.0){
+                            if (circle_config.3 == 0.0) {
                                 th = 1.0;
-                        }
+                            }
 
-                        let mut circle = BCircle::new(
-                            circle_config.1.0,
-                            circle_config.1.1,
-                            circle_config.0,
-                            Some(circle_config.2), 
-                            th
-                        );
+                            let mut circle = BCircle::new(
+                                circle_config.1 .0,
+                                circle_config.1 .1,
+                                circle_config.0,
+                                Some(circle_config.2),
+                                th,
+                            );
 
-                        for i in 0..generations {
-                            // push to shapes
-                            circle.update();
-                            self.shapes.push(circle.clone().shape);
+                            for i in 0..generations {
+                                // push to shapes
+                                circle.update();
+                                self.shapes.push(circle.clone().shape);
 
-                            circle = circle.clone();
-                            // circle.hue_shift(5.0);
-                            evolve_fn(&mut circle, statements.clone());
-                        }
-
+                                circle = circle.clone();
+                                // circle.hue_shift(5.0);
+                                evolve_fn(&mut circle, statements.clone());
+                            }
                         }
 
                         _ => {
