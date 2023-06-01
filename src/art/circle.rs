@@ -16,7 +16,7 @@ impl BCircle {
         y: f32,
         radius: f32,
         outline_color: Option<(u8, u8, u8)>,
-        thickness: f32,
+        outline_width: f32
     ) -> BCircle {
         BCircle {
             shape: Shape {
@@ -27,7 +27,7 @@ impl BCircle {
                     Circle::new()
                         .set("fill", "none")
                         .set("stroke", "#000000")
-                        .set("stroke-width", thickness)
+                        .set("stroke-width", outline_width)
                         .set("r", radius)
                         .set("cx", x)
                         .set("cy", y)
@@ -39,7 +39,7 @@ impl BCircle {
                 dimensions: (0.0, 0.0),
                 fill: (0, 0, 0),
                 outline_color: outline_color.unwrap_or((0, 0, 0)),
-                outline_width: thickness,
+                outline_width: outline_width,
                 rotation: 0.0,
                 transformation_stack: "".to_string(),
                 warp_vals: (0.0, 0.0),

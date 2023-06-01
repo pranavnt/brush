@@ -17,6 +17,7 @@ impl BRectangle {
         width: f32,
         height: f32,
         outline_color: Option<(u8, u8, u8)>,
+        outline_width: f32
     ) -> BRectangle {
         BRectangle {
             shape: Shape {
@@ -28,7 +29,7 @@ impl BRectangle {
                     Rectangle::new()
                         .set("fill", "none")
                         .set("stroke", "#000000")
-                        .set("stroke-width", 1)
+                        .set("stroke-width", outline_width)
                         .set("width", width)
                         .set("height", height)
                         .set("x", x)
@@ -40,7 +41,7 @@ impl BRectangle {
                 dimensions: (0.0, 0.0),
                 fill: (0, 0, 0),
                 outline_color: outline_color.unwrap_or((0, 0, 0)),
-                outline_width: 1.0,
+                outline_width: outline_width,
                 rotation: 0.0,
                 transformation_stack: "".to_string(),
                 warp_vals: (0.0, 0.0),
