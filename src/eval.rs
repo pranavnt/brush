@@ -1,4 +1,4 @@
-use crate::art::{draw, BCircle, BRectangle, Drawable, Polygon, Shape, SVG};
+use crate::art::{draw, BCircle, BRectangle, BPolygon, Drawable, Shape, SVG};
 use crate::ast::*;
 use crate::tokens::{Token, TokenType};
 use std::collections::*;
@@ -25,7 +25,7 @@ pub type EvolveFn = for<'a> fn(&'a mut dyn Drawable, Vec<Node>) -> ();
 pub enum Shapes {
     Circle(BCircle),
     Rectangle(BRectangle),
-    Polygon(Polygon),
+    Polygon(BPolygon),
     SVG(SVG),
 }
 

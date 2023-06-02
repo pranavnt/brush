@@ -185,29 +185,31 @@ impl Drawable for Shape {
     }
 
     fn reflect(&mut self, p1x: f32, p1y: f32, p2x: f32, p2y: f32) {
-        if p1x == p2x {
-            let distance = (self.center.0 - p1x);
-            self.center.0 = p1x - distance;
-        } else if p1y == p2y {
-            self.center.1 = 2.0 * p1y - self.center.1;
-        } else {
-            let slope = (p2y - p1y) / (p2x - p1x);
+        // if p1x == p2x {
+        //     let distance = (self.center.0 - p1x);
+        //     self.center.0 = p1x - distance;
+        // } else if p1y == p2y {
+        //     self.center.1 = 2.0 * p1y - self.center.1;
+        // } else {
+        //     let slope = (p2y - p1y) / (p2x - p1x);
 
-            let y_intercept = p1y - slope * p1x;
+        //     let y_intercept = p1y - slope * p1x;
 
-            let perp_slope = -1.0 / slope;
+        //     let perp_slope = -1.0 / slope;
 
-            let perp_y_intercept = self.center.1 - perp_slope * self.center.0;
+        //     let perp_y_intercept = self.center.1 - perp_slope * self.center.0;
 
-            let x_intersect = (perp_y_intercept - y_intercept) / (slope - perp_slope);
-            let y_intersect = slope * x_intersect + y_intercept;
+        //     let x_intersect = (perp_y_intercept - y_intercept) / (slope - perp_slope);
+        //     let y_intersect = slope * x_intersect + y_intercept;
 
-            let reflected_x = 2.0 * x_intersect - self.center.0;
-            let reflected_y = 2.0 * y_intersect - self.center.1;
+        //     let reflected_x = 2.0 * x_intersect - self.center.0;
+        //     let reflected_y = 2.0 * y_intersect - self.center.1;
 
-            self.center.0 = reflected_x;
-            self.center.1 = reflected_y;
-        }
+        //     self.center.0 = reflected_x;
+        //     self.center.1 = reflected_y;
+        // }
+
+        unimplemented!();
     }
 
     fn warp(&mut self, freq: f32, ampl: f32) {
@@ -229,13 +231,24 @@ impl Drawable for Shape {
             self.outline_color.0, self.outline_color.1, self.outline_color.2
         );
 
-        self.svg = Some(
-            Path::new()
-                .set("fill", "none")
+
+        let mut tmp = Path::new()
                 .set("stroke", o_color)
                 .set("stroke-width", self.outline_width)
                 .set("transform", self.transformation_stack.clone())
-                .set("d", self.path.clone().unwrap()),
-        );
+                .set("d", self.path.clone().unwrap());
+
+        if self.fill.3 != 0 {
+            let f_color = format!(
+                "#{:02x?}{:02x?}{:02x?}",
+                self.fill.0, self.fill.1, self.fill.2
+            );
+
+            tmp = tmp.set("fill", f_color);
+        } else {
+            tmp = tmp.set("fill", "none");
+        }
+
+        self.svg = Some(tmp);
     }
 }
