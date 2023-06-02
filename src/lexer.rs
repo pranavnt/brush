@@ -26,7 +26,21 @@ impl Lexer {
                 match cc {
                     // Match current character to left and right parens and curly braces
                     ',' => all_tokens.push(Token::new(TokenType::COMMA, cc.to_string())),
-                    '{' => all_tokens.push(Token::new(TokenType::L_CURLY, cc.to_string())),
+                    '{' => {
+                        if all_tokens.last().unwrap().token_type == TokenType::SHAPE_KEYWORD {
+                            all_tokens.push(Token::new(TokenType::L_CURLY, cc.to_string()));
+                            all_tokens.push(Token::new(TokenType::SHIFT_KEYWORD, "shift".to_string()));
+                            all_tokens.push(Token::new(TokenType::L_PAREN, "(".to_string()));
+                            all_tokens.push(Token::new(TokenType::NUMBER, "0".to_string()));
+                            all_tokens.push(Token::new(TokenType::COMMA, ",".to_string()));
+                            all_tokens.push(Token::new(TokenType::NUMBER, "0".to_string()));
+                            all_tokens.push(Token::new(TokenType::R_PAREN, ")".to_string()));
+                            all_tokens.push(Token::new(TokenType::ENDLINE, cc.to_string()));
+
+                        } else {
+                            all_tokens.push(Token::new(TokenType::L_CURLY, cc.to_string()));
+                        }
+                    },
                     '}' => all_tokens.push(Token::new(TokenType::R_CURLY, cc.to_string())),
                     '(' => all_tokens.push(Token::new(TokenType::L_PAREN, cc.to_string())),
                     ')' => all_tokens.push(Token::new(TokenType::R_PAREN, cc.to_string())),
