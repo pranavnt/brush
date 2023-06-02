@@ -258,7 +258,6 @@ impl Interpreter {
                                                 for val in &tuple.values {
                                                     x_list.push(Self::extract_numnode(&*val));
                                                 }
-
                                             }
 
                                             _ => {
@@ -273,7 +272,6 @@ impl Interpreter {
                                                 for val in &tuple.values {
                                                     y_list.push(Self::extract_numnode(&*val));
                                                 }
-
                                             }
 
                                             _ => {

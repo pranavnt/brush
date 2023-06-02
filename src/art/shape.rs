@@ -213,7 +213,8 @@ impl Drawable for Shape {
     }
 
     fn warp(&mut self, freq: f32, ampl: f32) {
-        self.warp_vals = (freq, ampl);
+        // self.warp_vals = (freq, ampl);
+        unimplemented!();
     }
 
     fn hue_shift(&mut self, amount: f32) {

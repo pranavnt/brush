@@ -160,7 +160,7 @@
   </style>
 </head>
 
-<body>
+<body onload="formatLines()">
   <nav class="bg-gray-800">
     <div class="max-w-9xl mx-auto px-5 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-24">
@@ -228,20 +228,15 @@ my_shape(
     if (savedValue) {
       textarea.value = savedValue;
     }
-    textarea.addEventListener("keydown", function (e) {
-      if (e.key === "(") {
-        const start = this.selectionStart;
-        const end = this.selectionEnd;
-        this.value = this.value.substring(0, start) + "()" + this.value.substring(end);
-        this.selectionStart = this.selectionEnd = start + 1;
-        e.preventDefault();
-      }
+
+    function formatLines() {
       const lines = textarea.value.split("\n").length;
       lineNumbers.innerHTML = "";
       for (let i = 1; i <= lines; i++) {
         lineNumbers.innerHTML += `<span></span>`;
       }
-    });
+    }
+
     textarea.addEventListener("keydown", function (e) {
       if (e.key === "{") {
         const start = this.selectionStart;
@@ -252,41 +247,23 @@ my_shape(
           "{\n\t\n}" + this.value.substring(end);
         this.selectionStart = this.selectionEnd = start + 1 + indent.length + indent.length;
         e.preventDefault();
-      }
-      /*if (e.key === "{") {
-        const start = this.selectionStart;
-        const end = this.selectionEnd;
-        this.value = this.value.substring(0, start) + "{\t}" + this.value.substring(end);
-        this.selectionStart = this.selectionEnd = start+1;
-        e.preventDefault();
-      }*/
-      const lines = textarea.value.split("\n").length;
-      lineNumbers.innerHTML = "";
-      for (let i = 1; i <= lines; i++) {
-        lineNumbers.innerHTML += `<span></span>`;
-      }
-    });
-    textarea.addEventListener("keydown", function (e) {
-      if (e.key === "Tab") {
+      } else if (e.key === "Tab") {
         const start = this.selectionStart;
         const end = this.selectionEnd;
         this.value = this.value.substring(0, start) + "\t" + this.value.substring(end);
         this.selectionStart = this.selectionEnd = start + 1;
         e.preventDefault();
+      } else if (e.key === "(") {
+        const start = this.selectionStart;
+        const end = this.selectionEnd;
+        this.value = this.value.substring(0, start) + "()" + this.value.substring(end);
+        this.selectionStart = this.selectionEnd = start + 1;
+        e.preventDefault();
       }
-      const lines = textarea.value.split("\n").length;
-      lineNumbers.innerHTML = "";
-      for (let i = 1; i <= lines; i++) {
-        lineNumbers.innerHTML += `<span></span>`;
-      }
+      
+      formatLines();
     });
-    textarea.addEventListener("input", () => {
-      const lines = textarea.value.split("\n").length;
-      lineNumbers.innerHTML = "";
-      for (let i = 1; i <= lines; i++) {
-        lineNumbers.innerHTML += `<span></span>`;
-      }
-    });
+
   </script>
 
 </body>
