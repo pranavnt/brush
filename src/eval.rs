@@ -139,64 +139,6 @@ impl Interpreter {
 
                                 ()
                             };
-                        // let evolveFn = |circle: &Circle| {
-                        //     for statement in &shape.statements {
-                        //         // if statement is shift, then shift by the value
-                        //         // if statement is stretch, then stretch by the value
-
-                        //         match statement {
-                        //             Node::Statement(statement) => {
-                        //                 match statement.kind {
-                        //                     StatementKind::Shift(x, y) => {
-                        //                         // shift by x, y
-                        //                         let x = match *x {
-                        //                             Node::NumberLiteral(num) => {
-                        //                                 num.value
-                        //                             },
-                        //                             _ => {
-                        //                                 panic!("wrong type somewhere");
-                        //                             }
-                        //                         };
-                        //                         let y = match *y {
-                        //                             Node::NumberLiteral(num) => {
-                        //                                 num.value
-                        //                             },
-                        //                             _ => {
-                        //                                 panic!("wrong type somewhere");
-                        //                             }
-                        //                         };
-                        //                         circle.shape.shift(x, y);
-                        //                     }
-
-                        //                     StatementKind::Stretch(x, y) => {
-                        //                         // stretch by x, y (will be same value for both lol)
-                        //                         let x = match *x {
-                        //                             Node::NumberLiteral(num) => {
-                        //                                 num.value
-                        //                             },
-                        //                             _ => {
-                        //                                 panic!("wrong type somewhere");
-                        //                             }
-                        //                         };
-                        //                         let y = match *y {
-                        //                             Node::NumberLiteral(num) => {
-                        //                                 num.value
-                        //                             },
-                        //                             _ => {
-                        //                                 panic!("wrong type somewhere");
-                        //                             }
-                        //                         };
-                        //                         circle.shape.stretch(x, y);
-                        //                     }
-
-                        //                     _ => {}
-                        //                 }
-                        //             }
-
-                        //             _ => {}
-                        //         }
-                        //     }
-                        // };
 
                         self.symbol_table.insert(
                             name.clone(),
@@ -302,9 +244,67 @@ impl Interpreter {
                         }
                     }
 
-
                     // then check shape specific properties and process boilerplate shapes
                     match shape_kind {
+                        ShapeKind::Polygon => {
+                            let mut x_list = Vec::<f32>::new();
+                            let mut y_list = Vec::<f32>::new();
+
+                            for property in properties {
+                                match property.name.as_str() {
+                                    "x" => {
+                                        match *property.value {
+                                            Node::TupleLiteral(tuple) => {
+                                                for val in &tuple.values {
+                                                    x_list.push(Self::extract_numnode(&*val));
+                                                }
+
+                                            }
+
+                                            _ => {
+                                                panic!("wrong type somewhere");
+                                            }
+                                        }
+                                    }
+
+                                    "y" => {
+                                        match *property.value {
+                                            Node::TupleLiteral(tuple) => {
+                                                for val in &tuple.values {
+                                                    y_list.push(Self::extract_numnode(&*val));
+                                                }
+
+                                            }
+
+                                            _ => {
+                                                panic!("wrong type somewhere");
+                                            }
+                                        }
+                                    }
+
+                                    _ => ()
+                                }
+                            }
+
+                            // create boilerplate poly
+                            let mut poly = BPolygon::new(
+                                x_list,
+                                y_list,
+                                Some(generic_config.2),
+                                generic_config.3,
+                                generic_config.1
+                            );
+
+                            for i in 0..generations {
+                                // push to shapes
+                                poly.update();
+                                self.shapes.push(poly.clone().shape);
+
+                                poly = poly.clone();
+                                evolve_fn(&mut poly, statements.clone());
+                            }
+                        }
+
                         ShapeKind::Rectangle => {
                             // size
                             let mut rect_config = (

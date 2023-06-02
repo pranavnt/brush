@@ -12,8 +12,8 @@ use crate::art::{BPolygon, Drawable, Shape};
 
 impl BPolygon {
     pub fn new(
-        x_vals: Vec<f32>,
-        y_vals: Vec<f32>,
+        x_vals: Vec::<f32>,
+        y_vals: Vec::<f32>,
         outline_color: Option<(u8, u8, u8)>,
         outline_width: f32,
         fill_color: (u8, u8, u8, u8)

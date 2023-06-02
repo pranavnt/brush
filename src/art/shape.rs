@@ -91,7 +91,7 @@ impl Drawable for Shape {
         self.center.1 += y;
 
         // iterate through the path and shift each point
-        let mut cdata = self.path.clone().unwrap();
+        let cdata = self.path.clone().unwrap();
         let mut newData = Data::new();
 
         // bruh we have to handle each type of command
