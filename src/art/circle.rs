@@ -16,7 +16,8 @@ impl BCircle {
         y: f32,
         radius: f32,
         outline_color: Option<(u8, u8, u8)>,
-        outline_width: f32
+        outline_width: f32,
+        fill_color: (u8, u8, u8, u8)
     ) -> BCircle {
         BCircle {
             shape: Shape {
@@ -37,7 +38,7 @@ impl BCircle {
 
                 center: (x, y),
                 dimensions: (0.0, 0.0),
-                fill: (0, 0, 0),
+                fill: fill_color,
                 outline_color: outline_color.unwrap_or((0, 0, 0)),
                 outline_width: outline_width,
                 rotation: 0.0,
@@ -101,15 +102,25 @@ impl Drawable for BCircle {
             self.shape.outline_color.0, self.shape.outline_color.1, self.shape.outline_color.2
         );
 
-        self.shape.circ = Some(
-            Circle::new()
-                .set("fill", "none")
-                .set("stroke", o_color)
-                .set("stroke-width", self.shape.outline_width)
-                .set("r", self.radius)
-                .set("cx", self.shape.center.0)
-                .set("cy", self.shape.center.1)
-                .set("transform", self.shape.transformation_stack.clone()),
-        );
+        let mut tmp = Circle::new()
+            .set("stroke", o_color)
+            .set("stroke-width", self.shape.outline_width)
+            .set("r", self.radius)
+            .set("cx", self.shape.center.0)
+            .set("cy", self.shape.center.1)
+            .set("transform", self.shape.transformation_stack.clone());
+
+        if self.shape.fill.3 != 0 {
+            let f_color = format!(
+                "#{:02x?}{:02x?}{:02x?}",
+                self.shape.fill.0, self.shape.fill.1, self.shape.fill.2
+            );
+
+            tmp = tmp.set("fill", f_color);
+        } else {
+            tmp = tmp.set("fill", "none");
+        }
+
+        self.shape.circ = Some(tmp);
     }
 }

@@ -338,7 +338,8 @@ impl Interpreter {
                                 rect_config.0.0,
                                 rect_config.0.1,
                                 Some(generic_config.2),
-                                generic_config.3
+                                generic_config.3,
+                                generic_config.1
                             );
 
                             for i in 0..generations {
@@ -356,7 +357,6 @@ impl Interpreter {
                             let mut circle_config = (
                                 0.0,
                             );
-                            let mut generations = 1;
 
                             // parse properties
                             for property in properties {
@@ -377,6 +377,7 @@ impl Interpreter {
                                 circle_config.0,
                                 Some(generic_config.2),
                                 generic_config.3,
+                                generic_config.1
                             );
 
                             for i in 0..generations {
@@ -404,30 +405,7 @@ impl Interpreter {
 
                     None
                 }
-                // StatementKind::Expression(expression) => self.tmp_eval(*expression),
-                // StatementKind::Return(expression) => self.tmp_eval(*expression),
 
-                // StatementKind::Shift(x,y) => {
-                //     let x_val = self.tmp_eval(*x).unwrap();
-                //     let y_val = self.tmp_eval(*y).unwrap();
-                //     // shift the shape here //
-                //     // Some(Value::Tuple(vec![x_val, y_val]))
-
-                //     None
-                // },
-                // StatementKind::Stretch(x, y) => {
-                //     let x_val = self.tmp_eval(*x).unwrap();
-                //     let y_val = self.tmp_eval(*y).unwrap();
-                //     // stretch the shape here //
-                //     // Some(Value::Tuple(vec![x_val, y_val]))
-
-                //     None
-                // },
-                // StatementKind::Rotate(angle) => {
-                //     let angle_val = self.tmp_eval(*angle);
-                //     // rotate the shape here //
-                //     angle_val
-                // },
                 _ => None,
             },
 

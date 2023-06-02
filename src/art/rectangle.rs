@@ -17,7 +17,8 @@ impl BRectangle {
         width: f32,
         height: f32,
         outline_color: Option<(u8, u8, u8)>,
-        outline_width: f32
+        outline_width: f32,
+        fill_color: (u8, u8, u8, u8)
     ) -> BRectangle {
         BRectangle {
             shape: Shape {
@@ -39,7 +40,7 @@ impl BRectangle {
 
                 center: (x, y),
                 dimensions: (0.0, 0.0),
-                fill: (0, 0, 0),
+                fill: fill_color,
                 outline_color: outline_color.unwrap_or((0, 0, 0)),
                 outline_width: outline_width,
                 rotation: 0.0,
@@ -102,16 +103,26 @@ impl Drawable for BRectangle {
             self.shape.outline_color.0, self.shape.outline_color.1, self.shape.outline_color.2
         );
 
-        self.shape.rect = Some(
-            Rectangle::new()
-                .set("fill", "none")
-                .set("stroke", o_color)
-                .set("stroke-width", self.shape.outline_width)
-                .set("x", self.shape.center.0 - self.width / 2.0)
-                .set("y", self.shape.center.1 - self.height / 2.0)
-                .set("width", self.width)
-                .set("height", self.height)
-                .set("transform", self.shape.transformation_stack.clone()),
-        );
+        let mut tmp = Rectangle::new()
+            .set("stroke", o_color)
+            .set("stroke-width", self.shape.outline_width)
+            .set("x", self.shape.center.0 - self.width / 2.0)
+            .set("y", self.shape.center.1 - self.height / 2.0)
+            .set("width", self.width)
+            .set("height", self.height)
+            .set("transform", self.shape.transformation_stack.clone());
+
+        if self.shape.fill.3 != 0 {
+            let f_color = format!(
+                "#{:02x?}{:02x?}{:02x?}",
+                self.shape.fill.0, self.shape.fill.1, self.shape.fill.2
+            );
+
+            tmp = tmp.set("fill", f_color);
+        } else {
+            tmp = tmp.set("fill", "none");
+        }
+
+        self.shape.rect = Some(tmp);
     }
 }

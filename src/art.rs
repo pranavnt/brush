@@ -40,7 +40,7 @@ pub struct Shape {
 
     pub center: (f32, f32),
     pub dimensions: (f32, f32),
-    pub fill: (u8, u8, u8),
+    pub fill: (u8, u8, u8, u8),
     pub outline_color: (u8, u8, u8),
     pub outline_width: f32,
     pub rotation: f32,
