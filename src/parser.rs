@@ -32,7 +32,7 @@ impl Parser {
                 TokenType::LET => {
                     // calculate end position based on when the next closing curly brace is
                     let mut end_pos = self.current + 1;
-                    while self.tokens[end_pos as usize].token_type != TokenType::R_CURLY {
+                    while self.tokens[end_pos as usize].token_type != TokenType::R_CURLY || self.tokens[(end_pos + 1) as usize].token_type == TokenType::L_CURLY {
                         end_pos += 1;
                     }
 
@@ -100,17 +100,28 @@ impl Parser {
         self.advance_past(TokenType::OPERATOR);
         let shape_kind = self.tokens[self.current as usize].value.clone();
 
-        self.advance_past(TokenType::L_CURLY);
-        
-        let mut statements = vec![];
+        let mut all_statements = Vec::<Vec::<Node>>::new();
 
-        
-        while self.current < end_pos {
-            let final_pos = self.get_next(TokenType::ENDLINE);
-            let statement = self.parse_statement(final_pos);
-            statements.push(statement);
+        let mut cur_end = self.current + 1;
+
+        while cur_end != end_pos {
+            self.advance_past(TokenType::L_CURLY);
+
+            let mut statements = Vec::<Node>::new();
+
+            while self.tokens[end_pos as usize].token_type != TokenType::R_CURLY {
+                cur_end += 1;
+            }
+    
+            while self.current < cur_end {
+                let final_pos = self.get_next(TokenType::ENDLINE);
+                let statement = self.parse_statement(final_pos);
+                statements.push(statement);
+            }   
+
+            all_statements.push(statements);
         }
-
+    
         let shape = ShapeNode {
             name: name.clone(),
             kind: match shape_kind.as_str() {
@@ -122,7 +133,7 @@ impl Parser {
                     panic!("Invalid shape type");
                 },
             },
-            statements: statements,
+            statements: all_statements,
         };
 
         return (Node::Shape(shape), name);

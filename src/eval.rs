@@ -1,4 +1,4 @@
-use crate::art::{draw, BCircle, BRectangle, BPolygon, Drawable, Shape, SVG};
+use crate::art::{draw, BCircle, BPolygon, BRectangle, Drawable, Shape, SVG};
 use crate::ast::*;
 use crate::tokens::{Token, TokenType};
 use std::collections::*;
@@ -14,7 +14,7 @@ pub enum Value {
     Number(f32),
     String(String),
     Tuple(Vec<Value>),
-    Evolve(ShapeKind, EvolveFn, Vec<Node>),
+    Evolve(ShapeKind, EvolveFn, Vec<Vec<Node>>),
     Shape(Shapes),
     Statements(Vec<Node>),
 }
@@ -62,6 +62,7 @@ impl Interpreter {
 
             Node::Shape(shape) => {
                 let name = &shape.name;
+
                 match self.symbol_table.get(name) {
                     Some(value) => panic!("variable already declared with name: {}", name),
                     None => {
@@ -167,19 +168,19 @@ impl Interpreter {
                             panic!("shape not found");
                         }
                     };
-                    
+
                     /*
-                        pos: (x, y)
-                        fill: (r, g, b, a)
-                        outline: (r, g, b)
-                        thickness: (t)
-                     */
+                       pos: (x, y)
+                       fill: (r, g, b, a)
+                       outline: (r, g, b)
+                       thickness: (t)
+                    */
 
                     let mut generic_config = (
                         (0.0, 0.0),
                         (u8::from(0), u8::from(0), u8::from(0), u8::from(0)),
                         (u8::from(0), u8::from(0), u8::from(0)),
-                        (1.0)
+                        (1.0),
                     );
 
                     let mut generations = 1;
@@ -190,7 +191,7 @@ impl Interpreter {
                         match property.name.as_str() {
                             "generations" => {
                                 generations = Self::extract_numnode(&*property.value) as i32;
-                            },
+                            }
 
                             "position" => {
                                 generic_config.0 = match *property.value {
@@ -204,7 +205,7 @@ impl Interpreter {
                                         panic!("wrong type somewhere");
                                     }
                                 }
-                            },
+                            }
 
                             "fill" => {
                                 generic_config.1 = match *property.value {
@@ -219,7 +220,7 @@ impl Interpreter {
                                         panic!("wrong type somewhere");
                                     }
                                 }
-                            },
+                            }
 
                             "outline" => {
                                 generic_config.2 = match *property.value {
@@ -234,13 +235,13 @@ impl Interpreter {
                                         panic!("wrong type somewhere");
                                     }
                                 }
-                            },
+                            }
 
                             "thickness" => {
                                 generic_config.3 = Self::extract_numnode(&*property.value);
                             }
 
-                            _ => ()
+                            _ => (),
                         }
                     }
 
@@ -252,62 +253,67 @@ impl Interpreter {
 
                             for property in properties {
                                 match property.name.as_str() {
-                                    "x" => {
-                                        match *property.value {
-                                            Node::TupleLiteral(tuple) => {
-                                                for val in &tuple.values {
-                                                    x_list.push(Self::extract_numnode(&*val));
-                                                }
-                                            }
-
-                                            _ => {
-                                                panic!("wrong type somewhere");
+                                    "x" => match *property.value {
+                                        Node::TupleLiteral(tuple) => {
+                                            for val in &tuple.values {
+                                                x_list.push(Self::extract_numnode(&*val));
                                             }
                                         }
-                                    }
 
-                                    "y" => {
-                                        match *property.value {
-                                            Node::TupleLiteral(tuple) => {
-                                                for val in &tuple.values {
-                                                    y_list.push(Self::extract_numnode(&*val));
-                                                }
-                                            }
+                                        _ => {
+                                            panic!("wrong type somewhere");
+                                        }
+                                    },
 
-                                            _ => {
-                                                panic!("wrong type somewhere");
+                                    "y" => match *property.value {
+                                        Node::TupleLiteral(tuple) => {
+                                            for val in &tuple.values {
+                                                y_list.push(Self::extract_numnode(&*val));
                                             }
                                         }
-                                    }
 
-                                    _ => ()
+                                        _ => {
+                                            panic!("wrong type somewhere");
+                                        }
+                                    },
+
+                                    _ => (),
                                 }
                             }
 
                             // create boilerplate poly
-                            let mut poly = BPolygon::new(
+                            let mut cur_layer = Vec::<BPolygon>::new();
+                            
+                            cur_layer.push(BPolygon::new(
                                 x_list,
                                 y_list,
                                 Some(generic_config.2),
                                 generic_config.3,
-                                generic_config.1
-                            );
+                                generic_config.1,
+                            ));
 
                             for i in 0..generations {
-                                // push to shapes
-                                poly.update();
-                                self.shapes.push(poly.clone().shape);
+                                let mut new_layer = Vec::<BPolygon>::new();
 
-                                poly = poly.clone();
-                                evolve_fn(&mut poly, statements.clone());
+                                for mut cur_shape in cur_layer {
+                                    // update and push to shapes
+                                    cur_shape.update();
+                                    self.shapes.push(cur_shape.clone().shape);
+
+                                    for child in statements.clone() {
+                                        let mut new_child = cur_shape.clone();
+                                        evolve_fn(&mut new_child, child.clone());
+
+                                        new_layer.push(new_child);
+                                    }
+                                }
+
+                                cur_layer = new_layer;
                             }
                         }
-
                         ShapeKind::Rectangle => {
                             // size
-                            let mut rect_config = (
-                                (0.0, 0.0),
-                            );
+                            let mut rect_config = ((0.0, 0.0),);
 
                             for property in properties {
                                 match property.name.as_str() {
@@ -316,7 +322,7 @@ impl Interpreter {
                                             Node::TupleLiteral(tuple) => {
                                                 let w = Self::extract_numnode(&*&tuple.values[0]);
                                                 let h = Self::extract_numnode(&*&tuple.values[1]);
-    
+
                                                 (w, h)
                                             }
                                             _ => {
@@ -325,67 +331,89 @@ impl Interpreter {
                                         }
                                     }
 
-                                    _ => ()
+                                    _ => (),
                                 }
                             }
 
-                            // create boilerplate rectangle
-                            let mut rect = BRectangle::new(
-                                generic_config.0.0,
-                                generic_config.0.1,
-                                rect_config.0.0,
-                                rect_config.0.1,
+                            // create boilerplate rect
+                            let mut cur_layer = Vec::<BRectangle>::new();
+                            
+                            cur_layer.push(BRectangle::new(
+                                generic_config.0 .0,
+                                generic_config.0 .1,
+                                rect_config.0 .0,
+                                rect_config.0 .1,
                                 Some(generic_config.2),
                                 generic_config.3,
-                                generic_config.1
-                            );
+                                generic_config.1,
+                            ));
 
                             for i in 0..generations {
-                                // push to shapes
-                                rect.update();
-                                self.shapes.push(rect.clone().shape);
+                                let mut new_layer = Vec::<BRectangle>::new();
 
-                                rect = rect.clone();
-                                evolve_fn(&mut rect, statements.clone());
+                                for mut cur_shape in cur_layer {
+                                    // update and push to shapes
+                                    cur_shape.update();
+                                    self.shapes.push(cur_shape.clone().shape);
+
+                                    for child in statements.clone() {
+                                        let mut new_child = cur_shape.clone();
+                                        evolve_fn(&mut new_child, child.clone());
+
+                                        new_layer.push(new_child);
+                                    }
+                                }
+
+                                cur_layer = new_layer;
                             }
+                            
                         }
 
                         ShapeKind::Circle => {
                             // radius
-                            let mut circle_config = (
-                                0.0,
-                            );
+                            let mut circle_config = (0.0,);
 
                             // parse properties
                             for property in properties {
                                 match property.name.as_str() {
                                     "radius" => {
                                         circle_config.0 = Self::extract_numnode(&*property.value);
-                                    },
+                                    }
 
-                                    _ => ()
+                                    _ => (),
                                 }
                             }
 
                             // create boilerplate circle with radius and center and thickness
 
-                            let mut circle = BCircle::new(
-                                generic_config.0.0,
-                                generic_config.0.1,
+                            let mut cur_layer = Vec::<BCircle>::new();
+                            
+                            cur_layer.push(BCircle::new(
+                                generic_config.0 .0,
+                                generic_config.0 .1,
                                 circle_config.0,
                                 Some(generic_config.2),
                                 generic_config.3,
-                                generic_config.1
-                            );
+                                generic_config.1,
+                            ));
 
                             for i in 0..generations {
-                                // push to shapes
-                                circle.update();
-                                self.shapes.push(circle.clone().shape);
+                                let mut new_layer = Vec::<BCircle>::new();
 
-                                circle = circle.clone();
-                                // circle.hue_shift(5.0);
-                                evolve_fn(&mut circle, statements.clone());
+                                for mut cur_shape in cur_layer {
+                                    // update and push to shapes
+                                    cur_shape.update();
+                                    self.shapes.push(cur_shape.clone().shape);
+
+                                    for child in statements.clone() {
+                                        let mut new_child = cur_shape.clone();
+                                        evolve_fn(&mut new_child, child.clone());
+
+                                        new_layer.push(new_child);
+                                    }
+                                }
+
+                                cur_layer = new_layer;
                             }
                         }
 
