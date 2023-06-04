@@ -1,17 +1,64 @@
-on: [push]
-
-name: CI
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches:
+      - main  # Change this to your desired branch
+  pull_request:
+    branches:
+      - main  # Change this to your desired branch
 
 jobs:
-  build_and_test:
-    name: Generative Art Language
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
+      - name: Setup | Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup | Rust
+        uses: ATiltedTree/setup-rust@v1
         with:
-          toolchain: stable
-      - uses: actions-rs/cargo@v1
+          rust-version: stable
+          components: clippy
+
+      - name: Configure Git
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Wasm-pack install
+        uses: jetli/wasm-pack-action@v0.4.0
         with:
-          command: build
-          args: --release --all-features
+          version: 'latest'
+
+
+      - name: Build WebAssembly
+        run: wasm-pack build --target web --out-name wasm --out-dir docs
+
+      - name: Copy index.html to the output directory
+        run: cp web/index.html docs
+
+      - name: ls la
+        run: ls -la docs
+
+      - name: git status
+        run: git status
+
+      - name: remove gitignore
+        run: rm -rf docs/.gitignore
+
+      - name: Stage changes
+        run: git add docs
+
+      - name: git status
+        run: git status
+
+      - name: Commit changes
+        run: git commit -m "Force commit deploy directory to gh-pages branch"
+
+      - name: Push changes to gh-pages
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          force: true
