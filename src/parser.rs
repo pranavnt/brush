@@ -1,6 +1,7 @@
 use std::collections::HashSet;
 use crate::ast::*;
 use crate::tokens::{Token,TokenType};
+use crate::log;
 
 pub struct Parser {
     pub tokens: Vec<Token>,
@@ -32,12 +33,16 @@ impl Parser {
                 TokenType::LET => {
                     // calculate end position based on when the next closing curly brace is
                     let mut end_pos = self.current + 1;
-                    while self.tokens[end_pos as usize].token_type != TokenType::R_CURLY {
+                    while self.tokens[end_pos as usize].token_type != TokenType::R_CURLY || self.tokens[(end_pos + 1) as usize].token_type == TokenType::L_CURLY {
                         end_pos += 1;
                     }
 
+                    log(format!("end_pos {}", end_pos).as_str());
+
                     let (shape, name) = self.parse_shape_declaration(end_pos);
                     
+                    log ("end shape parse");
+
                     self.shapes.insert(name);
 
                     program.statements.push(shape);
@@ -100,17 +105,39 @@ impl Parser {
         self.advance_past(TokenType::OPERATOR);
         let shape_kind = self.tokens[self.current as usize].value.clone();
 
-        self.advance_past(TokenType::L_CURLY);
-        
-        let mut statements = vec![];
+        log("n");
 
-        
-        while self.current < end_pos {
-            let final_pos = self.get_next(TokenType::ENDLINE);
-            let statement = self.parse_statement(final_pos);
-            statements.push(statement);
+        let mut all_statements = Vec::<Vec::<Node>>::new();
+
+        let mut cur_end = self.current + 1;
+
+        log(format!("cur end {}", cur_end).as_str());
+
+        while cur_end != end_pos {
+            self.advance_past(TokenType::L_CURLY);
+            cur_end = self.current + 1;
+
+            log(format!("cura end {}", cur_end).as_str());
+
+            let mut statements = Vec::<Node>::new();
+
+            while self.tokens[cur_end as usize].token_type != TokenType::R_CURLY {
+                cur_end += 1;
+            }
+            log(format!("cur end {}", cur_end).as_str());
+
+            log(format!("self cur {}", self.current).as_str());
+    
+            while self.current < cur_end {
+                let final_pos = self.get_next(TokenType::ENDLINE);
+                log(format!("final pos {}", final_pos).as_str());
+                let statement = self.parse_statement(final_pos);
+                statements.push(statement);
+            }   
+
+            all_statements.push(statements);
         }
-
+    
         let shape = ShapeNode {
             name: name.clone(),
             kind: match shape_kind.as_str() {
@@ -122,7 +149,7 @@ impl Parser {
                     panic!("Invalid shape type");
                 },
             },
-            statements: statements,
+            statements: all_statements,
         };
 
         return (Node::Shape(shape), name);

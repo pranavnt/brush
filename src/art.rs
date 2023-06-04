@@ -1,6 +1,7 @@
 mod circle;
 mod rectangle;
 mod shape;
+mod polygon;
 
 use std::ops::DerefMut;
 use std::ptr::addr_of;
@@ -8,7 +9,7 @@ use std::ptr::addr_of;
 use crate::error::Error;
 use svg::node::element::path::{Command, Data, Parameters};
 use svg::node::element::tag::Path;
-use svg::node::element::{Line, Path, Circle, Rectangle};
+use svg::node::element::{Line, Path, Circle, Rectangle, Polygon};
 use svg::parser::Event;
 use svg::Document;
 
@@ -40,12 +41,11 @@ pub struct Shape {
 
     pub center: (f32, f32),
     pub dimensions: (f32, f32),
-    pub fill: (u8, u8, u8),
+    pub fill: (u8, u8, u8, u8),
     pub outline_color: (u8, u8, u8),
     pub outline_width: f32,
     pub rotation: f32,
-    pub point_of_rotation: (f32, f32),
-    pub rotation_about: f32,
+    pub transformation_stack: String,
     pub warp_vals: (f32, f32),
     pub stretch: (f32, f32),
 }
@@ -65,9 +65,9 @@ pub struct BRectangle {
 }
 
 #[derive(Debug, Clone)]
-pub struct Polygon {
-    shape: Shape,
-    points: Vec<(f32, f32)>,
+pub struct BPolygon {
+    pub shape: Shape,
+    pub points: Vec<(f32, f32)>,
 }
 
 #[derive(Debug, Clone)]

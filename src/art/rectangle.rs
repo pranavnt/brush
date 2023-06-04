@@ -9,52 +9,57 @@ use svg::node::element::{Line, Path, Rectangle};
 use svg::parser::Event;
 use svg::Document;
 
-use crate::art::{Drawable, Shape, BRectangle};
+use crate::art::{BRectangle, Drawable, Shape};
 impl BRectangle {
-    pub fn new(x: f32, y: f32, width: f32, height: f32, outline_color: Option<(u8, u8, u8)>) -> BRectangle {
+    pub fn new(
+        x: f32,
+        y: f32,
+        width: f32,
+        height: f32,
+        outline_color: Option<(u8, u8, u8)>,
+        outline_width: f32,
+        fill_color: (u8, u8, u8, u8)
+    ) -> BRectangle {
         BRectangle {
             shape: Shape {
                 svg: None,
                 path: None,
 
                 circ: None,
-                rect: Some(Rectangle::new()
-                    .set("fill", "none")
-                    .set("stroke", "#000000")
-                    .set("stroke-width", 1)
-                    .set("width", width)
-                    .set("height", height)
-                    .set("x", x)
-                    .set("y", y)
-                    .set("transform", "rotate")
+                rect: Some(
+                    Rectangle::new()
+                        .set("fill", "none")
+                        .set("stroke", "#000000")
+                        .set("stroke-width", outline_width)
+                        .set("width", width)
+                        .set("height", height)
+                        .set("x", x)
+                        .set("y", y)
+                        .set("transform", "rotate"),
                 ),
 
                 center: (x, y),
                 dimensions: (0.0, 0.0),
-                fill: (0, 0, 0),
+                fill: fill_color,
                 outline_color: outline_color.unwrap_or((0, 0, 0)),
-                outline_width: 1.0,
+                outline_width: outline_width,
                 rotation: 0.0,
-                point_of_rotation: (0.0, 0.0),
-                rotation_about: 0.0,
+                transformation_stack: "".to_string(),
                 warp_vals: (0.0, 0.0),
                 stretch: (1.0, 1.0),
-                
-                
             },
 
             width: width,
-            height: height
+            height: height,
         }
     }
 }
-
 
 impl Drawable for BRectangle {
     fn rotate(&mut self, angle: f32) {
         self.shape.rotate(angle);
     }
-        
+
     fn rotate_to(&mut self, angle: f32) {
         self.shape.rotate_to(angle);
     }
@@ -93,24 +98,31 @@ impl Drawable for BRectangle {
     }
 
     fn update(&mut self) {
-        let o_color = format!("#{:02x?}{:02x?}{:02x?}", self.shape.outline_color.0, self.shape.outline_color.1, self.shape.outline_color.2);
-        let rotate = format!("rotate({} {} {})", self.shape.rotation, self.shape.center.0, self.shape.center.1);
-        let rotate_about = format!("rotate({} {} {})", self.shape.rotation_about, self.shape.point_of_rotation.0, self.shape.point_of_rotation.1);
+        let o_color = format!(
+            "#{:02x?}{:02x?}{:02x?}",
+            self.shape.outline_color.0, self.shape.outline_color.1, self.shape.outline_color.2
+        );
 
-        let all_rotate = format!("{} {}", rotate, rotate_about);
-        self.shape.rect = Some(Rectangle::new()
-                    .set("fill", "none")
-                    .set("stroke", o_color)
-                    .set("stroke-width", 1)
-                    .set("x", self.shape.center.0 - self.width / 2.0)
-                    .set("y", self.shape.center.1 - self.height / 2.0)
-                    .set("width", self.width)
-                    .set("height", self.height)
-                    .set("transform", all_rotate)
-                    
-                );
-                
+        let mut tmp = Rectangle::new()
+            .set("stroke", o_color)
+            .set("stroke-width", self.shape.outline_width)
+            .set("x", self.shape.center.0 - self.width / 2.0)
+            .set("y", self.shape.center.1 - self.height / 2.0)
+            .set("width", self.width)
+            .set("height", self.height)
+            .set("transform", self.shape.transformation_stack.clone());
+
+        if self.shape.fill.3 != 0 {
+            let f_color = format!(
+                "#{:02x?}{:02x?}{:02x?}",
+                self.shape.fill.0, self.shape.fill.1, self.shape.fill.2
+            );
+
+            tmp = tmp.set("fill", f_color);
+        } else {
+            tmp = tmp.set("fill", "none");
+        }
+
+        self.shape.rect = Some(tmp);
     }
-
-    
 }

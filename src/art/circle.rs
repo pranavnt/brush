@@ -4,38 +4,45 @@ use std::ptr::addr_of;
 use crate::error::Error;
 use svg::node::element::path::{Command, Data, Parameters};
 use svg::node::element::tag::Path;
-use svg::node::element::{Line, Path, Circle};
+use svg::node::element::{Circle, Line, Path};
 use svg::parser::Event;
 use svg::Document;
 
-use crate::art::{Drawable, Shape, BCircle};
+use crate::art::{BCircle, Drawable, Shape};
 
 impl BCircle {
-    pub fn new(x: f32, y: f32, radius: f32, outline_color: Option<(u8, u8, u8)>, thickness: f32) -> BCircle {
+    pub fn new(
+        x: f32,
+        y: f32,
+        radius: f32,
+        outline_color: Option<(u8, u8, u8)>,
+        outline_width: f32,
+        fill_color: (u8, u8, u8, u8)
+    ) -> BCircle {
         BCircle {
             shape: Shape {
                 svg: None,
                 path: None,
 
-                circ: Some(Circle::new()
-                    .set("fill", "none")
-                    .set("stroke", "#000000")
-                    .set("stroke-width", thickness)
-                    .set("r", radius)
-                    .set("cx", x)
-                    .set("cy", y)
-                    .set("transform", "rotate")
+                circ: Some(
+                    Circle::new()
+                        .set("fill", "none")
+                        .set("stroke", "#000000")
+                        .set("stroke-width", outline_width)
+                        .set("r", radius)
+                        .set("cx", x)
+                        .set("cy", y)
+                        .set("transform", "rotate"),
                 ),
                 rect: None,
 
                 center: (x, y),
                 dimensions: (0.0, 0.0),
-                fill: (0, 0, 0),
+                fill: fill_color,
                 outline_color: outline_color.unwrap_or((0, 0, 0)),
-                outline_width: thickness,
+                outline_width: outline_width,
                 rotation: 0.0,
-                point_of_rotation: (0.0, 0.0),
-                rotation_about: 0.0,
+                transformation_stack: "".to_string(),
                 warp_vals: (0.0, 0.0),
                 stretch: (1.0, 1.0),
             },
@@ -90,27 +97,30 @@ impl Drawable for BCircle {
     }
 
     fn update(&mut self) {
-        let o_color = format!("#{:02x?}{:02x?}{:02x?}", self.shape.outline_color.0, self.shape.outline_color.1, self.shape.outline_color.2);
-        let rotate = format!("rotate({} {} {})", self.shape.rotation, self.shape.center.0, self.shape.center.1);
-        let rotate_about = format!("rotate({} {} {})", self.shape.rotation_about, self.shape.point_of_rotation.0, self.shape.point_of_rotation.1);
-        
-        let all_rotate = format!("{} {}", rotate, rotate_about);
-        self.shape.circ = Some(Circle::new()
-                    .set("fill", "none")
-                    .set("stroke", o_color)
-                    .set("stroke-width", self.shape.outline_width)
-                    .set("r", self.radius)
-                    .set("cx", self.shape.center.0)
-                    .set("cy", self.shape.center.1)
-                    .set("transform", all_rotate)
-                    
-                );
-                    
-                    
-                    
-                    
-                    
-    }
+        let o_color = format!(
+            "#{:02x?}{:02x?}{:02x?}",
+            self.shape.outline_color.0, self.shape.outline_color.1, self.shape.outline_color.2
+        );
 
-    
+        let mut tmp = Circle::new()
+            .set("stroke", o_color)
+            .set("stroke-width", self.shape.outline_width)
+            .set("r", self.radius)
+            .set("cx", self.shape.center.0)
+            .set("cy", self.shape.center.1)
+            .set("transform", self.shape.transformation_stack.clone());
+
+        if self.shape.fill.3 != 0 {
+            let f_color = format!(
+                "#{:02x?}{:02x?}{:02x?}",
+                self.shape.fill.0, self.shape.fill.1, self.shape.fill.2
+            );
+
+            tmp = tmp.set("fill", f_color);
+        } else {
+            tmp = tmp.set("fill", "none");
+        }
+
+        self.shape.circ = Some(tmp);
+    }
 }

@@ -29,14 +29,16 @@ use wasm_bindgen::prelude::*;
 
 
 #[wasm_bindgen]
-extern {
-    pub fn alert(s: &str);
+extern "C" {
+    #[wasm_bindgen(js_namespace = console)]
+    pub fn log(s: &str);
 }
 
 #[wasm_bindgen]
-pub fn greet(name: &str) {
-    alert(&format!("Hello, {}!", name));
+pub fn debug_log(message: &str) {
+    log(message);
 }
+
 use std::string::String;
 
 #[wasm_bindgen]
@@ -56,8 +58,15 @@ pub fn process_file(content: &str) -> String{
 fn process(content: &str) {
     let mut lex = Lexer::new(String::from(content));
     let tokens = lex.lex();
+
+    for t in &tokens {
+        log(format!("{:#?}", t).as_str());
+    }
+
     let mut parser = Parser::new(tokens);
     let ast = parser.parse_program();
+
+    log(format!("{:#?}", ast).as_str());
     let mut interpreter = Interpreter::new(ast);
     interpreter.run();
 

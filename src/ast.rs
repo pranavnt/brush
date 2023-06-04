@@ -53,7 +53,7 @@ pub struct IdentifierNode {
 pub struct ShapeNode {
     pub name: String,
     pub kind: ShapeKind,
-    pub statements: Vec<Node>,
+    pub statements: Vec<Vec<Node>>,
 }
 
 #[derive(Debug, Clone)]
