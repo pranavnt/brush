@@ -173,7 +173,7 @@
         <div class="hidden md:block ml-auto">
           <div class="ml-10 flex items-baseline space-x-4">
             <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-l font-medium">Playground</a>
-            <a href="API.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-l font-medium">Bible</a>
+            <a href="docs.html" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-l font-medium">Bible</a>
           </div>
         </div>
       </div>
@@ -203,7 +203,7 @@ my_shape(
       class="px-4 py-2 bg-gray-200 text-black rounded hover:bg-gray-300">Run</button>
   </div>
   <script type="module" defer>
-    import init, { process_file, debug_log } from "../pkg/brush.js";
+    import init, { process_file, debug_log } from "./wasm.js";
     init().then(() => {
       console.log("Wasm module loaded");
     });

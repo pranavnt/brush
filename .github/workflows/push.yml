@@ -36,7 +36,7 @@ jobs:
         run: wasm-pack build --target web --out-name wasm --out-dir docs
 
       - name: Copy index.html to the output directory
-        run: cp web/index.html docs
+        run: cp -r web/ docs
 
       - name: ls la
         run: ls -la docs
