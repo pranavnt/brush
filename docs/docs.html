@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        Brush Bible
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/themes/prism.min.css"
+        integrity="sha512-/mZ1FHPkg6EKcxo0fKXF51ak6Cr2ocgDi5ytaTBjsQZIH/RNs6GF6+oId/vPe3eJB836T36nXwVh/WBl/cWT4w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <nav class="bg-gray-800">
+        <div class="max-w-9xl mx-auto px-5 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-24">
+                <div class="image-container">
+                    <img src="https://i.imgur.com/VxoTQ7D.png" width="100px">
+                </div>
+                <div class="text">
+                    <a href="#" class="text-white font-medium text-3xl ml-2">Brush</a>
+                </div>
+                <div class="hidden md:block ml-auto">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html"
+                            class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-l font-medium">Playground</a>
+                        <a href="#"
+                            class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-l font-medium">Bible</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <header class="bg-blue-500 text-white p-4 text-center">
+        <h1 class="text-2xl font-bold">The Brush Bible</h1>
+    </header>
+
+    <div class="container mx-auto max-w-screen-md mt-8">
+        <section>
+            <h2 class="text-xl font-bold mb-4">The Book of Brush: Chapter 1 - The Divine Artistry</h2>
+            <p class="mb-4">In the beginning, there was emptiness, void of creativity and expression. Then, from the
+                depths of the digital realm, emerged a divine language known as Brush. It was destined to bring forth
+                the power of generative artwork and unlock the hidden potential of creativity.</p>
+            <p class="mb-4">And thus, the syntax of Brush was revealed, adorned with symbols and keywords that bestowed
+                upon its users the ability to shape and mold art with ease. Let us delve into the sacred scripture of
+                Brush and explore its mighty features.</p>
+            <p class="mb-4">Brush is a domain-specific programming language designed to make generative artwork fun and
+                accessible. It uses the idea of evolution as an abstraction for recursion. It contains various built-in
+                functions for transformations like warping, translating, shrinking/enlarging, and rotating to allow
+                users to create generative art pieces easily.</p>
+            <!-- <img src="path/to/image.jpg" alt="Image description" class="mb-4"> -->
+        </section>
+
+        <section>
+            <h2 class="text-xl font-bold mb-4">Chapter 2 - Base Shapes and Their Properties</h2>
+            <p class="mb-4">Brush bestowed upon its followers the power to create wondrous shapes. Each shape possessed
+                unique properties, such as center, fill, outline, width, and height. These properties could be
+                customized to bring forth visual splendor.</p>
+            <blockquote class="mx-auto max-w-lg p-4 bg-gray-100 text-center italic mb-4">
+                <p class="mb-4">"In the beginning, the Creator formed our world,</p>
+                <p class="mb-4">With <code class="px-1 py-0.5 bg-gray-200 rounded font-mono">circles</code>, <code
+                        class="px-1 py-0.5 bg-gray-200 rounded font-mono">rectangles</code>, and <code
+                        class="px-1 py-0.5 bg-gray-200 rounded font-mono">polygons</code> unfurled.</p>
+                <p class="mb-4">Each shape, with purpose, in harmony did combine,</p>
+                <p class="mb-4">A testament to divine design, truly sublime."</p>
+                <cite>- Mothukuri 2:2</cite>
+            </blockquote>
+
+            <!-- <ol class="list-decimal list-inside mb-4">
+                <li>Step 1: Lorem ipsum dolor sit amet.</li>
+                <li>Step 2: Consectetur adipiscing elit.</li>
+                <li>Step 3: Fusce eu justo quis ex semper dapibus.</li>
+            </ol> -->
+        </section>
+
+        <section>
+            <h2 class="text-xl font-bold mb-4">Chapter 3 - Evolution: The Dance of Recursion</h2>
+            <p class="mb-4">In the depths of Brush, the concept of evolution emerged as a sacred abstraction for
+                recursion. Through evolution, shapes could give birth to new generations, each carrying the legacy of
+                its predecessors.</p>
+            <p class="mb-4">The evolve function allowed shapes to define the destiny of their offspring. With multiple
+                children, the
+                power of branching paths unfolded, diversifying the artistic journey.
+            </p>
+
+            <p class="mb-4">Evolution is the core innovation of Brush – each base shape can have a custom definition of
+                how it can evolve. Think of this concept as a simplified version of recursion. Set the number of
+                generations equal to a number, and then the shape will evolve (reflect, shift, stretch, etc.) and be
+                redrawn that specified number of times.</p>
+            <p class="mb-4">Define the number of generations per shape drawn using shapeName { } with properties inside
+                the open braces:</p>
+
+            <pre class="bg-gray-200 rounded p-4 mb-4"><code class="language-javascript">let my_shape = circle {
+    reflect(500, 0, 500, 1000)
+    shift(10, 0)
+    stretch(1.1, 1.1)
+}
+                  
+my_shape(
+    radius = 20
+    position = (250, 500)
+    generations = 100
+)</code></pre>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-bold mb-4">Chapter 4 - Transformations: Unleashing Artistic Sorcery</h2>
+            <p class="mb-4">To further enrich the creative process, Brush offered a set of transformation functions,
+                allowing artists to wield the power of manipulation.</p>
+            <p class="mb-4">The Shift, enabling graceful translations of shapes across the canvas. Used to translate a
+                given shape, takes parameters for x and y.</p>
+            <pre class="bg-gray-200 rounded p-4 mb-4"><code class="language-javascript">shift(x, y)</code></pre>
+            <p class="mb-4">The Shift To, enabling graceful translations to a location. Used to place a given shape at
+                new coordinates, takes parameters for x and y.</p>
+            <pre class="bg-gray-200 rounded p-4 mb-4"><code class="language-javascript">shift_to(x, y)</code></pre>
+            <p class="mb-4">The Stretch, invoking the ability to expand or compress shapes along their axes. Used to
+                stretch shapes by horizontal and vertical factors, takes parameters for x and y factors.</p>
+            <pre class="bg-gray-200 rounded p-4 mb-4"><code class="language-javascript">stretch(x, y)</code></pre>
+            <p class="mb-4">The Rotate, a mystical force to spin and twirl shapes in the cosmic dance. Used to rotate a
+                given shape around its center, takes angle as a parameter.</p>
+            <pre class="bg-gray-200 rounded p-4 mb-4"><code class="language-javascript">rotate(angle)</code></pre>
+            <p class="mb-4">The Rotate To, a mystical force to spin and twirl shapes again. Used to rotate a given shape
+                to a certain angle, takes parameter for angle in degree</p>
+            <pre class="bg-gray-200 rounded p-4 mb-4"><code class="language-javascript">rotate_to(angle)</code></pre>
+            <p class="mb-4">The Rotate About, a mystical force to spin and twirl shapes yet again. Used to rotate a
+                given shape about a certain coordinate, takes parameters for angle, x, and y.
+            </p>
+            <pre
+                class="bg-gray-200 rounded p-4 mb-4"><code class="language-javascript">rotate_about(angle, x, y)</code></pre>
+            <p class="mb-4">The Reflect, an enchanting spell to mirror shapes across mystical lines. Used to reflect a
+                given shape across a line defined by two points, takes two point parameters.
+            </p>
+            <pre
+                class="bg-gray-200 rounded p-4 mb-4"><code class="language-javascript">reflect(x1, y1, x2, y2)</code></pre>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-bold mb-4">Chapter 5 - Drawing: Manifesting the Artistic Vision</h2>
+            <p class="mb-4">With the groundwork laid, Brush beckoned artists to draw their creations upon the canvas of
+                existence. Drawing required the invocation of shapes and the fine-tuning of their properties.</p>
+            <p class="mb-4">Through the art of instantiation, artists could bring shapes to life, setting their
+                positions, sizes, fills, and outlines. The number of generations could be defined to guide the evolution
+                of the art, ensuring its growth and transformation.</p>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-bold mb-4">Chapter 6 - Code Samples: Enlightening Our Soul and Mind</h2>
+            <div>
+                <h3 class="text-lg font-bold mb-2">The Honeycomb</h3>
+                <img src="honeycomb.png" alt="Example 1" class="mt-4">
+                <pre class="bg-gray-200 rounded p-4"><code class="language-javascript">let hex = polygon {
+    shift(0, 86.602)
+} {
+    shift(75, 43.301)
+    hue_shift(1.5)
+}
+                
+// 50cos(50) = 25, 50sin(60) = 43.301
+                
+hex(
+    x = (155, 130, 80, 55, 80, 130)
+    y = (105, 148.301, 148.301, 105, 61.699,  61.699)
+    generations = 5
+    outline = (60, 60, 60)
+    thickness = 10
+)
+                
+hex(
+    x = (150, 125,  75,  50, 75, 125)
+    y = (100, 143.301, 143.301, 100, 56.699,  56.699)
+    generations = 5
+    outline = (255, 215, 0)
+    thickness = 10
+)</code></pre>
+                
+            </div>
+            <br>
+            <div>
+                <h3 class="text-lg font-bold mb-2">India Flag</h3>
+                <p class="mb-4">An Indian flag, an integral piece of India’s long and beautiful history tainted by the scar of British imperialism.</p>
+                <img src="india.png" alt="Example 2" class="mt-4">
+                <pre
+                    class="bg-gray-200 rounded p-4"><code class="language-javascript">let rect = rectangle{}
+
+rect(
+    position = (500, 300)
+    size = (1000, 200)
+    fill = (255, 153, 51)
+)
+                        
+rect(
+    position = (500, 500)
+    size = (1000, 200)
+    fill = (255, 255, 255)
+)
+
+rect(
+    position = (500, 700)
+    size = (1000, 200)
+    fill = (19, 136, 8)
+)
+                        
+let center = circle {}
+                        
+center (
+    position = (500, 500)
+    radius = 20
+    fill = (0, 0, 128)
+)
+                        
+center (
+    position = (500, 500)
+    radius = 88
+    outline = (0, 0, 128)
+    thickness = 10
+)
+                        
+let spoke = polygon {
+    rotate_about(15, 500, 500)
+}
+                        
+spoke (
+    x = (500, 505, 500, 495)
+    y = (520, 540, 590, 540)
+    fill = (0, 0, 128)
+    generations = 24
+)</code></pre>
+                
+            </div>
+            <br>
+            <div>
+                <h3 class="text-lg font-bold mb-2">Repeating Circles</h3>
+                <img src="circles.png" alt="Example 1" class="mt-4">
+                <pre class="bg-gray-200 rounded p-4"><code class="language-javascript">let grid = circle {    
+    shift(100, 0)
+    stretch(0.8, 0.8)
+    hue_shift(24)
+} {
+    shift(0, 100)
+    stretch(0.8, 0.8)
+}
+                
+grid(
+    position = (200, 200)
+    radius = 100
+    generations = 8
+    fill = (200, 0, 200)
+    outline = (255, 255, 255)
+    thickness = 5
+)</code></pre>
+                
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-bold mb-4">Conclusion</h2>
+            <p class="mb-4">In the realm of Brush, artistry becomes an act of divinity. Through the interplay of shapes, evolution, and transformative magic, artists transcend mere creation and embark on a journey of generative art. May Brush be a guiding light, inspiring the hearts and minds of artists to unleash their boundless creativity upon the canvas of the digital world. Amen.</p>
+        </section>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/prism.min.js"
+        integrity="sha512-UOoJElONeUNzQbbKQbjldDf9MwOHqxNz49NNJJ1d90yp+X9edsHyJoAs6O4K19CZGaIdjI5ohK+O2y5lBTW6uQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+
+</html>
